@@ -27,6 +27,8 @@ public class Player : MonoBehaviour // 인게임에 관련된 유저 정보를 담는 곳
         if (Manager.Instance.GameMgr == null)
             Debug.Log("얘 널이에요");
 
+        TableManager.Instance.Currentplayer = this;
+
         PlayerDafultDataSetting();
         
     }

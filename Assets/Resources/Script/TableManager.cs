@@ -3,6 +3,8 @@ using UnityEngine;
 public class TableManager
 {
     private static TableManager instance;
+    public Player Currentplayer;
+
     public static TableManager Instance
     {
         get
