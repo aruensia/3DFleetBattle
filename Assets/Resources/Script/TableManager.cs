@@ -18,17 +18,17 @@ public class TableManager
         }
     }
 
-    public Weapon isWeapon = new Weapon();
-    public ShipPart isShipPart = new ShipPart();
-    public Ship isShip = new Ship();
-    public Reactor isReactor = new Reactor();
-    public Thrusters isThrusters = new Thrusters();
+    public Weapon Weapon = new();
+    public ShipPart ShipPart = new();
+    public Ship Ship = new();
+    public Reactor Reactor = new();
+    public Thrusters Thrusters = new();
 
     public TableManager()
     {
-        isWeapon.SetWeaponData();
-        isShipPart.SetPartData();
-        isShip.SetShipValue();
+        Weapon.SetWeaponData();
+        ShipPart.SetPartData();
+        Ship.SetShipValue();
     }
     
     public void SetPlayerShips()
