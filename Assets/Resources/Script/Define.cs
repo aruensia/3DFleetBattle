@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Xml.Linq;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public enum WeaponType
 {
@@ -163,12 +165,6 @@ public class Ship
         tail = isTail;
     }
 
-    public int SetMaxHp(int Hhp, int Bhp, int Thp)
-    {
-        int setmaxHp = Hhp + Bhp + Thp;
-        return setmaxHp;
-    }
-
     public Ship()
     {
 
@@ -188,7 +184,7 @@ public class Ship
 
     public void SetShipValue()
     {
-        Ship Ship01 = new Ship("Corvette", 50, 40, 2, ShipClassData.Corvette, shipcount: 5);
+        Ship Ship01 = new Ship(name: "Corvette", maxhp: 50 , shipcaps: 40, fleetcost: 2, ShipClassData.Corvette, shipcount: 5);
 
         ShipList.Add(10000, Ship01);
     }

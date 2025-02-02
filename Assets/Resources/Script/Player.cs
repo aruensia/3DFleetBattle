@@ -19,7 +19,8 @@ public class FleetData
 {
     public List<FleetData> userFleet = new List<FleetData>();
     public Ship ShipData { get; set; }
-    public GameObject DefaultShip;
+    public GameObject[] DefaultShip;
+    
 
     int _money;
  
@@ -32,6 +33,7 @@ public class FleetData
 
     private void Start()
     {
+        DefaultShip[0] = GameObject.Find("Player").GetComponent<Player>().DefaultShip[0];
         if (Manager.Instance.GameMgr == null)
             Debug.Log("¾ê ³ÎÀÌ¿¡¿ä");
 
@@ -39,6 +41,12 @@ public class FleetData
         
         PlayerDafultDataSetting();
         SetShips();
+        ResetShipData();
+    }
+
+    void ResetShipData()
+    {
+        ShipData = null;
     }
 
     public void PlayerDafultDataSetting()
@@ -55,15 +63,14 @@ public class FleetData
 
     void SetShips()
     {
-        DefaultShip = GameObject.Find("Player").GetComponent<Player>().DefaultShip;
-        InstanceShip SetShipInfo = DefaultShip.GetComponent<InstanceShip>();
-        SetShipInfo.ShipData = ShipData;
+        InstanceShip SetShipInfo = DefaultShip[0].GetComponent<InstanceShip>();
+        SetShipInfo.ShipData = this.ShipData;
         userFleet.Add(new FleetData(SetShipInfo, 5));
 
         for ( int i = 0; i < userFleet[0].ShipCount; i++ )
         {
-            Instantiate(DefaultShip);
+            Instantiate(DefaultShip[0], this.transform.GetChild(0));
+            //DefaultShip.transform.SetParent();
         }
-        Debug.Log(userFleet[0].ShipCount);
     }
 }
