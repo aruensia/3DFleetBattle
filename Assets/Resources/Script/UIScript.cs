@@ -10,15 +10,23 @@ public class UIScript : MonoBehaviour
     public Text body;
     public Text tail;
 
-    public Text[] WeaponList;
-    //public Text[] BodyWeaponList;
-    //public Text[] TailWeaponList;
+    public Text[] SubData;
 
-    Player isPlayers;
+    Player Players;
 
     void Start()
     {
-        //isPlayers = TableManager.Instance.Currentplayer;
+        Players = Manager.Instance.PlayerMgr;
+        SetUnitInfo();
+        
+
+    }
+
+    void SetUnitInfo()
+    {
+        SubData[0].text = "유닛 수 : " + Players.userFleet[0].ShipCount.ToString();
+        SubData[1].text = "사용 전력 : " + Players.userFleet[0].Ship.ShipData.ShipCaps.ToString();
+        SubData[2].text = "최대 체력 : " + Players.userFleet[0].Ship.ShipData.MaxHp.ToString();
     }
 
     //void SetUIText()
@@ -42,9 +50,4 @@ public class UIScript : MonoBehaviour
     //
     //    }
     //}
-
-    private void OnDestroy()
-    {
-        //Manager.Instance.GameMgr.OnShowGameDataSet -= SetUIText;
-    }
 }

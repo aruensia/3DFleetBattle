@@ -5,7 +5,6 @@ public class TableManager
     private static TableManager instance;
 
     public InstanceShip InstanceShip;
-    
 
     public static TableManager Instance
     {

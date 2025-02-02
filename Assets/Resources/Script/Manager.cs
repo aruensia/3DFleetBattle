@@ -15,7 +15,7 @@ public class Manager : MonoBehaviour
     public GameManager GameMgr { get; } = new();
     public UIScript UiMgr { get; }
 
-    public Player PlayerMgr { get; }
+    public Player PlayerMgr { get; set; }
 
     private void Awake()
     {
