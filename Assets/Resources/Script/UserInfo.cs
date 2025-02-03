@@ -5,5 +5,4 @@ using UnityEngine;
 public class UserInfo : MonoBehaviour
 {
     int currentUserStage;
-
 }

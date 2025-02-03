@@ -184,8 +184,10 @@ public class Ship
 
     public void SetShipValue()
     {
+        Ship Ship00 = new Ship(name: "None", maxhp: 0, shipcaps: 0, fleetcost: 2, ShipClassData.None, shipcount: 0);
         Ship Ship01 = new Ship(name: "Corvette", maxhp: 50 , shipcaps: 40, fleetcost: 2, ShipClassData.Corvette, shipcount: 5);
 
+        ShipList.Add(19999, Ship00);
         ShipList.Add(10000, Ship01);
     }
 }

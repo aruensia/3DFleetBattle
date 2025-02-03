@@ -29,9 +29,4 @@ public class TableManager
         ShipPart.SetPartData();
         Ship.SetShipValue();
     }
-    
-    public void SetPlayerShips()
-    {
-        //Currentplayer.ShipData = isShip.ShipList[10000];
-    }
 }
