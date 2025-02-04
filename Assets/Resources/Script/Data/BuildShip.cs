@@ -2,24 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildShip : MonoBehaviour
+public class BuildShip
 {
-    public ShipHull ShipHull;
+    public ShipHull ShipHull { get; set; }
 
-    public ShipHead Head;
-    public ShipBody Body;
-    public ShipTail Tail;
+    public ShipHead Head { get; set; }
+    public ShipBody Body { get; set; }
+    public ShipTail Tail { get; set; }
 
     bool BuildOn = false;
 
     public int TotalHp => ShipHull != null ? (ShipHull.defaultHp + Head.headHp + Body.headHp + Tail.headHp) : 0;
     public int TotalDamage => Head.weapons.Count > 0 ? TotalWeaponCalculate() : 0;
     public int MaxReactor => Body.reactor.reactorPower > 0 ? ReacotrPowerCalculate() : 0;
-
-    private void Start()
-    {
-        Debug.Log(TotalHp);
-    }
 
     int TotalWeaponCalculate()
     {

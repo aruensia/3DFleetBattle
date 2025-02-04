@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShipBluePrint : MonoBehaviour
 {
     public BuildShip currentShip = new BuildShip();
-    
+
 
 
     #region Ui 버튼에서 호출하여 쓸 함수
@@ -31,9 +31,23 @@ public class ShipBluePrint : MonoBehaviour
     }
     #endregion
 
-    public void ShipRollout()
+    public GameObject GetShipClass(ShipClass shipClass)
     {
-        
+        switch (shipClass)
+        {
+            case ShipClass.Corvette:
+                return Resources.Load<GameObject>("Prefabs/ShipClassData/Corvette");
+
+            default:
+                return null;
+        }
     }
 
+    public void ShipRollout(ShipClass type)
+    {
+        GameObject shipPrefab = GetShipClass(type);
+        GameObject newShip = Instantiate(shipPrefab, this.transform);
+
+
+    }
 }
