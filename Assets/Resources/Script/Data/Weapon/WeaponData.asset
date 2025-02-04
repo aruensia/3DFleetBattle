@@ -16,3 +16,4 @@ MonoBehaviour:
   damage: 5
   attackRange: 20
   attackSpeed: 5
+  usePower: 5

@@ -9,5 +9,5 @@ public class Weapon : ScriptableObject
     public int damage;
     public int attackRange;
     public float attackSpeed;
-
+    public int usePower;
 }

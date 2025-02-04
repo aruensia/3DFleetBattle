@@ -8,5 +8,6 @@ public class ShipBody : ScriptableObject
     public string headName;
     public int headHp;
     public List<Weapon> weapons = new List<Weapon>();
+    public ShipReactor reactor;
 
 }
