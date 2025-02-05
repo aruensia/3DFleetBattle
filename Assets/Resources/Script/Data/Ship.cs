@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Ship
 {
-    ShipHull shipHull;
-    ShipHead shiphead;
-    ShipBody shipBody;
-    ShipTail shipTail;
+    public ShipHull shipHull;
+    public ShipHead shiphead;
+    public ShipBody shipBody;
+    public ShipTail shipTail;
 
     int hp;
     int speed;
@@ -15,15 +15,18 @@ public class Ship
     int reactor;
 
     //함선의 총 체력을 구함
-    private int MaxHp () => shipHull.defaultHp + shiphead.headHp + shipBody.headHp + shipTail.headHp;
+    //public int MaxHp () => shipHull.defaultHp + shiphead.headHp + shipBody.headHp + shipTail.headHp;
 
     //함선의 총 방어력을 구함
-    private int maxdefence;
+    //public int maxdefence;
 
     //함선의 무기 총 개수를 구함
-    private int WeaponCount () => shiphead.weapons.Count + shipBody.weapons.Count + shipTail.weapons.Count;
+    //public int WeaponCount () => shiphead.weapons.Count + shipBody.weapons.Count + shipTail.weapons.Count;
 
+    public int GetMaxHp()
+    {
+        hp = shipHull.defaultHp + shiphead.headHp + shipBody.bodyHp + shipTail.headHp;
 
-
-
+        return hp;
+    }
 }
