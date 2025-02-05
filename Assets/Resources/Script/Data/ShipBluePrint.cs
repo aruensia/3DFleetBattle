@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShipBluePrint : MonoBehaviour
 {
     public BuildShip currentShip = new BuildShip();
-
+    public static ShipClass myTpye;
 
 
     #region Ui 버튼에서 호출하여 쓸 함수
@@ -47,7 +48,5 @@ public class ShipBluePrint : MonoBehaviour
     {
         GameObject shipPrefab = GetShipClass(type);
         GameObject newShip = Instantiate(shipPrefab, this.transform);
-
-
     }
 }

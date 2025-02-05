@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16835d270f1e10744becc79389f971c5, type: 3}
-  m_Name: ShipHullData
+  m_Script: {fileID: 11500000, guid: b8e85da483b01d84fb217bc6bba18093, type: 3}
+  m_Name: WeaponData 1
   m_EditorClassIdentifier: 
-  hullName: "\uBE44\uC5B4\uC788\uC74C"
-  defaultHp: 0
-  shipClass: 1
+  weaponName: "\uB9E4\uC2A4 \uB4DC\uB77C\uC774\uBC84"
+  damage: 5
+  attackRange: 20
+  attackSpeed: 5
+  usePower: 5

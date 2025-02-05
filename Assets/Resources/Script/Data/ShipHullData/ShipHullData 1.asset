@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16835d270f1e10744becc79389f971c5, type: 3}
-  m_Name: ShipHullData
+  m_Name: ShipHullData 1
   m_EditorClassIdentifier: 
-  hullName: "\uBE44\uC5B4\uC788\uC74C"
-  defaultHp: 0
+  hullName: "\uCD08\uACC4\uD568"
+  defaultHp: 10
   shipClass: 1

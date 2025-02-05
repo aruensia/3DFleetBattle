@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16835d270f1e10744becc79389f971c5, type: 3}
-  m_Name: ShipHullData
+  m_Script: {fileID: 11500000, guid: adad6ec6720ff6043876a5c61750a959, type: 3}
+  m_Name: ShipBodyData 1
   m_EditorClassIdentifier: 
-  hullName: "\uBE44\uC5B4\uC788\uC74C"
-  defaultHp: 0
-  shipClass: 1
+  headName: "\uC120\uCCB4"
+  headHp: 10
+  weapons: []
