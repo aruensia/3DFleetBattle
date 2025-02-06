@@ -32,6 +32,7 @@ public class DataManager : MonoBehaviour
     public ShipBody tempShipData;
     DataList getNewDataList;
     public Weapon testweapon;
+    List<string> tempdatalist;
 
       private void Awake()
     {
@@ -53,14 +54,14 @@ public class DataManager : MonoBehaviour
     {
         GetDataObject();
         getNewDataList.GetShipData();
-        Debug.Log("sdfsdfsdf" + getNewDataList.weaponData[0].name);
-       //TestSetting();
+        Debug.Log(getNewDataList.AllShipDataDic["shipHullData", List<ScriptableObject>()].name);
     }
 
 
     void GetDataObject()
     {
         getNewDataList = Resources.Load<DataList>($"Script/Data/DataList") ;
+        tempdatalist = getNewDataList.datanamelist;
         Debug.Log(getNewDataList);
 
     }

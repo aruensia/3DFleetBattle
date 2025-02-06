@@ -2,126 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "DataList", menuName = "Ship/DataList")]
 public class DataList : ScriptableObject
 {
-    public List<ScriptableObject> shipHullData = new List<ScriptableObject>();
-    public List<ScriptableObject> shipHeadData = new List<ScriptableObject>();
-    public List<ScriptableObject> shipBodyData = new List<ScriptableObject>();
-    public List<ScriptableObject> shipTailData = new List<ScriptableObject>();
-    public List<ScriptableObject> weaponData = new List<ScriptableObject>();
+    public Dictionary<string, List<ScriptableObject>> AllShipDataDic = new Dictionary<string, List<ScriptableObject>>();
+
+    public List<string> datanamelist = new List<string>()
+    {
+        {"shipHullData" },
+        {"shipHeadData" },
+        {"shipBodyData" },
+        {"shipTailData" },
+        {"weaponData" },
+        {"UtilityData" },
+    };
+
+
     ScriptableObject scriptableObjectData;
     int LoadCount = 1;
 
+    void AddTotalShipDataDic()
+    {
+        for (int i = 0; i < datanamelist.Count; i++)
+        {
+            AllShipDataDic.Add(datanamelist[i], new List<ScriptableObject>());
+        }
+    }
+
+    void AllShipDataDicClear()
+    {
+        AllShipDataDic.Clear();
+    }
+
     public void GetShipData()
     {
-        shipHullData.Clear();
-        shipHeadData.Clear();
-        shipBodyData.Clear();
-        shipTailData.Clear();
-        weaponData.Clear();
+        AllShipDataDicClear();
+        AddTotalShipDataDic();
+        Debug.Log(AllShipDataDic.Count);
 
-        bool whileEnd = false;
-        int whileCount = 0;
-        Debug.Log("級嬢身");
-        while (whileEnd == false)
+        for ( int i = 0;i < datanamelist.Count;i++)
         {
-            switch (whileCount)
+            scriptableObjectData = Resources.Load<ScriptableObject>($"Script/Data/{datanamelist[i]}/{datanamelist[i]} {LoadCount}");
+            if (scriptableObjectData == null)
             {
-                case 0:
-                    while (true)
-                    {
-                        scriptableObjectData = Resources.Load<ScriptableObject>($"Script/Data/ShipHullData/ShipHullData {LoadCount}");
-                        if (scriptableObjectData == null)
-                        {
-                            Debug.Log("ShipHullData 確");
+                Debug.Log($"{datanamelist[i]} 確");
 
-                            break;
-                        }
-                        shipHullData.Add(scriptableObjectData);
-                        Debug.Log(shipHullData[LoadCount - 1].name);
-                        LoadCount++;
-                    }
-                    LoadCount = 1;
-                    whileCount++;
-                    break;
-                case 1:
-                    while (true)
-                    {
-                        scriptableObjectData = Resources.Load<ScriptableObject>($"Script/Data/ShipHeadData/ShipHeadData {LoadCount}");
-                        if (scriptableObjectData == null)
-                        {
-                            Debug.Log("ShipHeadData 確");
-
-                            break;
-                        }
-                        shipHeadData.Add(scriptableObjectData);
-                        Debug.Log(shipHeadData[LoadCount - 1].name);
-                        LoadCount++;
-                    }
-                    LoadCount = 1;
-                    whileCount++;
-                    break;
-
-                case 2:
-                    while (true)
-                    {
-                        scriptableObjectData = Resources.Load<ScriptableObject>($"Script/Data/ShipBodyData/ShipBodyData {LoadCount}");
-                        if (scriptableObjectData == null)
-                        {
-                            Debug.Log("ShipBodyData 確");
-
-                            break;
-                        }
-                        shipBodyData.Add(scriptableObjectData);
-                        Debug.Log(shipBodyData[LoadCount - 1].name);
-                        LoadCount++;
-                    }
-                    LoadCount = 1;
-                    whileCount++;
-                    break;
-
-                case 3:
-                    while (true)
-                    {
-                        scriptableObjectData = Resources.Load<ScriptableObject>($"Script/Data/ShipTailData/ShipTailData {LoadCount}");
-                        if (scriptableObjectData == null)
-                        {
-                            Debug.Log("ShipTailData 確");
-
-                            break;
-                        }
-                        shipTailData.Add(scriptableObjectData);
-                        Debug.Log(shipTailData[LoadCount - 1].name);
-                        LoadCount++;
-                    }
-                    LoadCount = 1;
-                    whileCount++;
-                    break;
-
-                case 4:
-                    while (true)
-                    {
-                        scriptableObjectData = Resources.Load<ScriptableObject>($"Script/Data/weaponData/WeaponData {LoadCount}");
-                        if (scriptableObjectData == null)
-                        {
-                            Debug.Log("WeaponData 確");
-
-                            break;
-                        }
-                        weaponData.Add(scriptableObjectData);
-                        Debug.Log(weaponData[LoadCount - 1].name);
-                        LoadCount++;
-                    }
-                    LoadCount = 1;
-                    whileCount++;
-                    break;
-
-                case 5:
-                    whileEnd = true;
-                    break;
+                break;
             }
+            AllShipDataDic[datanamelist[i]].Add(scriptableObjectData);
+            LoadCount++;
         }
     }
 }
