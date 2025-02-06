@@ -17,3 +17,10 @@ MonoBehaviour:
   weapons:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  utility:
+  - {fileID: 0}
+  - {fileID: 0}
+  shipClass: 0
+  size: 0
+  cost: 0

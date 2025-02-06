@@ -9,6 +9,7 @@ public class ShipThruster : ScriptableObject
     public string thrusterName;
     public float thrusterSpeed;
     public int usePower;
+    public Grade grade;
     public ShipClass shipClass;
     public Size size;
     public int cost;

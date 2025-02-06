@@ -14,13 +14,14 @@ public class DataList : ScriptableObject
     ScriptableObject scriptableObjectData;
     int LoadCount = 1;
 
-    private void Awake()
+    public void GetShipData()
     {
-        GetShipHullData();
-    }
+        shipHullData.Clear();
+        shipHeadData.Clear();
+        shipBodyData.Clear();
+        shipTailData.Clear();
+        weaponData.Clear();
 
-    void GetShipHullData()
-    {
         bool whileEnd = false;
         int whileCount = 0;
         Debug.Log("µé¾î¿È");

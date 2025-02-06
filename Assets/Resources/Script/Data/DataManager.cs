@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Grade
+{
+    Normal, Military, Epic, HighTech
+}
+
 public enum Utility
 {
     Shields, Armor, Computer
@@ -25,7 +30,8 @@ public class DataManager : MonoBehaviour
     }
 
     public ShipBody tempShipData;
-    public DataList getNewDataList;
+    DataList getNewDataList;
+    public Weapon testweapon;
 
       private void Awake()
     {
@@ -41,9 +47,14 @@ public class DataManager : MonoBehaviour
         }
     }
 
+
+
     private void Start()
     {
         GetDataObject();
+        getNewDataList.GetShipData();
+        Debug.Log("sdfsdfsdf" + getNewDataList.weaponData[0].name);
+       //TestSetting();
     }
 
 
@@ -53,6 +64,15 @@ public class DataManager : MonoBehaviour
         Debug.Log(getNewDataList);
 
     }
+
+    //void TestSetting()
+    //{
+    //    ShipHead testhead = new ShipHead();
+    //    testweapon = new Weapon();
+
+    //    testhead.weapons.Add(testweapon);
+    //    Debug.Log(testhead.weapons[0].name);
+    //}    
 
 
 }

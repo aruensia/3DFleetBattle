@@ -10,6 +10,7 @@ public class Weapon : ScriptableObject
     public int attackRange;
     public float attackSpeed;
     public int usePower;
+    public Grade grade;
     public ShipClass shipClass;
     public Size size;
     public int cost;

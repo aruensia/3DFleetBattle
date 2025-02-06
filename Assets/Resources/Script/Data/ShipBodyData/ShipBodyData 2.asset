@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adad6ec6720ff6043876a5c61750a959, type: 3}
   m_Name: ShipBodyData 2
   m_EditorClassIdentifier: 
-  headName: "\uC120\uCCB4"
-  headHp: 10
-  weapons: []
+  bodyName: "\uBC29\uACF5\uD568"
+  bodyHp: 0
+  weapons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  reactor: {fileID: 0}
+  utility:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  shipClass: 1
+  size: 0
+  cost: 0

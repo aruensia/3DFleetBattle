@@ -17,3 +17,6 @@ MonoBehaviour:
   attackRange: 20
   attackSpeed: 5
   usePower: 5
+  shipClass: 1
+  size: 0
+  cost: 0

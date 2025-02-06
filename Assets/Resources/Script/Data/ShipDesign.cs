@@ -24,11 +24,12 @@ public class ShipDesign : MonoBehaviour
 
     private void Start()
     {
+        SetShipHullButton.onClick.AddListener(() => SetShipHull(DataManager.Instance.tempShipData));
     }
 
     public void onShipHullButton()
     {
-        SetShipHullButton.onClick.AddListener(() => SetShipHull(DataManager.Instance.tempShipData));
+       // SetShipHullButton.onClick.AddListener(() => SetShipHull(DataManager.Instance.tempShipData));
         if(SetShipHullButton == null)
         {
             Debug.Log("버튼이 null");
@@ -41,8 +42,12 @@ public class ShipDesign : MonoBehaviour
     
     void SetShipHull(ShipBody shipbody)
     {
-        this.shipbody = shipbody;
-        this.shipHp = this.shipHp + shipbody.bodyHp;
-        Debug.Log(this.shipbody.bodyName);
+        if (shipbody == null)
+        {
+            this.shipbody = shipbody;
+            this.shipHp = this.shipHp + shipbody.bodyHp;
+            Debug.Log(this.shipbody.bodyName + " 가 들어갔습니다.");
+        }
+        Debug.Log("이미 값이 있습니다.");
     }
 }
