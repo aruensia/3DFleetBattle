@@ -9,10 +9,10 @@ public class Ship
     public ShipBody shipBody;
     public ShipTail shipTail;
 
-    int hp;
-    int speed;
-    int usecap;
-    int reactor;
+    public int hp;
+    public int speed;
+    public int usecap;
+    public int cost;
 
     //함선의 총 체력을 구함
     //public int MaxHp () => shipHull.defaultHp + shiphead.headHp + shipBody.headHp + shipTail.headHp;
@@ -25,7 +25,7 @@ public class Ship
 
     public int GetMaxHp()
     {
-        hp = shipHull.defaultHp + shiphead.headHp + shipBody.bodyHp + shipTail.headHp;
+        hp = shipHull.defaultHp + shiphead.headHp + shipBody.bodyHp + shipTail.tailHp;
 
         return hp;
     }

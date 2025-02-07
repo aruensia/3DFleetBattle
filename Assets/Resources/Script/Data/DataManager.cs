@@ -29,10 +29,15 @@ public class DataManager : MonoBehaviour
         get { return instance; }
     }
 
-    public ShipBody tempShipData;
+    public ShipBody tempShipBodyData;
+    public ShipHead tempShipHeadData;
+    public ShipTail tempShipTailData;
+    public Weapon tempWeaponData;
+    public ShipReactor tempShipREactorData;
+    public ShipThruster tempShipThrusterData;
+
     DataList getNewDataList;
     public Weapon testweapon;
-    List<string> tempdatalist;
 
       private void Awake()
     {
@@ -48,32 +53,28 @@ public class DataManager : MonoBehaviour
         }
     }
 
-
-
     private void Start()
     {
         GetDataObject();
         getNewDataList.GetShipData();
-        Debug.Log(getNewDataList.AllShipDataDic["shipHullData", List<ScriptableObject>()].name);
+        //TestSetting();
     }
-
 
     void GetDataObject()
     {
         getNewDataList = Resources.Load<DataList>($"Script/Data/DataList") ;
-        tempdatalist = getNewDataList.datanamelist;
-        Debug.Log(getNewDataList);
-
     }
 
-    //void TestSetting()
-    //{
-    //    ShipHead testhead = new ShipHead();
-    //    testweapon = new Weapon();
+    void TestSetting()
+    {
+        foreach(var item in getNewDataList.AllShipDataDic)
+        {
+            Debug.Log($"[Key: {item.Key}] 데이터 계수 : {item.Value.Count}");
 
-    //    testhead.weapons.Add(testweapon);
-    //    Debug.Log(testhead.weapons[0].name);
-    //}    
-
-
+            foreach(var item2 in item.Value)
+            {
+                Debug.Log($"- {item2.name}");
+            }
+        }
+    }    
 }

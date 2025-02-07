@@ -15,8 +15,6 @@ public class ShipDesign : MonoBehaviour
     ShipBody shipbody;
     ShipTail shiptail;
 
-    int shipHp;
-
     [SerializeField] Button SetShipHullButton;
     [SerializeField] Button SetShipHeadButton;
     [SerializeField] Button SetShipBodyButton;
@@ -24,30 +22,69 @@ public class ShipDesign : MonoBehaviour
 
     private void Start()
     {
-        SetShipHullButton.onClick.AddListener(() => SetShipHull(DataManager.Instance.tempShipData));
+        SetShipBodyButton.onClick.AddListener(() => SetShipBody(DataManager.Instance.tempShipBodyData));
+        SetShipHeadButton.onClick.AddListener(() => SetShipHead(DataManager.Instance.tempShipHeadData));
+        SetShipTailButton.onClick.AddListener(() => SetShipTail(DataManager.Instance.tempShipTailData));
     }
 
-    public void onShipHullButton()
+    void SetShipHull(ShipHull shiphull)
     {
-       // SetShipHullButton.onClick.AddListener(() => SetShipHull(DataManager.Instance.tempShipData));
-        if(SetShipHullButton == null)
+        if (this.shiphull == null)
         {
-            Debug.Log("버튼이 null");
-        }
-        if(DataManager.Instance.tempShipData == null)
-        {
-           Debug.Log("얘가 없어요");
-        }
-    }
-    
-    void SetShipHull(ShipBody shipbody)
-    {
-        if (shipbody == null)
-        {
-            this.shipbody = shipbody;
-            this.shipHp = this.shipHp + shipbody.bodyHp;
+            this.shiphull = shiphull;
+
             Debug.Log(this.shipbody.bodyName + " 가 들어갔습니다.");
         }
-        Debug.Log("이미 값이 있습니다.");
+        else
+        {
+            Debug.Log("이미 값이 있습니다.");
+        }
     }
+
+
+    void SetShipBody(ShipBody shipbody)
+    {
+        if(this.shipbody == null)
+        {
+            this.shipbody = shipbody;
+            this.currentship.hp = this.currentship.hp + shipbody.bodyHp;
+            this.currentship.cost += shipbody.cost;
+            Debug.Log(this.shipbody.bodyName + " 가 들어갔습니다.");
+        }
+        else
+        {
+            Debug.Log("이미 값이 있습니다.");
+        }
+    }
+
+    void SetShipHead(ShipHead shiphead)
+    {
+        if (this.shiphead == null)
+        {
+            this.shiphead = shiphead;
+            this.currentship.hp += shiphead.headHp;
+            this.currentship.cost += shipbody.cost;
+            Debug.Log(this.shiphead.headName + " 가 들어갔습니다.");
+        }
+        else
+        {
+            Debug.Log("이미 값이 있습니다.");
+        }
+    }
+
+    void SetShipTail(ShipTail shiptail)
+    {
+        if (this.shiptail == null)
+        {
+            this.shiptail = shiptail;
+            this.currentship.hp += shiptail.tailHp;
+            this.currentship.cost += shipbody.cost;
+            Debug.Log(this.shiptail.tailName + " 가 들어갔습니다.");
+        }
+        else
+        {
+            Debug.Log("이미 값이 있습니다.");
+        }
+    }
+
 }

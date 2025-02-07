@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UtilityData", menuName = "Ship/UtilityData")]
 public class UtilityData : ScriptableObject
 {
-    public string headName;
+    public string utilityName;
     public int defence;
     public int shild;
     public Utility utility;

@@ -26,4 +26,16 @@ public class ShipHead : ScriptableObject
         return true;
     }
 
+    public bool AddUtility(UtilityData Utility)
+    {
+        if (size != Utility.size)
+        {
+            Debug.Log("사이즈가 달라 장착 안됌");
+            return false;
+        }
+
+        utility.Add(Utility);
+        Debug.Log(Utility.name + "이 장착이 됌");
+        return true;
+    }
 }

@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c35f2a22d32b4a44b8cdfa86dc74bc0, type: 3}
   m_Name: ShipTailData 1
   m_EditorClassIdentifier: 
-  headName: "\uC120\uBBF8"
+  tailName: 
   headHp: 5
   weapons: []
+  thruster: {fileID: 0}
+  utility:
+  - {fileID: 0}
+  - {fileID: 0}
+  shipClass: 0
+  size: 0
+  cost: 0

@@ -9,10 +9,10 @@ public class GetShipData : MonoBehaviour
 
     public void AddBodyDataButton()
     {
-            if (DataManager.Instance.tempShipData == null)
+            if (DataManager.Instance.tempShipBodyData == null)
             {
-                DataManager.Instance.tempShipData = shipbody;
-                Debug.Log(DataManager.Instance.tempShipData.name);
+                DataManager.Instance.tempShipBodyData = shipbody;
+                Debug.Log(DataManager.Instance.tempShipBodyData.name);
             } 
             else
             {
