@@ -1,29 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class ShipTest : MonoBehaviour
 {
-    int tempButtonNumber = 0;
+    public Image itemImage;
+    bool isOn = false;
 
-    List<Object> shiplist = new List<Object>();
 
-    public void GetButtonInt(int value)
+    private void Update()
     {
-        tempButtonNumber = value;
-        Debug.Log(tempButtonNumber);
+        if (isOn == true)
+        {
+            itemImage.rectTransform.position = Input.mousePosition;
+        }
     }
 
-    public void InitShipItem()
+    public void GetItemImage()
     {
-        
-    }
+        isOn = true;
+        transform.GetChild(0).gameObject.SetActive(true);
 
-    void CreateShipItemStatInfo()
-    {
-        
-        //transform.Translate
     }
-
 }
