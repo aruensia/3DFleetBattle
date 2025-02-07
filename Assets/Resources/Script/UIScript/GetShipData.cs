@@ -9,14 +9,13 @@ public class GetShipData : MonoBehaviour
 
     public void AddBodyDataButton()
     {
-            if (DataManager.Instance.tempShipBodyData == null)
+            if (DataManager.Instance.defaultShipPart == null)
             {
-                DataManager.Instance.tempShipBodyData = shipbody;
-                Debug.Log(DataManager.Instance.tempShipBodyData.name);
+                Debug.Log("널이야");
             } 
             else
             {
-                Debug.Log("널이야");
+                Debug.Log(DataManager.Instance.defaultShipPart.name);
             }
     }
 }

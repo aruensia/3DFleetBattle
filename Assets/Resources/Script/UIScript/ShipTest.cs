@@ -9,8 +9,6 @@ public class ShipTest : MonoBehaviour
 
     List<Object> shiplist = new List<Object>();
 
-
-
     public void GetButtonInt(int value)
     {
         tempButtonNumber = value;

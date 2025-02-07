@@ -3,39 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ShipHeadData", menuName = "Ship/ShipHeadData")]
-public class ShipHead : ScriptableObject
+public class ShipHead : DefaultShipPart
 {
-    public string headName;
-    public int headHp;
     public List<Weapon> weapons = new List<Weapon>();
     public List<UtilityData> utility = new List<UtilityData>();
-    public ShipClass shipClass;
-    public Size size;
-    public int cost;
-
-    public bool AddWeapon(Weapon weapon)
-    {
-        if (size != weapon.size)
-        {
-            Debug.Log("사이즈가 달라 장착 안됌");
-            return false;
-        }
-
-        weapons.Add(weapon);
-        Debug.Log(weapon + "이 장착이 됌");
-        return true;
-    }
-
-    public bool AddUtility(UtilityData Utility)
-    {
-        if (size != Utility.size)
-        {
-            Debug.Log("사이즈가 달라 장착 안됌");
-            return false;
-        }
-
-        utility.Add(Utility);
-        Debug.Log(Utility.name + "이 장착이 됌");
-        return true;
-    }
 }

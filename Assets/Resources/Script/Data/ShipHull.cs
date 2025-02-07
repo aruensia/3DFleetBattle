@@ -6,9 +6,8 @@ using UnityEngine;
 public class ShipHull : ScriptableObject
 {
     public string hullName;
-    public int defaultHp;
+    public int hulltHp;
     public ShipClass shipClass;
     public Size size;
     public int cost;
-
 }

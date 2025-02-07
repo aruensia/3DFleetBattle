@@ -9,22 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adad6ec6720ff6043876a5c61750a959, type: 3}
-  m_Name: ShipBodyData 2
+  m_Script: {fileID: 11500000, guid: d293f345a06151b4f9ca471f7cb5bfac, type: 3}
+  m_Name: ShipHeadData 2
   m_EditorClassIdentifier: 
-  partType: 2
-  defaultShipPartName: "\uD14C\uC2A4\uD2B8 \uC27D\uBC14\uB5142"
+  partType: 0
+  defaultShipPartName: 
   defaultShipPartHp: 0
   defaultShipPartCost: 0
   defaultShipPartSize: 0
   defaultShipPartClass: 0
   DefaultShipPartGrade: 0
-  weapons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  reactor: {fileID: 0}
-  utility:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  weapons: []
+  utility: []

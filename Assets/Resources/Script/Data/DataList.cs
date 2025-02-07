@@ -7,15 +7,6 @@ using UnityEngine.UIElements;
 [CreateAssetMenu(fileName = "DataList", menuName = "Ship/DataList")]
 public class DataList : ScriptableObject
 {
-    List<string> folders = new List<string>()
-    {
-        {"ShipHullData"},
-        {"ShipHeadData"},
-        {"ShipBodyData"},
-        {"ShipTailData"},
-        {"WeaponData"},
-        {"UtilityData"},
-    };
     public Dictionary<string, List<ScriptableObject>> AllShipDataDic = new Dictionary<string, List<ScriptableObject>>()
     {
         { "ShipHullData", new List<ScriptableObject>()},
@@ -36,20 +27,18 @@ public class DataList : ScriptableObject
     public void GetShipData()
     {
         int LoadCount = 1;
-        for ( int i = 0; i< AllShipDataDic.Count; i++ )
+        foreach ( var dic in AllShipDataDic )
         {
-            Debug.Log(folders[i]);
-            while (true)
+            while(true)
             {
-                //Debug.Log($"Script/Data/{folders[i]}/{folders[i]} {LoadCount}");
-                scriptableObjectData = Resources.Load<ScriptableObject>($"Script/Data/{folders[i]}/{folders[i]} {LoadCount}");
+                scriptableObjectData = Resources.Load<ScriptableObject>($"Script/Data/{dic.Key}/{dic.Key} {LoadCount}");
                 if (scriptableObjectData == null)
                 {
                     //데이터가 없을 경우 while문을 빠져나감.
-                    Debug.Log($"-------------------{folders[i]}의 로드 완료");
+                    Debug.Log($"-------------------{dic.Key}의 로드 완료. {dic.Key}의 데이터 갯수 : {dic.Value.Count}");
                     break;
                 }
-                AllShipDataDic[folders[i]].Add(scriptableObjectData);
+                dic.Value.Add(scriptableObjectData);
                 LoadCount++;
             }
             LoadCount = 1;

@@ -845,7 +845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99472d105cc5df34daf5a7b0e4852745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempShipData: {fileID: 0}
+  defaultShipPart: {fileID: 11400000, guid: 53aced4cff903fe4c90e02ccb9ffdda7, type: 2}
   testweapon: {fileID: 0}
 --- !u!4 &1245806823 stripped
 Transform:
@@ -982,7 +982,7 @@ GameObject:
   - component: {fileID: 1508905560}
   - component: {fileID: 1508905559}
   m_Layer: 0
-  m_Name: SetShipHullBtn
+  m_Name: SetShipPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1147,10 +1147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199102dbda78ad74780ca1b87bff3946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SetShipHullButton: {fileID: 1508905559}
-  SetShipHeadButton: {fileID: 0}
-  SetShipBodyButton: {fileID: 0}
-  SetShipTailButton: {fileID: 0}
+  SetShipPartButton: {fileID: 1508905559}
 --- !u!1 &1910385931
 GameObject:
   m_ObjectHideFlags: 0

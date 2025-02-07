@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PartType
+{
+    Hull, Head, Body, Tail, Weapon, Utility, Reactor, Thruster
+}
+
 public enum Grade
 {
     Normal, Military, Epic, HighTech
@@ -29,12 +34,7 @@ public class DataManager : MonoBehaviour
         get { return instance; }
     }
 
-    public ShipBody tempShipBodyData;
-    public ShipHead tempShipHeadData;
-    public ShipTail tempShipTailData;
-    public Weapon tempWeaponData;
-    public ShipReactor tempShipREactorData;
-    public ShipThruster tempShipThrusterData;
+    public DefaultShipPart defaultShipPart;
 
     DataList getNewDataList;
     public Weapon testweapon;
