@@ -9,13 +9,6 @@ public class ShipDesign : MonoBehaviour
     //유저가 생성할 함선에 대해서 뉴 할당.
     Ship currentship = new Ship();
 
-    [SerializeField] Button SetShipPartButton;
-
-
-    private void Start()
-    {
-        SetShipPartButton.onClick.AddListener(() => SetShipPart(DataManager.Instance.defaultShipPart));
-    }
 
     void SetShipHull(ShipHull shiphull)
     {

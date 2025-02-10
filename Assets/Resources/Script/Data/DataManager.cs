@@ -9,7 +9,7 @@ public enum PartType
 
 public enum Grade
 {
-    Normal, Military, Epic, HighTech
+    Normal, Military, Epic, HighTech, end
 }
 
 public enum Utility
@@ -36,8 +36,9 @@ public class DataManager : MonoBehaviour
 
     public DefaultShipPart defaultShipPart;
 
-    DataList getNewDataList;
+    public DataList getNewDataList;
     public Weapon testweapon;
+    ShopMain shopMain;
 
       private void Awake()
     {
@@ -55,8 +56,10 @@ public class DataManager : MonoBehaviour
 
     private void Start()
     {
+        shopMain = GetComponent<ShopMain>();
         GetDataObject();
         getNewDataList.GetShipData();
+        shopMain.GetForManagerShipData();
         //TestSetting();
     }
 
