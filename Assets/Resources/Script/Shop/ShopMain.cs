@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class ShopMain : MonoBehaviour
     //한 번의 전투가 끝날 때마다 아이템의 목록을 새로고침한다. 유저가 특정 상품을 구매할 경우, 솔드아웃이 되어, 더이상 목록에 상품이 생성되지 않는다.
 
     Dictionary<string, List<ScriptableObject>> sellListShipData = new Dictionary<string, List<ScriptableObject>>();
+    List<ScriptableObject> shopItemList = new List<ScriptableObject>();
 
     [SerializeField] TMP_Dropdown dropdown;
     List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
@@ -29,7 +31,6 @@ public class ShopMain : MonoBehaviour
     {
         tempListInt = index;
         ShowShopItem(index);
-        Debug.Log(tempListInt);
     }
 
     public void GetForManagerShipData()
@@ -59,43 +60,60 @@ public class ShopMain : MonoBehaviour
         }
     }
 
+    public void LoadShopData()
+    {
+        for (int i = 0; i < optionsList.Count; i++)
+        {
+            for (int j = 0; j < sellListShipData[optionsList[i].text].Count; j++)
+            {
+                shopItemList.Add(sellListShipData[optionsList[i].text][j]);
+            }
+        }
+
+        foreach( var item in  shopItemList )
+        {
+            Debug.Log(item.name);
+        }
+    }
+
+
     void ShowShopItem(int itemindex)
     {
         int itemGradeRange = Random.Range(1, (int)Grade.end);
         int itemItemRange = Random.Range(1, 101);
 
-        List<int> items = new List<int> { 0, 1, 2, 3, 4, 5 };
-
-        
-
-
-
         switch (tempListInt)
         {
             case 0:
+                Debug.Log(shopItemList[itemindex]);
                 Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
                 break;
 
 
             case 1:
+                Debug.Log(shopItemList[itemindex]);
                 Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
                 break;
 
 
             case 2:
+                Debug.Log(shopItemList[itemindex]);
                 Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
                 break;
 
 
             case 3:
+                Debug.Log(shopItemList[itemindex]);
                 Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
                 break;
 
             case 4:
+                Debug.Log(shopItemList[itemindex]);
                 Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
                 break;
 
             case 5:
+                Debug.Log(shopItemList[itemindex]);
                 Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
                 break;
 
