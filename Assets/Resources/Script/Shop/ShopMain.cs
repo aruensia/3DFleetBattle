@@ -108,6 +108,8 @@ public class ShopMain : MonoBehaviour
         {
             itemBuyCheck[i] = true;
             shopItemPrefab = GameObject.Instantiate(shopItemPrefab, pos.transform.position, Quaternion.identity);
+            //shopItemPrefab = GetComponent<List<ScriptableObject>>();
+
         }
     }
 
