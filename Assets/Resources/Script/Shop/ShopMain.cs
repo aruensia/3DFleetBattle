@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class ShopMain : MonoBehaviour
 {
@@ -13,24 +14,22 @@ public class ShopMain : MonoBehaviour
 
     Dictionary<string, List<ScriptableObject>> sellListShipData = new Dictionary<string, List<ScriptableObject>>();
 
-    //List<ScriptableObject> shopShipHullDataList = new List<ScriptableObject>();
-    //List<ScriptableObject> shopShipHeadDataList = new List<ScriptableObject>();
-    //List<ScriptableObject> shopShipBodyDataList = new List<ScriptableObject>();
-    //List<ScriptableObject> shopShipTailDataList = new List<ScriptableObject>();
-    //List<ScriptableObject> shopWeaponDataList = new List<ScriptableObject>();
-    //List<ScriptableObject> shopUtilityDataList = new List<ScriptableObject>();
-
     List<ScriptableObject> shopItemList = new List<ScriptableObject>();
     List<List<ScriptableObject>> totalshopItemList = new List<List<ScriptableObject>>();
     List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
+    List<List<ScriptableObject>> tempTotalShopItem;
 
     [SerializeField] TMP_Dropdown dropdown;
     [SerializeField] Button TempSellectShipPartMenuButton;
 
-    ScriptableObject tempDataObject;
+    public GameObject shopItemPrefab;
+    RectTransform pos;
 
     bool isScenesOn = false;
-    List<List<ScriptableObject>> tempTotalShopItem;
+    bool[] itemBuyCheck;
+
+    [SerializeField] int shopListCount;
+
 
     private void Start()
     {
@@ -39,7 +38,7 @@ public class ShopMain : MonoBehaviour
         //SceneManager.sceneLoaded += LoadShopData;
     }
 
-    public void OnDropdownEvent(int index)
+    public void OnDropdownEvent(int index) //유저가 선택한 드랍목록의 int값을 인자로 넘김
     {
         ShowShopItem(tempTotalShopItem[index]);
     }
@@ -75,22 +74,21 @@ public class ShopMain : MonoBehaviour
     {
         for (int i = 0; i < optionsList.Count; i++)
         {
-            for (int j = 0; j < sellListShipData[optionsList[i].text].Count; j++)
+            if(sellListShipData.ContainsKey(optionsList[i].text)) //만일 키가 있을 경우 List에 상품 목록을 넣고 없을 경우 오류를 내놓음.
             {
-                shopItemList.Add(sellListShipData[optionsList[i].text][j]);
+                for (int j = 0; j < sellListShipData[optionsList[i].text].Count; j++)
+                {
+                    shopItemList.Add(sellListShipData[optionsList[i].text][j]);
+                }
             }
+            else
+            {
+                Debug.LogWarning($"sellListShipData의 키가 없습니다.");
+            }
+
             totalshopItemList.Add(shopItemList);
             shopItemList = new List<ScriptableObject>();
         }
-
-        foreach (var item in totalshopItemList)
-        {
-            for( int i = 0; i < item.Count; i ++)
-            {
-                Debug.Log(item[i].name);
-            }
-        }
-
         tempTotalShopItem = totalshopItemList;
     }
 
@@ -100,12 +98,17 @@ public class ShopMain : MonoBehaviour
         //부품 목록을 누를 경우, 랜덤값을 통해 
 
         int itemGradeRange = Random.Range(1, (int)Grade.end);
-        int itemItemRange = Random.Range(1, 101);
-
+        int itemItemRange = Random.Range(1, itemvalue.Count);
+        itemBuyCheck = new bool[shopListCount];
+        pos.transform.position = new Vector3(50, 480, 0);
+        shopItemPrefab.transform.position = pos.position;
         Debug.Log(itemvalue[0].name);
 
- 
-        
+        for ( int i = 0; i < shopListCount; i++)
+        {
+            itemBuyCheck[i] = true;
+            shopItemPrefab = GameObject.Instantiate(shopItemPrefab, pos.transform.position, Quaternion.identity);
+        }
     }
 
     private void OnDestroy()

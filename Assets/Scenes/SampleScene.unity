@@ -1360,6 +1360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropdown: {fileID: 2034603764}
   TempSellectShipPartMenuButton: {fileID: 997076670}
+  shopListCount: 5
 --- !u!1 &1185030671
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,7 +1995,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 523650382}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.81333375
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
