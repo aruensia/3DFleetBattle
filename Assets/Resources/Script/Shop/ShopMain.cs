@@ -100,17 +100,10 @@ public class ShopMain : MonoBehaviour
         int itemGradeRange = Random.Range(1, (int)Grade.end);
         int itemItemRange = Random.Range(1, itemvalue.Count);
         itemBuyCheck = new bool[shopListCount];
-        pos.transform.position = new Vector3(50, 480, 0);
-        shopItemPrefab.transform.position = pos.position;
+
         Debug.Log(itemvalue[0].name);
 
-        for ( int i = 0; i < shopListCount; i++)
-        {
-            itemBuyCheck[i] = true;
-            shopItemPrefab = GameObject.Instantiate(shopItemPrefab, pos.transform.position, Quaternion.identity);
-            //shopItemPrefab = GetComponent<List<ScriptableObject>>();
 
-        }
     }
 
     private void OnDestroy()
