@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ShopMain : MonoBehaviour
@@ -12,33 +13,35 @@ public class ShopMain : MonoBehaviour
 
     Dictionary<string, List<ScriptableObject>> sellListShipData = new Dictionary<string, List<ScriptableObject>>();
 
-    List<ScriptableObject> shopShipHullDataList = new List<ScriptableObject>();
-    List<ScriptableObject> shopShipHeadDataList = new List<ScriptableObject>();
-    List<ScriptableObject> shopShipBodyDataList = new List<ScriptableObject>();
-    List<ScriptableObject> shopShipTailDataList = new List<ScriptableObject>();
-    List<ScriptableObject> shopWeaponDataList = new List<ScriptableObject>();
-    List<ScriptableObject> shopUtilityDataList = new List<ScriptableObject>();
+    //List<ScriptableObject> shopShipHullDataList = new List<ScriptableObject>();
+    //List<ScriptableObject> shopShipHeadDataList = new List<ScriptableObject>();
+    //List<ScriptableObject> shopShipBodyDataList = new List<ScriptableObject>();
+    //List<ScriptableObject> shopShipTailDataList = new List<ScriptableObject>();
+    //List<ScriptableObject> shopWeaponDataList = new List<ScriptableObject>();
+    //List<ScriptableObject> shopUtilityDataList = new List<ScriptableObject>();
+
+    List<ScriptableObject> shopItemList = new List<ScriptableObject>();
+    List<List<ScriptableObject>> totalshopItemList = new List<List<ScriptableObject>>();
+    List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
 
     [SerializeField] TMP_Dropdown dropdown;
-    List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
     [SerializeField] Button TempSellectShipPartMenuButton;
 
     ScriptableObject tempDataObject;
 
     bool isScenesOn = false;
-
-    int tempListInt;
+    List<List<ScriptableObject>> tempTotalShopItem;
 
     private void Start()
     {
         TempSellectShipPartMenuButton.onClick.AddListener(() => DropdownDataInit());
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
+        //SceneManager.sceneLoaded += LoadShopData;
     }
 
     public void OnDropdownEvent(int index)
     {
-        tempListInt = index;
-        ShowShopItem(index);
+        ShowShopItem(tempTotalShopItem[index]);
     }
 
     public void GetForManagerShipData()
@@ -53,7 +56,7 @@ public class ShopMain : MonoBehaviour
         //씬 전환 기능이 완료될 경우 사라지는 함수.
     }
 
-    void DropdownDataInit()
+    void DropdownDataInit() //드롭다운 목록에 들어갈 값의 List를 생성함
     {
         if ( isScenesOn == true)
         {
@@ -70,82 +73,44 @@ public class ShopMain : MonoBehaviour
 
     public void LoadShopData()
     {
-        shopShipHullDataList = sellListShipData["ShipHullData"];
-        shopShipHeadDataList = sellListShipData["ShipHeadData"];
-        shopShipBodyDataList = sellListShipData["ShipBodyData"];
-        shopShipTailDataList = sellListShipData["ShipTailData"];
-        shopWeaponDataList = sellListShipData["WeaponData"];
-        shopUtilityDataList = sellListShipData["UtilityData"];
+        for (int i = 0; i < optionsList.Count; i++)
+        {
+            for (int j = 0; j < sellListShipData[optionsList[i].text].Count; j++)
+            {
+                shopItemList.Add(sellListShipData[optionsList[i].text][j]);
+            }
+            totalshopItemList.Add(shopItemList);
+            shopItemList = new List<ScriptableObject>();
+        }
 
-        //for (int i = 0; i < optionsList.Count; i++)
-        //{
-        //    for (int j = 0; j < sellListShipData[optionsList[i].text].Count; j++)
-        //    {
-        //        shopItemList.Add(sellListShipData[optionsList[i].text]);
-        //    }
-        //}
+        foreach (var item in totalshopItemList)
+        {
+            for( int i = 0; i < item.Count; i ++)
+            {
+                Debug.Log(item[i].name);
+            }
+        }
+
+        tempTotalShopItem = totalshopItemList;
     }
 
 
-    void ShowShopItem(int itemindex)
+    void ShowShopItem(List<ScriptableObject> itemvalue)
     {
         //부품 목록을 누를 경우, 랜덤값을 통해 
 
         int itemGradeRange = Random.Range(1, (int)Grade.end);
         int itemItemRange = Random.Range(1, 101);
 
-        switch (tempListInt)
-        {
-            case 0:
-                if (itemItemRange < 85)
-                {
+        Debug.Log(itemvalue[0].name);
 
-                }
-                else if(itemItemRange < 95)
-                {
-
-                }
-                else if(itemItemRange < 99)
-                {
-
-                }
-
-
-                Debug.Log($"shopShipHullDataList는 {shopShipHullDataList.Count}의 개수를 가지고 있으며 시작 값은 {shopShipHullDataList[0].name} 입니다.");
-                Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
-                break;
-
-
-            case 1:
-                Debug.Log($"shopShipHullDataList는 {shopShipHeadDataList.Count}의 개수를 가지고 있으며 시작 값은 {shopShipHeadDataList[0].name} 입니다.");
-                Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
-                break;
-
-
-            case 2:
-                Debug.Log($"shopShipHullDataList는 {shopShipBodyDataList.Count}의 개수를 가지고 있으며 시작 값은 {shopShipBodyDataList[0].name} 입니다.");
-                Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
-                break;
-
-
-            case 3:
-                Debug.Log($"shopShipHullDataList는 {shopShipTailDataList.Count}의 개수를 가지고 있으며 시작 값은 {shopShipTailDataList[0].name} 입니다.");
-                Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
-                break;
-
-            case 4:
-                Debug.Log($"shopShipHullDataList는 {shopWeaponDataList.Count}의 개수를 가지고 있으며 시작 값은 {shopWeaponDataList[0].name} 입니다.");
-                Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
-                break;
-
-            case 5:
-                Debug.Log($"shopShipHullDataList는 {shopUtilityDataList.Count}의 개수를 가지고 있으며 시작 값은 {shopUtilityDataList[0].name} 입니다.");
-                Debug.Log($"아이템 등급은 {itemGradeRange}, 아이템 범위는 {itemItemRange}입니다.");
-                break;
-
-        }
+ 
+        
     }
 
-
+    private void OnDestroy()
+    {
+        //SceneManager.sceneLoaded -= LoadShopData;
+    }
 
 }

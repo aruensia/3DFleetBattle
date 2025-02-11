@@ -1082,7 +1082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &963194225
@@ -1994,7 +1994,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 523650382}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.81333375
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2965,12 +2965,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7013101076117372880, guid: 65af08e4bd0c0e345827987d8c8f5bfd, type: 3}
+      propertyPath: m_text
+      value: ShipPartName
+      objectReference: {fileID: 0}
     - target: {fileID: 8257967702260976436, guid: 65af08e4bd0c0e345827987d8c8f5bfd, type: 3}
       propertyPath: m_Name
       value: ShopInfo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8835120607796676716, guid: 65af08e4bd0c0e345827987d8c8f5bfd, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65af08e4bd0c0e345827987d8c8f5bfd, type: 3}
