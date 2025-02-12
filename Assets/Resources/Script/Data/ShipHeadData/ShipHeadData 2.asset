@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d293f345a06151b4f9ca471f7cb5bfac, type: 3}
   m_Name: ShipHeadData 2
   m_EditorClassIdentifier: 
-  partType: 0
+  partType: 1
   defaultShipPartName: 
   defaultShipPartHp: 0
   defaultShipPartCost: 0

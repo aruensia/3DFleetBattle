@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class ShopMain : MonoBehaviour
 {
@@ -14,18 +12,21 @@ public class ShopMain : MonoBehaviour
 
     Dictionary<string, List<ScriptableObject>> sellListShipData = new Dictionary<string, List<ScriptableObject>>();
 
-    List<ScriptableObject> shopItemList = new List<ScriptableObject>();
-    List<List<ScriptableObject>> totalshopItemList = new List<List<ScriptableObject>>();
-    List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>();
+    List<ScriptableObject> tempshopItemList = new List<ScriptableObject>(); // 상점에서 파는 아이템 목록
+    List<List<ScriptableObject>> totalshopItemList = new List<List<ScriptableObject>>(); // sellListShipData에서 받은 딕셔너리를 상점에서 사용하기 위해 저장한 리스트.
+    List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>(); //드롭다운 목록에 사용하는 키를 저장할 리스트
     List<List<ScriptableObject>> tempTotalShopItem;
 
     [SerializeField] TMP_Dropdown dropdown;
     [SerializeField] Button TempSellectShipPartMenuButton;
 
+
+    public Text shipPartName;
     public GameObject shopItemPrefab;
+    Transform tempcanvas;
     RectTransform pos;
 
-    bool isScenesOn = false;
+    bool isScenesOn = true;
     bool[] itemBuyCheck;
 
     [SerializeField] int shopListCount;
@@ -33,6 +34,7 @@ public class ShopMain : MonoBehaviour
 
     private void Start()
     {
+        tempcanvas = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Transform>();
         TempSellectShipPartMenuButton.onClick.AddListener(() => DropdownDataInit());
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
         //SceneManager.sceneLoaded += LoadShopData;
@@ -78,7 +80,7 @@ public class ShopMain : MonoBehaviour
             {
                 for (int j = 0; j < sellListShipData[optionsList[i].text].Count; j++)
                 {
-                    shopItemList.Add(sellListShipData[optionsList[i].text][j]);
+                    tempshopItemList.Add(sellListShipData[optionsList[i].text][j]);
                 }
             }
             else
@@ -86,8 +88,8 @@ public class ShopMain : MonoBehaviour
                 Debug.LogWarning($"sellListShipData의 키가 없습니다.");
             }
 
-            totalshopItemList.Add(shopItemList);
-            shopItemList = new List<ScriptableObject>();
+            totalshopItemList.Add(tempshopItemList);
+            tempshopItemList = new List<ScriptableObject>();
         }
         tempTotalShopItem = totalshopItemList;
     }
@@ -99,11 +101,50 @@ public class ShopMain : MonoBehaviour
 
         int itemGradeRange = Random.Range(1, (int)Grade.end);
         int itemItemRange = Random.Range(1, itemvalue.Count);
+        List<ScriptableObject> sellItemList = new List<ScriptableObject>();
+        string[] tempitemname = new string[itemvalue.Count];
         itemBuyCheck = new bool[shopListCount];
 
-        Debug.Log(itemvalue[0].name);
+        sellItemList.Clear();
+        Text shipPartName;
+        int count = 0;
+        foreach ( var item in itemvalue)
+        {
+            string typename = item.GetType().FullName;
+            
+            if (typename == "ShipBody")
+            {
+                ShipBody tempitem = item as ShipBody;
+                sellItemList.Add(tempitem);
+                if(tempitem.defaultShipPartName == null)
+                {
+                    Debug.Log("tempitem.defaultShipPartName의 값이 비어있음");
+                }
+                else
+                {
+                    Debug.Log($"tempitemname의 카운트는 : {count}, 이름은 : {tempitem.defaultShipPartName}");
+                    tempitemname[count] = tempitem.defaultShipPartName;
+                    count++;
+                }
+            }
+        }
 
+        for (int i = 0; i < itemvalue.Count; i++)
+        {
+            var a = Instantiate(shopItemPrefab, tempcanvas);
 
+            if(itemvalue[i] == null)
+            {
+                Debug.Log($"{itemvalue}에 i가 없어요");
+            }
+            else
+            {
+                shipPartName = a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>();
+                shipPartName.text = tempitemname[i];
+                Debug.Log($"ShipBody의 부품 이름은 {tempitemname[i]}");
+            }
+            a.transform.Translate(i * 180, -20, 0);
+        }
     }
 
     private void OnDestroy()
@@ -111,4 +152,4 @@ public class ShopMain : MonoBehaviour
         //SceneManager.sceneLoaded -= LoadShopData;
     }
 
-}
+}   
