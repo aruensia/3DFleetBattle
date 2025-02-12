@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ShipReactorData", menuName = "Ship/ShipReactorData")]
-public class ShipReactor : ScriptableObject
+public class ShipReactor : DefaultShipPart
 {
     public string reactorName;
     public int reactorPower;
-    public Grade grade;
-    public ShipClass shipClass;
-    public Size size;
-    public int cost;
 }

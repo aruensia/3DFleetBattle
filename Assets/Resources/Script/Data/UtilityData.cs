@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "UtilityData", menuName = "Ship/UtilityData")]
-public class UtilityData : ScriptableObject
+public class UtilityData : DefaultShipPart
 {
     public string utilityName;
     public int defence;
     public int shild;
     public Utility utility;
-    public ShipClass shipClass;
-    public Size size;
-    public int cost;
+
 }

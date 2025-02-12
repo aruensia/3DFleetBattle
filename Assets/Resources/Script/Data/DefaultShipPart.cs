@@ -7,7 +7,7 @@ public class DefaultShipPart : ScriptableObject
 {
     public PartType partType;
     public string defaultShipPartName;
-    public int defaultShipPartHp;
+    public int defaultShipPartArmor;
     public int defaultShipPartCost;
     public Size defaultShipPartSize;
     public ShipClass defaultShipPartClass;

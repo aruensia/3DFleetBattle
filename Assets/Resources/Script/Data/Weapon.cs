@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WeaponData", menuName = "Ship/WeaponData")]
-public class Weapon : ScriptableObject
+public class Weapon : DefaultShipPart
 {
     public string weaponName;
     public int damage;
     public int attackRange;
     public float attackSpeed;
     public int usePower;
-    public Grade grade;
-    public ShipClass shipClass;
-    public Size size;
-    public int cost;
 }
