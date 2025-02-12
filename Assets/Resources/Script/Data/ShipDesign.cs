@@ -33,7 +33,7 @@ public class ShipDesign : MonoBehaviour
                 if (this.currentship.shiphead == null)
                 {
                     this.currentship.shiphead = (ShipHead)tempShipPart;
-                    this.currentship.hp += tempShipPart.defaultShipPartHp;
+                    this.currentship.hp += tempShipPart.defaultShipPartArmor;
                     this.currentship.cost += tempShipPart.defaultShipPartCost;
                     Debug.Log(this.currentship.shiphead.defaultShipPartName + " 가 들어갔습니다.");
                 }
@@ -47,7 +47,7 @@ public class ShipDesign : MonoBehaviour
                 if (this.currentship.shipBody == null)
                 {
                     this.currentship.shipBody = (ShipBody)tempShipPart;
-                    this.currentship.hp += tempShipPart.defaultShipPartHp;
+                    this.currentship.hp += tempShipPart.defaultShipPartArmor;
                     this.currentship.cost += tempShipPart.defaultShipPartCost;
                     Debug.Log(this.currentship.shipBody.defaultShipPartName + " 가 들어갔습니다.");
                 }
@@ -61,7 +61,7 @@ public class ShipDesign : MonoBehaviour
                 if (this.currentship.shipTail == null)
                 {
                     this.currentship.shipBody = (ShipBody)tempShipPart;
-                    this.currentship.hp += tempShipPart.defaultShipPartHp;
+                    this.currentship.hp += tempShipPart.defaultShipPartArmor;
                     this.currentship.cost += tempShipPart.defaultShipPartCost;
                     Debug.Log(this.currentship.shipTail.defaultShipPartName + " 가 들어갔습니다.");
                 }
