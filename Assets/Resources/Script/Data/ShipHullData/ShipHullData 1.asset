@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: ShipHullData 1
   m_EditorClassIdentifier: 
   partType: 0
-  defaultShipPartName: "\uD638\uC704\uD568 \uBAB8\uCCB4"
+  defaultShipPartName: "\uCD08\uACC4\uD568"
   defaultShipPartArmor: 0
   defaultShipPartCost: 0
   defaultShipPartSize: 0
-  defaultShipPartClass: 2
+  defaultShipPartClass: 1
   DefaultShipPartGrade: 0
-  hullName: 
+  hullName: "\uCD08\uACC4\uD568"
   hulltHp: 0
-  shipClass: 2
+  shipClass: 1
   size: 0
   cost: 0

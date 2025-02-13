@@ -25,14 +25,14 @@ public class ShopMain : MonoBehaviour
     Button TempSelctShipHullButton;
 
 
-    List<ShipHull> shopShiphulls = new List<ShipHull>();
-    List<ShipHead> shopShipHeads = new List<ShipHead>();
-    List<ShipBody> shopShipBodys = new List<ShipBody>();
-    List<ShipTail> shopShipTails = new List<ShipTail>();
-    List<Weapon> shopShipWeapons = new List<Weapon>();
-    List<UtilityData> shopShipUtilitys = new List<UtilityData>();
-    List<ShipThruster> shopShipThrusters = new List<ShipThruster>();
-    List<ShipReactor> shopShipReactors = new List<ShipReactor>();
+    List<DefaultShipPart> currentsShopShiphulls = new List<DefaultShipPart>();
+    //List<ShipHead> shopShipHeads = new List<ShipHead>();
+    //List<ShipBody> shopShipBodys = new List<ShipBody>();
+    //List<ShipTail> shopShipTails = new List<ShipTail>();
+    //List<Weapon> shopShipWeapons = new List<Weapon>();
+    //List<UtilityData> shopShipUtilitys = new List<UtilityData>();
+    //List<ShipThruster> shopShipThrusters = new List<ShipThruster>();
+    //List<ShipReactor> shopShipReactors = new List<ShipReactor>();
 
 
     public Text shipPartName;
@@ -151,143 +151,27 @@ public class ShopMain : MonoBehaviour
         int itemGradeRange = Random.Range(1, (int)Grade.end);
         string[] tempitemname = new string[itemvalue.Count];
         itemBuyCheck = new bool[shopListCount];
-
+        currentsShopShiphulls.Clear();
         sellItemList.Clear();
         Text shipPartName;
         int count = 0;
         foreach ( var item in itemvalue)
         {
-            string typename = item.GetType().FullName;
-            
-            switch(typename)
+            DefaultShipPart tempdata = item as DefaultShipPart;
+            currentsShopShiphulls.Add(tempdata);
+            sellItemList.Add(tempdata);
+
+            Debug.Log("--s---ss--" + tempdata.defaultShipPartName);
+
+            if (tempdata.defaultShipPartName == null)
             {
-                case "ShipHead":
-                    ShipHead temphead = item as ShipHead;
-                    shopShipHeads.Add(temphead);
-                    sellItemList.Add(temphead);
-
-                    if (temphead.defaultShipPartName == null)
-                    {
-                        Debug.Log("tempitem.defaultShipPartName의 값이 비어있음");
-                    }
-                    else
-                    {
-                        tempitemname[count] = temphead.defaultShipPartName;
-                        count++;
-                    }
-                    break;
-
-                case "ShipBody":
-                    ShipBody tempbody = item as ShipBody;
-                    shopShipBodys.Add(tempbody);
-                    sellItemList.Add(tempbody);
-
-                    if (tempbody.defaultShipPartName == null)
-                    {
-                        Debug.Log("tempitem.defaultShipPartName의 값이 비어있음");
-                    }
-                    else
-                    {
-                        tempitemname[count] = tempbody.defaultShipPartName;
-                        count++;
-                    }
-                    break;
-
-                case "ShipTail":
-                    ShipTail temptail = item as ShipTail;
-                    shopShipTails.Add(temptail);
-                    sellItemList.Add(temptail);
-
-                    if (temptail.defaultShipPartName == null)
-                    {
-                        Debug.Log("tempitem.defaultShipPartName의 값이 비어있음");
-                    }
-                    else
-                    {
-                        tempitemname[count] = temptail.defaultShipPartName;
-                        count++;
-                    }
-                    break;
-
-                case "ShipHull":
-                    ShipHull temphull = item as ShipHull;
-                    shopShiphulls.Add(temphull);
-                    sellItemList.Add(temphull);
-
-                    if (temphull.hullName == null)
-                    {
-                        Debug.Log("tempitem.hullName 값이 비어있음");
-                    }
-                    else
-                    {
-                        tempitemname[count] = temphull.hullName;
-                        count++;
-                    }
-                    break;
-
-                case "Weapon":
-                    Weapon tempweapon = item as Weapon;
-                    shopShipWeapons.Add(tempweapon);
-                    sellItemList.Add(tempweapon);
-
-                    if (tempweapon.defaultShipPartName == null)
-                    {
-                        Debug.Log("tempitem.weaponName 값이 비어있음");
-                    }
-                    else
-                    {
-                        tempitemname[count] = tempweapon.defaultShipPartName;
-                        count++;
-                    }
-                    break;
-
-                case "UtilityData":
-                    UtilityData tempUtility = item as UtilityData;
-                    shopShipUtilitys.Add(tempUtility);
-                    sellItemList.Add(tempUtility);
-
-                    if (tempUtility.utilityName == null)
-                    {
-                        Debug.Log("tempitem.utilityName 값이 비어있음");
-                    }
-                    else
-                    {
-                        tempitemname[count] = tempUtility.utilityName;
-                        count++;
-                    }
-                    break;
-
-                case "ShipThruster":
-                    ShipThruster tempThruster = item as ShipThruster;
-                    shopShipThrusters.Add(tempThruster);
-                    sellItemList.Add(tempThruster);
-
-                    if (tempThruster.thrusterName == null)
-                    {
-                        Debug.Log("tempitem.utilityName 값이 비어있음");
-                    }
-                    else
-                    {
-                        tempitemname[count] = tempThruster.thrusterName;
-                        count++;
-                    }
-                    break;
-
-                case "ShipReactor":
-                    ShipReactor tempReactor = item as ShipReactor;
-                    shopShipReactors.Add(tempReactor);
-                    sellItemList.Add(tempReactor);
-
-                    if (tempReactor.reactorName == null)
-                    {
-                        Debug.Log("tempitem.utilityName 값이 비어있음");
-                    }
-                    else
-                    {
-                        tempitemname[count] = tempReactor.reactorName;
-                        count++;
-                    }
-                    break;
+                Debug.Log("tempitem.defaultShipPartName의 값이 비어있음");
+                Debug.Log($"카운트값은 : {count}");
+            }
+            else
+            {
+                tempitemname[count] = tempdata.defaultShipPartName;
+                count++;
             }
         }
 
@@ -310,6 +194,9 @@ public class ShopMain : MonoBehaviour
             }
             a.transform.Translate(i * 180, -20, 0);
         }
+
+        Debug.Log($"--------------{currentsShopShiphulls.Count}");
+        Debug.Log($"--------------{currentsShopShiphulls[0].name}");
     }
 
     public void SelectShopItem(int value)
@@ -318,8 +205,67 @@ public class ShopMain : MonoBehaviour
         switch(type)
         {
             case "ShipHull":
-                Debug.Log($"{shopShiphulls[value].hullName}");
-                tempSelectShopItem = shopShiphulls[value];
+
+                ShipHull shipHull = currentsShopShiphulls[value] as ShipHull;
+
+                Debug.Log($"{shipHull.hullName}");
+                tempSelectShopItem = shipHull;
+                break;
+
+            case "ShipHead":
+
+                ShipHead shipHead = currentsShopShiphulls[value] as ShipHead;
+
+                Debug.Log($"{shipHead.defaultShipPartName}");
+                tempSelectShopItem = shipHead;
+                break;
+
+            case "ShipBody":
+
+                ShipBody shipBody = currentsShopShiphulls[value] as ShipBody;
+
+                Debug.Log($"{shipBody.defaultShipPartName}");
+                tempSelectShopItem = shipBody;
+                break;
+
+            case "ShipTail":
+
+                ShipTail shipTail = currentsShopShiphulls[value] as ShipTail;
+
+                Debug.Log($"{shipTail.defaultShipPartName}");
+                tempSelectShopItem = shipTail;
+                break;
+
+            case "Weapon":
+
+                Weapon weapon = currentsShopShiphulls[value] as Weapon;
+
+                Debug.Log($"{weapon.defaultShipPartName}");
+                tempSelectShopItem = weapon;
+                break;
+
+            case "UtilityData":
+
+                UtilityData utilityData = currentsShopShiphulls[value] as UtilityData;
+
+                Debug.Log($"{utilityData.defaultShipPartName}");
+                tempSelectShopItem = utilityData;
+                break;
+
+            case "ShipReactor":
+
+                ShipReactor shipReactor = currentsShopShiphulls[value] as ShipReactor;
+
+                Debug.Log($"{shipReactor.defaultShipPartName}");
+                tempSelectShopItem = shipReactor;
+                break;
+
+            case "ShipThruster":
+
+                ShipThruster shipThruster = currentsShopShiphulls[value] as ShipThruster;
+
+                Debug.Log($"{shipThruster.defaultShipPartName}");
+                tempSelectShopItem = shipThruster;
                 break;
         }
 
@@ -330,7 +276,7 @@ public class ShopMain : MonoBehaviour
     public void AddTempShipHull()
     {
         currentHullName.text = shipDesign.currentship.shipHull.hullName.ToString();
-        currentHullHp.text = "체력 : " + shipDesign.currentship.shipHull.hulltHp.ToString();
+        currentHullHp.text = "체  력 : " + shipDesign.currentship.shipHull.hulltHp.ToString();
 
         tempSelectShopItem = null;
         if (tempSelectShopItem == null)

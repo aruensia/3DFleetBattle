@@ -12,22 +12,18 @@ public class ShipDesign : MonoBehaviour
 
     public void SetShipHull(ScriptableObject value)
     {
-        Debug.Log("버튼이 눌려서 쉽디자인 호출됌");
-        if (this.currentship.shipHull == null)
-        {
-            string a = value.GetType().FullName;
-            if(a == "ShipHull")
-            {
-                ShipHull useShiphull = value as ShipHull;
-                this.currentship.shipHull = useShiphull;
-            }
+         Debug.Log("버튼이 눌려서 쉽디자인 호출됌");
+         
+         string a = value.GetType().FullName;
+         if(a == "ShipHull")
+         {
+             ShipHull useShiphull = value as ShipHull;
+             this.currentship.shipHull = useShiphull;
+         }
+         
+         Debug.Log(this.currentship.shipHull.hullName + " 가 들어갔습니다.");
+      
 
-            Debug.Log(this.currentship.shipHull.hullName + " 가 들어갔습니다.");
-        }
-        else
-        {
-            Debug.Log("이미 값이 있습니다.");
-        }
     }
 
     void SetShipPart(DefaultShipPart tempShipPart)
