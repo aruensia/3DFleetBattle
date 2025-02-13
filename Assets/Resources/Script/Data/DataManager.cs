@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WeaponType
+{
+    Mass, Laser, Drone
+}
+
 public enum PartType
 {
     Hull, Head, Body, Tail, Weapon, Utility, Reactor, Thruster

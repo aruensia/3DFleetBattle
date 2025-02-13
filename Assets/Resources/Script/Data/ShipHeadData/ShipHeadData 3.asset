@@ -9,18 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e85da483b01d84fb217bc6bba18093, type: 3}
-  m_Name: weaponData 2
+  m_Script: {fileID: 11500000, guid: d293f345a06151b4f9ca471f7cb5bfac, type: 3}
+  m_Name: ShipHeadData 3
   m_EditorClassIdentifier: 
-  partType: 0
-  defaultShipPartName: "\uAD70\uC6A9 \uB9E4\uC2A4 \uB4DC\uB77C\uC774\uBC84"
+  partType: 1
+  defaultShipPartName: "\uAD70\uC6A9 \uC694\uACA9\uD568 \uC120\uB450"
   defaultShipPartArmor: 0
   defaultShipPartCost: 0
   defaultShipPartSize: 0
   defaultShipPartClass: 1
   DefaultShipPartGrade: 1
-  damage: 7
-  attackRange: 20
-  weaponType: 0
-  attackSpeed: 5
-  usePower: 5
+  weapons:
+  - {fileID: 0}
+  utility:
+  - {fileID: 0}
+  - {fileID: 0}

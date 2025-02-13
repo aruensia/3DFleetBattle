@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8e85da483b01d84fb217bc6bba18093, type: 3}
   m_Name: weaponData 1
   m_EditorClassIdentifier: 
-  weaponName: "\uB9E4\uC2A4 \uB4DC\uB77C\uC774\uBC84"
+  partType: 0
+  defaultShipPartName: "\uB9E4\uC2A4 \uB4DC\uB77C\uC774\uBC84"
+  defaultShipPartArmor: 0
+  defaultShipPartCost: 0
+  defaultShipPartSize: 0
+  defaultShipPartClass: 1
+  DefaultShipPartGrade: 0
   damage: 5
   attackRange: 20
+  weaponType: 0
   attackSpeed: 5
   usePower: 5

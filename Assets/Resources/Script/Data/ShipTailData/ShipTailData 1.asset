@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c35f2a22d32b4a44b8cdfa86dc74bc0, type: 3}
   m_Name: ShipTailData 1
   m_EditorClassIdentifier: 
-  tailName: 
-  headHp: 5
+  partType: 3
+  defaultShipPartName: "\uC694\uACA9\uD568 \uC120\uBBF8"
+  defaultShipPartArmor: 0
+  defaultShipPartCost: 0
+  defaultShipPartSize: 0
+  defaultShipPartClass: 1
+  DefaultShipPartGrade: 0
   weapons: []
   thruster: {fileID: 0}
   utility:
   - {fileID: 0}
   - {fileID: 0}
-  shipClass: 0
-  size: 0
-  cost: 0

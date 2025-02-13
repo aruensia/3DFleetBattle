@@ -15,6 +15,8 @@ public class DataList : ScriptableObject
         { "ShipTailData", new List<ScriptableObject>()},
         { "WeaponData", new List<ScriptableObject>()},
         { "UtilityData", new List<ScriptableObject>()},
+        { "ShipReactorData", new List<ScriptableObject>()},
+        { "ShipThrusterData", new List<ScriptableObject>()},
     };
 
     ScriptableObject scriptableObjectData;

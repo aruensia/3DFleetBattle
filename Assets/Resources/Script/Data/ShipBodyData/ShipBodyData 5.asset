@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partType: 2
   defaultShipPartName: 
-  defaultShipPartHp: 0
+  defaultShipPartArmor: 0
   defaultShipPartCost: 0
   defaultShipPartSize: 0
-  defaultShipPartClass: 0
-  DefaultShipPartGrade: 0
+  defaultShipPartClass: 1
+  DefaultShipPartGrade: 2
   weapons: []
   reactor: {fileID: 0}
   utility: []

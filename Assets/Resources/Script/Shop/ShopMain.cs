@@ -19,12 +19,12 @@ public class ShopMain : MonoBehaviour
 
     [SerializeField] TMP_Dropdown dropdown;
     [SerializeField] Button TempSellectShipPartMenuButton;
+    Button SelctShipItemButton;
 
 
     public Text shipPartName;
     public GameObject shopItemPrefab;
     Transform tempcanvas;
-    RectTransform pos;
 
     bool isScenesOn = true;
     bool[] itemBuyCheck;
@@ -36,6 +36,8 @@ public class ShopMain : MonoBehaviour
     {
         tempcanvas = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Transform>();
         TempSellectShipPartMenuButton.onClick.AddListener(() => DropdownDataInit());
+        //SelctShipItemButton = GameObject.Find("ShipItemList")
+        SelctShipItemButton.onClick.AddListener(() => SelectShopItem());
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
         //SceneManager.sceneLoaded += LoadShopData;
     }
@@ -49,6 +51,11 @@ public class ShopMain : MonoBehaviour
     {
         sellListShipData = DataManager.Instance.getNewDataList.AllShipDataDic;
         //메인 데이터에서 불러온 게임 데이터를 판매할 목록에 넣어놓음.
+    }
+
+    public void SelectShopItem()
+    {
+        Debug.Log("버튼 누름");
     }
 
     public void InitSceneChange()
@@ -100,7 +107,6 @@ public class ShopMain : MonoBehaviour
         //부품 목록을 누를 경우, 랜덤값을 통해 
 
         int itemGradeRange = Random.Range(1, (int)Grade.end);
-        int itemItemRange = Random.Range(1, itemvalue.Count);
         List<ScriptableObject> sellItemList = new List<ScriptableObject>();
         string[] tempitemname = new string[itemvalue.Count];
         itemBuyCheck = new bool[shopListCount];
@@ -178,13 +184,13 @@ public class ShopMain : MonoBehaviour
                     Weapon tempweapon = item as Weapon;
                     sellItemList.Add(tempweapon);
 
-                    if (tempweapon.weaponName == null)
+                    if (tempweapon.defaultShipPartName == null)
                     {
                         Debug.Log("tempitem.weaponName 값이 비어있음");
                     }
                     else
                     {
-                        tempitemname[count] = tempweapon.weaponName;
+                        tempitemname[count] = tempweapon.defaultShipPartName;
                         count++;
                     }
                     break;
@@ -229,6 +235,7 @@ public class ShopMain : MonoBehaviour
                     }
                     else
                     {
+                        sellItemList.Add(tempReactor);
                         tempitemname[count] = tempReactor.reactorName;
                         count++;
                     }
@@ -238,21 +245,24 @@ public class ShopMain : MonoBehaviour
 
         for (int i = 0; i < itemvalue.Count; i++)
         {
+            int itemItemRange = Random.Range(1, itemvalue.Count);
             var a = Instantiate(shopItemPrefab, tempcanvas);
             shipPartName = a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>();
 
-            if (itemvalue[i] == null)
+            if (itemvalue[itemItemRange] == null)
             {
                 shipPartName.text = " ";
             }
             else
             {
-                shipPartName.text = tempitemname[i];
-                Debug.Log($"ShipBody의 부품 이름은 {tempitemname[i]}");
+
+                shipPartName.text = tempitemname[itemItemRange];
+                Debug.Log($"ShipBody의 부품 이름은 {tempitemname[itemItemRange]}");
             }
             a.transform.Translate(i * 180, -20, 0);
         }
     }
+
 
     private void OnDestroy()
     {
