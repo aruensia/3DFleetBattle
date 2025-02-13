@@ -7,14 +7,20 @@ using UnityEngine.UI;
 public class ShipDesign : MonoBehaviour
 {
     //유저가 생성할 함선에 대해서 뉴 할당.
-    Ship currentship = new Ship();
+    public Ship currentship = new Ship();
 
 
-    void SetShipHull(ShipHull shiphull)
+    public void SetShipHull(ScriptableObject value)
     {
+        Debug.Log("버튼이 눌려서 쉽디자인 호출됌");
         if (this.currentship.shipHull == null)
         {
-            this.currentship.shipHull = shiphull;
+            string a = value.GetType().FullName;
+            if(a == "ShipHull")
+            {
+                ShipHull useShiphull = value as ShipHull;
+                this.currentship.shipHull = useShiphull;
+            }
 
             Debug.Log(this.currentship.shipHull.hullName + " 가 들어갔습니다.");
         }

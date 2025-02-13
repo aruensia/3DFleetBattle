@@ -7,15 +7,15 @@ public class GetShipData : MonoBehaviour
 {
     public ShipBody shipbody;
 
-    public void AddBodyDataButton()
-    {
-            if (DataManager.Instance.defaultShipPart == null)
-            {
-                Debug.Log("널이야");
-            } 
-            else
-            {
-                Debug.Log(DataManager.Instance.defaultShipPart.name);
-            }
-    }
+    //public void AddBodyDataButton()
+    //{
+    //        if (DataManager.Instance.defaultShipPart == null)
+    //        {
+    //            Debug.Log("널이야");
+    //        } 
+    //        else
+    //        {
+    //            Debug.Log(DataManager.Instance.defaultShipPart.name);
+    //        }
+    //}
 }

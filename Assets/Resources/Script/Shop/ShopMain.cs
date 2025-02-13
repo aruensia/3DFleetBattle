@@ -4,26 +4,40 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ShopMain : MonoBehaviour
 {
     //상점은 유저 전투 등급에 따라 아이쇼핑할 수 있는 상품 개수가 증가한다.
     //한 번의 전투가 끝날 때마다 아이템의 목록을 새로고침한다. 유저가 특정 상품을 구매할 경우, 솔드아웃이 되어, 더이상 목록에 상품이 생성되지 않는다.
+    ShipDesign shipDesign;
 
     Dictionary<string, List<ScriptableObject>> sellListShipData = new Dictionary<string, List<ScriptableObject>>();
 
     List<ScriptableObject> tempshopItemList = new List<ScriptableObject>(); // 상점에서 파는 아이템 목록
     List<List<ScriptableObject>> totalshopItemList = new List<List<ScriptableObject>>(); // sellListShipData에서 받은 딕셔너리를 상점에서 사용하기 위해 저장한 리스트.
     List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>(); //드롭다운 목록에 사용하는 키를 저장할 리스트
+    List<ScriptableObject> sellItemList = new List<ScriptableObject>();
     List<List<ScriptableObject>> tempTotalShopItem;
 
-    [SerializeField] TMP_Dropdown dropdown;
-    [SerializeField] Button TempSellectShipPartMenuButton;
+    [SerializeField] TMP_Dropdown dropdown; //유저가 구매할 아이템에 대한 상점 목록
     Button SelctShipItemButton;
+    Button TempSelctShipHullButton;
+
+
+    List<ShipHull> shopShiphulls = new List<ShipHull>();
+    List<ShipHead> shopShipHeads = new List<ShipHead>();
+    List<ShipBody> shopShipBodys = new List<ShipBody>();
+    List<ShipTail> shopShipTails = new List<ShipTail>();
+    List<Weapon> shopShipWeapons = new List<Weapon>();
+    List<UtilityData> shopShipUtilitys = new List<UtilityData>();
+    List<ShipThruster> shopShipThrusters = new List<ShipThruster>();
+    List<ShipReactor> shopShipReactors = new List<ShipReactor>();
 
 
     public Text shipPartName;
     public GameObject shopItemPrefab;
+    public ScriptableObject tempSelectShopItem;
     Transform tempcanvas;
 
     bool isScenesOn = true;
@@ -31,19 +45,50 @@ public class ShopMain : MonoBehaviour
 
     [SerializeField] int shopListCount;
 
+    //------------------------------------------------------------------
+    #region 유저가 디자인중인 함선
 
+    public Text currentHullName;
+    public Text currentHullHp;
+    public Text currentHullArmor;
+
+
+    #endregion
     private void Start()
     {
+        TempSelctShipHullButton = GameObject.Find("TempUserShipSetting").transform.GetChild(4).GetComponent<Button>();
+        TempSelctShipHullButton.onClick.AddListener(() => shipDesign.SetShipHull(tempSelectShopItem));
+        TempSelctShipHullButton.onClick.AddListener(() => AddTempShipHull());
         tempcanvas = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Transform>();
-        TempSellectShipPartMenuButton.onClick.AddListener(() => DropdownDataInit());
-        //SelctShipItemButton = GameObject.Find("ShipItemList")
-        SelctShipItemButton.onClick.AddListener(() => SelectShopItem());
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
-        //SceneManager.sceneLoaded += LoadShopData;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            SceneManager.LoadScene("MainScene");
+        }
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("OnEnable 로드 됌");
+        shipDesign = GetComponent<ShipDesign>();
+        GetForManagerShipData();
+        DropdownDataInit();
+        LoadShopData();
     }
 
     public void OnDropdownEvent(int index) //유저가 선택한 드랍목록의 int값을 인자로 넘김
     {
+        //if (shopItemPrefab.name == shopItemPrefab.name + index)
+        //{
+        //    shopItemPrefab.SetActive(false);
+        //}
+
+        Debug.Log($"{shopItemPrefab}를 비활성화 화였음.");
+
         ShowShopItem(tempTotalShopItem[index]);
     }
 
@@ -51,11 +96,6 @@ public class ShopMain : MonoBehaviour
     {
         sellListShipData = DataManager.Instance.getNewDataList.AllShipDataDic;
         //메인 데이터에서 불러온 게임 데이터를 판매할 목록에 넣어놓음.
-    }
-
-    public void SelectShopItem()
-    {
-        Debug.Log("버튼 누름");
     }
 
     public void InitSceneChange()
@@ -81,6 +121,7 @@ public class ShopMain : MonoBehaviour
 
     public void LoadShopData()
     {
+        Debug.Log("LoadShopData 호출");
         for (int i = 0; i < optionsList.Count; i++)
         {
             if(sellListShipData.ContainsKey(optionsList[i].text)) //만일 키가 있을 경우 List에 상품 목록을 넣고 없을 경우 오류를 내놓음.
@@ -96,18 +137,18 @@ public class ShopMain : MonoBehaviour
             }
 
             totalshopItemList.Add(tempshopItemList);
-            tempshopItemList = new List<ScriptableObject>();
+
+            if(i != optionsList.Count)
+            {
+                tempshopItemList = new List<ScriptableObject>();
+            }
         }
         tempTotalShopItem = totalshopItemList;
     }
 
-
     void ShowShopItem(List<ScriptableObject> itemvalue)
     {
-        //부품 목록을 누를 경우, 랜덤값을 통해 
-
         int itemGradeRange = Random.Range(1, (int)Grade.end);
-        List<ScriptableObject> sellItemList = new List<ScriptableObject>();
         string[] tempitemname = new string[itemvalue.Count];
         itemBuyCheck = new bool[shopListCount];
 
@@ -122,6 +163,7 @@ public class ShopMain : MonoBehaviour
             {
                 case "ShipHead":
                     ShipHead temphead = item as ShipHead;
+                    shopShipHeads.Add(temphead);
                     sellItemList.Add(temphead);
 
                     if (temphead.defaultShipPartName == null)
@@ -137,6 +179,7 @@ public class ShopMain : MonoBehaviour
 
                 case "ShipBody":
                     ShipBody tempbody = item as ShipBody;
+                    shopShipBodys.Add(tempbody);
                     sellItemList.Add(tempbody);
 
                     if (tempbody.defaultShipPartName == null)
@@ -152,6 +195,7 @@ public class ShopMain : MonoBehaviour
 
                 case "ShipTail":
                     ShipTail temptail = item as ShipTail;
+                    shopShipTails.Add(temptail);
                     sellItemList.Add(temptail);
 
                     if (temptail.defaultShipPartName == null)
@@ -167,6 +211,7 @@ public class ShopMain : MonoBehaviour
 
                 case "ShipHull":
                     ShipHull temphull = item as ShipHull;
+                    shopShiphulls.Add(temphull);
                     sellItemList.Add(temphull);
 
                     if (temphull.hullName == null)
@@ -182,6 +227,7 @@ public class ShopMain : MonoBehaviour
 
                 case "Weapon":
                     Weapon tempweapon = item as Weapon;
+                    shopShipWeapons.Add(tempweapon);
                     sellItemList.Add(tempweapon);
 
                     if (tempweapon.defaultShipPartName == null)
@@ -197,6 +243,7 @@ public class ShopMain : MonoBehaviour
 
                 case "UtilityData":
                     UtilityData tempUtility = item as UtilityData;
+                    shopShipUtilitys.Add(tempUtility);
                     sellItemList.Add(tempUtility);
 
                     if (tempUtility.utilityName == null)
@@ -212,6 +259,7 @@ public class ShopMain : MonoBehaviour
 
                 case "ShipThruster":
                     ShipThruster tempThruster = item as ShipThruster;
+                    shopShipThrusters.Add(tempThruster);
                     sellItemList.Add(tempThruster);
 
                     if (tempThruster.thrusterName == null)
@@ -227,6 +275,7 @@ public class ShopMain : MonoBehaviour
 
                 case "ShipReactor":
                     ShipReactor tempReactor = item as ShipReactor;
+                    shopShipReactors.Add(tempReactor);
                     sellItemList.Add(tempReactor);
 
                     if (tempReactor.reactorName == null)
@@ -235,7 +284,6 @@ public class ShopMain : MonoBehaviour
                     }
                     else
                     {
-                        sellItemList.Add(tempReactor);
                         tempitemname[count] = tempReactor.reactorName;
                         count++;
                     }
@@ -247,6 +295,8 @@ public class ShopMain : MonoBehaviour
         {
             int itemItemRange = Random.Range(1, itemvalue.Count);
             var a = Instantiate(shopItemPrefab, tempcanvas);
+            a.name = "ShipItemList" + itemvalue[i];
+            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SelectShopItem(itemItemRange));
             shipPartName = a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>();
 
             if (itemvalue[itemItemRange] == null)
@@ -255,13 +305,41 @@ public class ShopMain : MonoBehaviour
             }
             else
             {
-
                 shipPartName.text = tempitemname[itemItemRange];
                 Debug.Log($"ShipBody의 부품 이름은 {tempitemname[itemItemRange]}");
             }
             a.transform.Translate(i * 180, -20, 0);
         }
     }
+
+    public void SelectShopItem(int value)
+    {
+        string type = sellItemList[value].GetType().FullName;
+        switch(type)
+        {
+            case "ShipHull":
+                Debug.Log($"{shopShiphulls[value].hullName}");
+                tempSelectShopItem = shopShiphulls[value];
+                break;
+        }
+
+        
+        Debug.Log($"----------- 내가 선택한 아이템의 값은 : {tempSelectShopItem.name}");
+    }
+
+    public void AddTempShipHull()
+    {
+        currentHullName.text = shipDesign.currentship.shipHull.hullName.ToString();
+        currentHullHp.text = "체력 : " + shipDesign.currentship.shipHull.hulltHp.ToString();
+
+        tempSelectShopItem = null;
+        if (tempSelectShopItem == null)
+        {
+            Debug.Log($"{tempSelectShopItem}가 널이 됌");
+        }
+
+    }
+
 
 
     private void OnDestroy()

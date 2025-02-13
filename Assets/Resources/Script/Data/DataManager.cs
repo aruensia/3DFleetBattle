@@ -39,8 +39,6 @@ public class DataManager : MonoBehaviour
         get { return instance; }
     }
 
-    public DefaultShipPart defaultShipPart;
-
     public DataList getNewDataList;
     public Weapon testweapon;
     ShopMain shopMain;
@@ -50,7 +48,7 @@ public class DataManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-
+            GetDataObject();
             DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
@@ -62,10 +60,7 @@ public class DataManager : MonoBehaviour
     private void Start()
     {
         shopMain = GetComponent<ShopMain>();
-        GetDataObject();
         getNewDataList.GetShipData();
-        shopMain.GetForManagerShipData();
-        //TestSetting();
     }
 
     void GetDataObject()
