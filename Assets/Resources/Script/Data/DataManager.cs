@@ -39,9 +39,11 @@ public class DataManager : MonoBehaviour
         get { return instance; }
     }
 
+    [HideInInspector]
     public DataList getNewDataList;
-    public Weapon testweapon;
     ShopMain shopMain;
+    [HideInInspector]
+    public PlayerInfo playerInfo;
 
       private void Awake()
     {
@@ -60,6 +62,7 @@ public class DataManager : MonoBehaviour
     private void Start()
     {
         shopMain = GetComponent<ShopMain>();
+        playerInfo = GetComponent<PlayerInfo>();
         getNewDataList.GetShipData();
     }
 

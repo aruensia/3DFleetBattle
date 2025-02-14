@@ -1,18 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    Dictionary<string, List<ScriptableObject>> playerData = new Dictionary<string, List<ScriptableObject>>()
     {
-        
+        { "ShipHullData", new List<ScriptableObject>()},
+        { "ShipHeadData", new List<ScriptableObject>()},
+        { "ShipBodyData", new List<ScriptableObject>()},
+        { "ShipTailData", new List<ScriptableObject>()},
+        { "WeaponData", new List<ScriptableObject>()},
+        { "UtilityData", new List<ScriptableObject>()},
+        { "ShipReactorData", new List<ScriptableObject>()},
+        { "ShipThrusterData", new List<ScriptableObject>()},
+    };
+
+    public Dictionary<string, List<ScriptableObject>> PlayerData
+    {
+        get { return playerData; }
+        set { playerData = value; }
     }
 
-    // Update is called once per frame
-    void Update()
+    List<ScriptableObject> shipPartinventory = new List<ScriptableObject>();
+    List<Ship> MyShips = new List<Ship>();
+
+    int money;
+
+    public int Money
     {
-        
+        get { return money; }
+        set { money = value; }
     }
+
+    public int inventoryCount;
+
+    private void Start()
+    {
+        SetDefaultData();
+    }
+
+    void SetDefaultData()
+    {
+        money = 5000;
+        Debug.Log($"@@@@-- 함선의 데이터를 초기화 했음 --@@@@");
+        Debug.Log($"@@@@-- 인벤토리의 크기는 : {inventoryCount} --@@@@");
+        Debug.Log($"@@@@-- 초기화된 돈은 : {money} --@@@@");
+    }
+
+
+
 }
