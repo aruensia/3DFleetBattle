@@ -1348,7 +1348,7 @@ MonoBehaviour:
   shipPartName: {fileID: 0}
   shopItemPrefab: {fileID: 5943205332805435894, guid: e1dba051a0c1b5942b3fd77d6c4606f3, type: 3}
   itemSlot: {fileID: 992431340034828300, guid: 6c3d8603a813c3e4ca363d64aebe0ffa, type: 3}
-  partSlot: {fileID: 1377506944}
+  partSlot: {fileID: 3607853116646230155, guid: 0dd012e4621f482499304966ef15ec78, type: 3}
   tempSelectShopItem: {fileID: 0}
   userInven: {fileID: 1411416107}
   shopListCount: 8

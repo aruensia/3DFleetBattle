@@ -345,11 +345,20 @@ public class ShopMain : MonoBehaviour
 
     void CreatePartSlot()
     {
-        foreach(var inventory in sellListShipData)
+        List<string> slots = new List<string>();
+
+        foreach (var inventory in sellListShipData)
         {
-            Debug.Log(inventory.Key);
+            slots.Add(inventory.Key);
+
         }
 
+
+        for ( int i = 0;i < sellListShipData.Count; i++)
+        {
+            var partslot = Instantiate(partSlot, userInven.transform.GetChild(0));
+            partslot.GetComponentInChildren<Text>().text = slots[i];
+        }
     }
 
     void AddItemInUserInventory()
