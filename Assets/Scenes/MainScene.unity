@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   getNewDataList: {fileID: 0}
+  playerInfo: {fileID: 0}
 --- !u!4 &1496704203
 Transform:
   m_ObjectHideFlags: 0
@@ -298,7 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1169349e19f66fb46b7b81865d5002f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryCount: 30
+  inventoryCount: 52
 --- !u!1 &1706517599
 GameObject:
   m_ObjectHideFlags: 0

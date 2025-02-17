@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 public class ShopMain : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class ShopMain : MonoBehaviour
     List<GameObject> currentShopItemList = new List<GameObject>();
     List<DefaultShipPart> currentsShopShipDatas = new List<DefaultShipPart>();
     List<GameObject> tempInventorylist = new List<GameObject>();
+    List<int> slotPartList = new List<int>();
 
 
     public Text shipPartName;
@@ -35,12 +37,16 @@ public class ShopMain : MonoBehaviour
     public ScriptableObject tempSelectShopItem;
     Transform tempcanvas;
     public Transform userInven;
+    public GameObject buyItemPopup;
 
     bool isScenesOn = true;
     bool[] itemBuyCheck;
 
     [SerializeField] int shopListCount;
     int tempInventoryCount;
+    int itemItemRange;
+
+    public GameObject[] activityUIControl;
 
     //------------------------------------------------------------------
     #region 유저가 디자인중인 함선
@@ -57,6 +63,7 @@ public class ShopMain : MonoBehaviour
         //TempSelctShipHullButton.onClick.AddListener(() => shipDesign.SetShipHull(tempSelectShopItem));
         //TempSelctShipHullButton.onClick.AddListener(() => AddTempShipHull());
         tempcanvas = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Transform>(); // 드랍목록 아이템이 생성될 부모의 위치
+        activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange));
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
         CreateItemSlot();
     }
@@ -153,14 +160,17 @@ public class ShopMain : MonoBehaviour
     {
         int itemGradeRange = Random.Range(1, (int)Grade.end);
         string[] tempitemname = new string[itemvalue.Count];
-        itemBuyCheck = new bool[shopListCount];
-        currentsShopShipDatas.Clear();
-        sellItemList.Clear();
+        DefaultShipPart tempdata;
         Text shipPartName;
         int count = 0;
+        itemBuyCheck = new bool[shopListCount];
+
+        currentsShopShipDatas.Clear();
+        sellItemList.Clear();
+
         foreach ( var item in itemvalue)
         {
-            DefaultShipPart tempdata = item as DefaultShipPart;
+            tempdata = item as DefaultShipPart;
             currentsShopShipDatas.Add(tempdata);
             sellItemList.Add(tempdata);
 
@@ -180,11 +190,12 @@ public class ShopMain : MonoBehaviour
 
         for (int i = 0; i < itemvalue.Count; i++)
         {
-            int itemItemRange = Random.Range(1, itemvalue.Count);
+            itemItemRange = Random.Range(1, itemvalue.Count);
             var a = Instantiate(shopItemPrefab, tempcanvas);
             currentShopItemList.Add(a);
             a.name = "ShipItemList" + itemvalue[i];
-            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SelectShopItem(itemItemRange));
+            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetButPopup());
+            //a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange));
             shipPartName = a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>();
 
             if (itemvalue[itemItemRange] == null)
@@ -196,133 +207,6 @@ public class ShopMain : MonoBehaviour
                 shipPartName.text = tempitemname[itemItemRange];
             }
             a.transform.Translate(i * 180, -20, 0);
-        }
-    }
-
-    public void SelectShopItem(int value)
-    {
-        string type = sellItemList[value].GetType().FullName;
-        switch(type)
-        {
-            case "ShipHull":
-
-                ShipHull shipHull = currentsShopShipDatas[value] as ShipHull;
-                if( shipHull.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHull.defaultShipPartCost;
-                    Debug.Log($"{shipHull.hullName}");
-                    tempSelectShopItem = shipHull;
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
-                break;
-
-            case "ShipHead":
-
-                ShipHead shipHead = currentsShopShipDatas[value] as ShipHead;
-                if (shipHead.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHead.defaultShipPartCost;
-                    Debug.Log($"{shipHead.defaultShipPartName}");
-                    tempSelectShopItem = shipHead;
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
-                break;
-
-            case "ShipBody":
-
-                ShipBody shipBody = currentsShopShipDatas[value] as ShipBody;
-                if (shipBody.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipBody.defaultShipPartCost;
-                    Debug.Log($"{shipBody.defaultShipPartName}");
-                    tempSelectShopItem = shipBody;
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
-                break;
-
-            case "ShipTail":
-
-                ShipTail shipTail = currentsShopShipDatas[value] as ShipTail;
-                if (shipTail.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipTail.defaultShipPartCost;
-                    Debug.Log($"{shipTail.defaultShipPartName}");
-                    tempSelectShopItem = shipTail;
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
-                break;
-
-            case "Weapon":
-
-                Weapon weapon = currentsShopShipDatas[value] as Weapon;
-                if (weapon.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - weapon.defaultShipPartCost;
-                    Debug.Log($"{weapon.defaultShipPartName}");
-                    tempSelectShopItem = weapon;
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
-                break;
-
-            case "UtilityData":
-
-                UtilityData utilityData = currentsShopShipDatas[value] as UtilityData;
-                if (utilityData.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - utilityData.defaultShipPartCost;
-                    Debug.Log($"{utilityData.defaultShipPartName}");
-                    tempSelectShopItem = utilityData;
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
-                break;
-
-            case "ShipReactor":
-
-                ShipReactor shipReactor = currentsShopShipDatas[value] as ShipReactor;
-                if (shipReactor.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipReactor.defaultShipPartCost;
-                    Debug.Log($"{shipReactor.defaultShipPartName}");
-                    tempSelectShopItem = shipReactor;
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
-                break;
-
-            case "ShipThruster":
-
-                ShipThruster shipThruster = currentsShopShipDatas[value] as ShipThruster;
-                if (shipThruster.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipThruster.defaultShipPartCost;
-                    Debug.Log($"{shipThruster.defaultShipPartName}");
-                    tempSelectShopItem = shipThruster;
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
-                break;
         }
     }
 
@@ -346,18 +230,57 @@ public class ShopMain : MonoBehaviour
     void CreatePartSlot()
     {
         List<string> slots = new List<string>();
+        int slotPartvalue = 0;
 
         foreach (var inventory in sellListShipData)
         {
             slots.Add(inventory.Key);
-
         }
-
 
         for ( int i = 0;i < sellListShipData.Count; i++)
         {
-            var partslot = Instantiate(partSlot, userInven.transform.GetChild(0));
-            partslot.GetComponentInChildren<Text>().text = slots[i];
+            var temppartslot = Instantiate(partSlot, userInven.transform.GetChild(0));
+            temppartslot.name = "PartSlot" + i;
+            temppartslot.GetComponent<Button>().onClick.AddListener(() => SetItemChange(temppartslot));
+           
+            slotPartList.Add(slotPartvalue);
+            slotPartvalue++;
+
+            switch (slots[i])
+            {
+                case "ShipHullData":
+                    temppartslot.GetComponentInChildren<Text>().text = "함선 함체";
+                    break;
+
+                case "ShipHeadData":
+                    temppartslot.GetComponentInChildren<Text>().text = "선두";
+                    break;
+
+
+                case "ShipBodyData":
+                    temppartslot.GetComponentInChildren<Text>().text = "선체";
+                    break;
+
+                case "ShipTailData":
+                    temppartslot.GetComponentInChildren<Text>().text = "선미";
+                    break;
+
+                case "WeaponData":
+                    temppartslot.GetComponentInChildren<Text>().text = "무기";
+                    break;
+
+                case "UtilityData":
+                    temppartslot.GetComponentInChildren<Text>().text = "보조장치";
+                    break;
+
+                case "ShipReactorData":
+                    temppartslot.GetComponentInChildren<Text>().text = "반응로";
+                    break;
+
+                case "ShipThrusterData":
+                    temppartslot.GetComponentInChildren<Text>().text = "추진체";
+                    break;
+            }
         }
     }
 
@@ -368,6 +291,245 @@ public class ShopMain : MonoBehaviour
         DataManager.Instance.playerInfo.PlayerData[addItemType + "Data"].Add(tempSelectShopItem);
         Debug.Log($"데이터 받아옴 {DataManager.Instance.playerInfo.PlayerData[addItemType + "Data"][0].name}");
     }
+
+    void SetItemChange(GameObject partslot)
+    {
+        string number = Regex.Replace(partslot.name, @"\D", "");
+        int tempnum = int.Parse(number);
+        int tempCount = 0;
+
+        switch(tempnum)
+        {
+            case 0:
+                if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count == 0 )
+                {
+                    Debug.Log("아이템이 없습니다.");
+                }
+                else if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count > 0)
+                {
+                    Debug.Log("아이템이 있습니다.");
+                }
+                break;
+
+            case 1:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count > 0)
+                {
+                    Debug.Log("아이템이 있습니다.");
+                }
+                break;
+
+            case 2:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count > 0)
+                {
+                    Debug.Log("아이템이 있습니다.");
+                }
+                break;
+
+            case 3:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count > 0)
+                {
+                    Debug.Log("아이템이 있습니다.");
+                }
+                break;
+
+            case 4:
+                if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count > 0)
+                {
+                    Debug.Log("아이템이 있습니다.");
+                }
+                break;
+
+            case 5:
+                if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count > 0)
+                {
+                    Debug.Log("아이템이 있습니다.");
+                }
+                break;
+
+            case 6:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count > 0)
+                {
+                    Debug.Log("아이템이 있습니다.");
+                }
+                break;
+
+            case 7:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count > 0)
+                {
+                    Debug.Log("아이템이 있습니다.");
+                }
+                break;
+        }
+    }
+
+    void SetButPopup()
+    {
+        activityUIControl[0].SetActive(true);
+    }
+
+    void BuyItem(int value)
+    {
+        Debug.Log("호출이 안됌!!!!");
+
+        activityUIControl[0].SetActive(true);
+
+        string type = sellItemList[value].GetType().FullName;
+        switch (type)
+        {
+            case "ShipHull":
+
+                ShipHull shipHull = currentsShopShipDatas[value] as ShipHull;
+                if (shipHull.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                {
+                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHull.defaultShipPartCost;
+                    Debug.Log($"{shipHull.hullName}");
+                    Debug.Log($"{DataManager.Instance.playerInfo.Money}");
+                    DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Add(shipHull);
+                    Debug.Log($"{DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count}");
+                }
+                else
+                {
+                    Debug.Log("보유한 돈이 모자랍니다.");
+                }
+                break;
+
+            case "ShipHead":
+
+                ShipHead shipHead = currentsShopShipDatas[value] as ShipHead;
+                if (shipHead.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                {
+                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHead.defaultShipPartCost;
+                    Debug.Log($"{shipHead.defaultShipPartName}");
+                    DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Add(shipHead);
+                }
+                else
+                {
+                    Debug.Log("보유한 돈이 모자랍니다.");
+                }
+                break;
+
+            case "ShipBody":
+
+                ShipBody shipBody = currentsShopShipDatas[value] as ShipBody;
+                if (shipBody.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                {
+                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipBody.defaultShipPartCost;
+                    Debug.Log($"{shipBody.defaultShipPartName}");
+                    DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Add(shipBody);
+                }
+                else
+                {
+                    Debug.Log("보유한 돈이 모자랍니다.");
+                }
+                break;
+
+            case "ShipTail":
+
+                ShipTail shipTail = currentsShopShipDatas[value] as ShipTail;
+                if (shipTail.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                {
+                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipTail.defaultShipPartCost;
+                    Debug.Log($"{shipTail.defaultShipPartName}");
+                    DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Add(shipTail);
+                }
+                else
+                {
+                    Debug.Log("보유한 돈이 모자랍니다.");
+                }
+                break;
+
+            case "Weapon":
+
+                Weapon weapon = currentsShopShipDatas[value] as Weapon;
+                if (weapon.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                {
+                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - weapon.defaultShipPartCost;
+                    Debug.Log($"{weapon.defaultShipPartName}");
+                    DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(weapon);
+                }
+                else
+                {
+                    Debug.Log("보유한 돈이 모자랍니다.");
+                }
+                break;
+
+            case "UtilityData":
+
+                UtilityData utilityData = currentsShopShipDatas[value] as UtilityData;
+                if (utilityData.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                {
+                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - utilityData.defaultShipPartCost;
+                    Debug.Log($"{utilityData.defaultShipPartName}");
+                    DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(utilityData);
+                }
+                else
+                {
+                    Debug.Log("보유한 돈이 모자랍니다.");
+                }
+                break;
+
+            case "ShipReactor":
+
+                ShipReactor shipReactor = currentsShopShipDatas[value] as ShipReactor;
+                if (shipReactor.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                {
+                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipReactor.defaultShipPartCost;
+                    Debug.Log($"{shipReactor.defaultShipPartName}");
+                    DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Add(shipReactor);
+                    //tempSelectShopItem = shipReactor;
+                }
+                else
+                {
+                    Debug.Log("보유한 돈이 모자랍니다.");
+                }
+                break;
+
+            case "ShipThruster":
+
+                ShipThruster shipThruster = currentsShopShipDatas[value] as ShipThruster;
+                if (shipThruster.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                {
+                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipThruster.defaultShipPartCost;
+                    Debug.Log($"{shipThruster.defaultShipPartName}");
+                    DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Add(shipThruster);
+                }
+                else
+                {
+                    Debug.Log("보유한 돈이 모자랍니다.");
+                }
+                break;
+        }
+    }
+
+
 
 
     private void OnDisable()
