@@ -1356,6 +1356,8 @@ MonoBehaviour:
   activityUIControl:
   - {fileID: 9047804604782001227}
   - {fileID: 9047804604782001228}
+  - {fileID: 1687032144}
+  - {fileID: 2034603762}
   currentHullName: {fileID: 2051926585}
   currentHullHp: {fileID: 550007497}
   currentHullArmor: {fileID: 1991653709}
@@ -1942,7 +1944,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 523650382}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.89331704
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2093,6 +2095,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1571437780}
   m_CullTransparentMesh: 1
+--- !u!1 &1687032144 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8151334364265437738, guid: 6bcd07dfd49e9b248814444f4f31dca2, type: 3}
+  m_PrefabInstance: {fileID: 9047804604782001225}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1730608095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,6 +2645,7 @@ GameObject:
   - component: {fileID: 2034603766}
   - component: {fileID: 2034603765}
   - component: {fileID: 2034603764}
+  - component: {fileID: 2034603767}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: Untagged
@@ -2764,6 +2772,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2034603762}
   m_CullTransparentMesh: 1
+--- !u!225 &2034603767
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034603762}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &2051926585 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7104456615846759175, guid: aeadf9be97c0be04686a7013debe45c2, type: 3}

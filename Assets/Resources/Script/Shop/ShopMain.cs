@@ -23,7 +23,6 @@ public class ShopMain : MonoBehaviour
     List<List<ScriptableObject>> tempTotalShopItem;
 
     [SerializeField] TMP_Dropdown dropdown; //유저가 구매할 아이템에 대한 상점 목록
-    Button TempSelctShipHullButton;
     List<GameObject> currentShopItemList = new List<GameObject>();
     List<DefaultShipPart> currentsShopShipDatas = new List<DefaultShipPart>();
     List<GameObject> tempInventorylist = new List<GameObject>();
@@ -63,7 +62,8 @@ public class ShopMain : MonoBehaviour
         //TempSelctShipHullButton.onClick.AddListener(() => shipDesign.SetShipHull(tempSelectShopItem));
         //TempSelctShipHullButton.onClick.AddListener(() => AddTempShipHull());
         tempcanvas = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Transform>(); // 드랍목록 아이템이 생성될 부모의 위치
-        activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange));
+        //activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(activityUIControl));
+        activityUIControl[2].GetComponent<Button>().onClick.AddListener(() => ColseBuyPopup());
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
         CreateItemSlot();
     }
@@ -190,15 +190,15 @@ public class ShopMain : MonoBehaviour
 
         for (int i = 0; i < itemvalue.Count; i++)
         {
-            itemItemRange = Random.Range(1, itemvalue.Count);
+            itemItemRange = Random.Range(0, itemvalue.Count);
             var a = Instantiate(shopItemPrefab, tempcanvas);
             currentShopItemList.Add(a);
             a.name = "ShipItemList" + itemvalue[i];
-            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetButPopup());
-            //a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange));
+            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup());
+            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange));
             shipPartName = a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>();
 
-            if (itemvalue[itemItemRange] == null)
+            if (itemvalue == null)
             {
                 shipPartName.text = " ";
             }
@@ -296,7 +296,7 @@ public class ShopMain : MonoBehaviour
     {
         string number = Regex.Replace(partslot.name, @"\D", "");
         int tempnum = int.Parse(number);
-        int tempCount = 0;
+        //int tempCount = 0;
 
         switch(tempnum)
         {
@@ -390,17 +390,20 @@ public class ShopMain : MonoBehaviour
         }
     }
 
-    void SetButPopup()
+    void SetBuyPopup()
     {
         activityUIControl[0].SetActive(true);
+        activityUIControl[3].GetComponent<CanvasGroup>().interactable = false;
+    }
+
+    void ColseBuyPopup()
+    {
+        activityUIControl[0].SetActive(false);
+        activityUIControl[3].GetComponent<CanvasGroup>().interactable = true;
     }
 
     void BuyItem(int value)
     {
-        Debug.Log("호출이 안됌!!!!");
-
-        activityUIControl[0].SetActive(true);
-
         string type = sellItemList[value].GetType().FullName;
         switch (type)
         {
