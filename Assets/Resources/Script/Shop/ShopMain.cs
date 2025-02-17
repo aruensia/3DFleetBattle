@@ -26,6 +26,7 @@ public class ShopMain : MonoBehaviour
     List<GameObject> currentShopItemList = new List<GameObject>();
     List<DefaultShipPart> currentsShopShipDatas = new List<DefaultShipPart>();
     List<GameObject> tempInventorylist = new List<GameObject>();
+    List<int> tempSelectItemNumber = new List<int>();
     List<int> slotPartList = new List<int>();
 
 
@@ -174,8 +175,6 @@ public class ShopMain : MonoBehaviour
             currentsShopShipDatas.Add(tempdata);
             sellItemList.Add(tempdata);
 
-            Debug.Log("--s---ss--" + tempdata.defaultShipPartName);
-
             if (tempdata.defaultShipPartName == null)
             {
                 Debug.Log("tempitem.defaultShipPartName의 값이 비어있음");
@@ -195,7 +194,7 @@ public class ShopMain : MonoBehaviour
             currentShopItemList.Add(a);
             a.name = "ShipItemList" + itemvalue[i];
             a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup());
-            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange));
+            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange, tempSelectItemNumber, a));
             shipPartName = a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>();
 
             if (itemvalue == null)
@@ -205,6 +204,7 @@ public class ShopMain : MonoBehaviour
             else
             {
                 shipPartName.text = tempitemname[itemItemRange];
+                tempSelectItemNumber.Add(itemItemRange);
             }
             a.transform.Translate(i * 180, -20, 0);
         }
@@ -402,7 +402,7 @@ public class ShopMain : MonoBehaviour
         activityUIControl[3].GetComponent<CanvasGroup>().interactable = true;
     }
 
-    void BuyItem(int value)
+    void BuyItem(int value, List<int> selcetnum, GameObject itemslot)
     {
         string type = sellItemList[value].GetType().FullName;
         switch (type)
