@@ -17,16 +17,13 @@ public class ShopMain : MonoBehaviour
 
     List<ScriptableObject> tempshopItemList = new List<ScriptableObject>(); // 상점에서 파는 아이템 목록
     List<List<ScriptableObject>> totalshopItemList = new List<List<ScriptableObject>>(); // sellListShipData에서 받은 딕셔너리를 상점에서 사용하기 위해 저장한 리스트.
-    List<List<ScriptableObject>> partItemList = new List<List<ScriptableObject>>(); // 
     List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>(); //드롭다운 목록에 사용하는 키를 저장할 리스트
-    List<ScriptableObject> sellItemList = new List<ScriptableObject>();
     List<List<ScriptableObject>> tempTotalShopItem;
 
     [SerializeField] TMP_Dropdown dropdown; //유저가 구매할 아이템에 대한 상점 목록
-    List<GameObject> currentShopItemList = new List<GameObject>();
+    List<GameObject> currentShopItemList = new List<GameObject>();  // 드롭다운 목록에 사용하는 아이템 리스트
     List<DefaultShipPart> currentsShopShipDatas = new List<DefaultShipPart>();
     List<GameObject> tempInventorylist = new List<GameObject>();
-    List<int> tempSelectItemNumber = new List<int>();
     List<int> slotPartList = new List<int>();
 
 
@@ -34,7 +31,7 @@ public class ShopMain : MonoBehaviour
     public GameObject shopItemPrefab;
     public GameObject itemSlot;
     public GameObject partSlot;
-    public ScriptableObject tempSelectShopItem;
+    public GameObject tempselectItem;
     Transform tempcanvas;
     public Transform userInven;
     public GameObject buyItemPopup;
@@ -59,11 +56,12 @@ public class ShopMain : MonoBehaviour
     #endregion
     private void Start()
     {
+      
         //TempSelctShipHullButton = GameObject.Find("TempUserShipSetting").transform.GetChild(4).GetComponent<Button>();
         //TempSelctShipHullButton.onClick.AddListener(() => shipDesign.SetShipHull(tempSelectShopItem));
         //TempSelctShipHullButton.onClick.AddListener(() => AddTempShipHull());
         tempcanvas = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Transform>(); // 드랍목록 아이템이 생성될 부모의 위치
-        //activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(activityUIControl));
+        //activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange, tempselectItem));
         activityUIControl[2].GetComponent<Button>().onClick.AddListener(() => ColseBuyPopup());
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
         CreateItemSlot();
@@ -78,7 +76,7 @@ public class ShopMain : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            AddItemInUserInventory();
+            //AddItemInUserInventory();
         }
     }
 
@@ -142,6 +140,7 @@ public class ShopMain : MonoBehaviour
                     tempshopItemList.Add(sellListShipData[optionsList[i].text][j]);
                 }
             }
+
             else
             {
                 Debug.LogWarning($"sellListShipData의 키가 없습니다.");
@@ -167,13 +166,11 @@ public class ShopMain : MonoBehaviour
         itemBuyCheck = new bool[shopListCount];
 
         currentsShopShipDatas.Clear();
-        sellItemList.Clear();
 
         foreach ( var item in itemvalue)
         {
             tempdata = item as DefaultShipPart;
             currentsShopShipDatas.Add(tempdata);
-            sellItemList.Add(tempdata);
 
             if (tempdata.defaultShipPartName == null)
             {
@@ -190,13 +187,13 @@ public class ShopMain : MonoBehaviour
         for (int i = 0; i < itemvalue.Count; i++)
         {
             itemItemRange = Random.Range(0, itemvalue.Count);
+            int tempint = itemItemRange;
             var a = Instantiate(shopItemPrefab, tempcanvas);
             currentShopItemList.Add(a);
             a.name = "ShipItemList" + itemvalue[i];
-            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup());
-            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange, tempSelectItemNumber, a));
-            shipPartName = a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>();
-
+            shipPartName = tempselectItem.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>();
+            //activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(tempint));
+            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup(tempint));
             if (itemvalue == null)
             {
                 shipPartName.text = " ";
@@ -204,7 +201,6 @@ public class ShopMain : MonoBehaviour
             else
             {
                 shipPartName.text = tempitemname[itemItemRange];
-                tempSelectItemNumber.Add(itemItemRange);
             }
             a.transform.Translate(i * 180, -20, 0);
         }
@@ -284,13 +280,13 @@ public class ShopMain : MonoBehaviour
         }
     }
 
-    void AddItemInUserInventory()
-    {
-        string addItemType = tempSelectShopItem.GetType().FullName;
-
-        DataManager.Instance.playerInfo.PlayerData[addItemType + "Data"].Add(tempSelectShopItem);
-        Debug.Log($"데이터 받아옴 {DataManager.Instance.playerInfo.PlayerData[addItemType + "Data"][0].name}");
-    }
+   // void AddItemInUserInventory()
+   // {
+   //     string addItemType = tempSelectShopItem.GetType().FullName;
+   //
+   //     DataManager.Instance.playerInfo.PlayerData[addItemType + "Data"].Add(tempSelectShopItem);
+   //     Debug.Log($"데이터 받아옴 {DataManager.Instance.playerInfo.PlayerData[addItemType + "Data"][0].name}");
+   // }
 
     void SetItemChange(GameObject partslot)
     {
@@ -390,8 +386,9 @@ public class ShopMain : MonoBehaviour
         }
     }
 
-    void SetBuyPopup()
+    void SetBuyPopup(int value)
     {
+        Debug.Log(value);
         activityUIControl[0].SetActive(true);
         activityUIControl[3].GetComponent<CanvasGroup>().interactable = false;
     }
@@ -402,9 +399,10 @@ public class ShopMain : MonoBehaviour
         activityUIControl[3].GetComponent<CanvasGroup>().interactable = true;
     }
 
-    void BuyItem(int value, List<int> selcetnum, GameObject itemslot)
+    void BuyItem(int value)
     {
-        string type = sellItemList[value].GetType().FullName;
+        string type = currentsShopShipDatas[value].GetType().FullName;
+
         switch (type)
         {
             case "ShipHull":
@@ -537,7 +535,7 @@ public class ShopMain : MonoBehaviour
 
     private void OnDisable()
     {
-        tempSelectShopItem = null;
+        //tempSelectShopItem = null;
     }
 
 }   
