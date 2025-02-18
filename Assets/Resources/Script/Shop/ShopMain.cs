@@ -32,6 +32,7 @@ public class ShopMain : MonoBehaviour
     public GameObject itemSlot;
     public GameObject partSlot;
     public GameObject tempselectItem;
+    public Sprite defaultSlotImage;
     Transform tempcanvas;
     public Transform userInven;
     public GameObject buyItemPopup;
@@ -43,6 +44,7 @@ public class ShopMain : MonoBehaviour
     int tempInventoryCount;
     int itemItemRange;
 
+    ScriptableObject currentSelectItem;
     public GameObject[] activityUIControl;
 
     //------------------------------------------------------------------
@@ -61,7 +63,7 @@ public class ShopMain : MonoBehaviour
         //TempSelctShipHullButton.onClick.AddListener(() => shipDesign.SetShipHull(tempSelectShopItem));
         //TempSelctShipHullButton.onClick.AddListener(() => AddTempShipHull());
         tempcanvas = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Transform>(); // 드랍목록 아이템이 생성될 부모의 위치
-        //activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange, tempselectItem));
+        activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange));
         activityUIControl[2].GetComponent<Button>().onClick.AddListener(() => ColseBuyPopup());
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
         CreateItemSlot();
@@ -105,12 +107,6 @@ public class ShopMain : MonoBehaviour
     {
         sellListShipData = DataManager.Instance.getNewDataList.AllShipDataDic;
         //메인 데이터에서 불러온 게임 데이터를 판매할 목록에 넣어놓음.
-    }
-
-    public void InitSceneChange()
-    {
-        isScenesOn = true;
-        //씬 전환 기능이 완료될 경우 사라지는 함수.
     }
 
     void DropdownDataInit() //드롭다운 목록에 들어갈 값의 List를 생성함
@@ -161,7 +157,6 @@ public class ShopMain : MonoBehaviour
         int itemGradeRange = Random.Range(1, (int)Grade.end);
         string[] tempitemname = new string[itemvalue.Count];
         DefaultShipPart tempdata;
-        Text shipPartName;
         int count = 0;
         itemBuyCheck = new bool[shopListCount];
 
@@ -189,20 +184,11 @@ public class ShopMain : MonoBehaviour
             itemItemRange = Random.Range(0, itemvalue.Count);
             int tempint = itemItemRange;
             var a = Instantiate(shopItemPrefab, tempcanvas);
-            currentShopItemList.Add(a);
-            a.name = "ShipItemList" + itemvalue[i];
-            shipPartName = tempselectItem.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>();
-            //activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(tempint));
-            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup(tempint));
-            if (itemvalue == null)
-            {
-                shipPartName.text = " ";
-            }
-            else
-            {
-                shipPartName.text = tempitemname[itemItemRange];
-            }
+            a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>().text = tempitemname[itemItemRange];
+
             a.transform.Translate(i * 180, -20, 0);
+            currentShopItemList.Add(a);
+            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup(tempint));
         }
     }
 
@@ -233,7 +219,7 @@ public class ShopMain : MonoBehaviour
             slots.Add(inventory.Key);
         }
 
-        for ( int i = 0;i < sellListShipData.Count; i++)
+        for ( int i = 0; i < sellListShipData.Count; i++)
         {
             var temppartslot = Instantiate(partSlot, userInven.transform.GetChild(0));
             temppartslot.name = "PartSlot" + i;
@@ -292,7 +278,7 @@ public class ShopMain : MonoBehaviour
     {
         string number = Regex.Replace(partslot.name, @"\D", "");
         int tempnum = int.Parse(number);
-        //int tempCount = 0;
+        int count = 0;
 
         switch(tempnum)
         {
@@ -303,7 +289,14 @@ public class ShopMain : MonoBehaviour
                 }
                 else if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count > 0)
                 {
-                    Debug.Log("아이템이 있습니다.");
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHullData"])
+                    {
+                        ShipHull currentShipHull = (ShipHull)item;
+                        Debug.Log(currentShipHull.iconImage);
+                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        count++;
+                    }
+                    count = 0;
                 }
                 break;
 
@@ -325,7 +318,14 @@ public class ShopMain : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count > 0)
                 {
-                    Debug.Log("아이템이 있습니다.");
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipBodyData"])
+                    {
+                        ShipBody currentShipHull = (ShipBody)item;
+                        Debug.Log(currentShipHull.iconImage);
+                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        count++;
+                    }
+                    count = 0;
                 }
                 break;
 
@@ -388,7 +388,10 @@ public class ShopMain : MonoBehaviour
 
     void SetBuyPopup(int value)
     {
-        Debug.Log(value);
+
+        currentSelectItem = currentsShopShipDatas[value];
+
+        Debug.Log(currentSelectItem.name);
         activityUIControl[0].SetActive(true);
         activityUIControl[3].GetComponent<CanvasGroup>().interactable = false;
     }
@@ -401,13 +404,13 @@ public class ShopMain : MonoBehaviour
 
     void BuyItem(int value)
     {
-        string type = currentsShopShipDatas[value].GetType().FullName;
+        string type = currentSelectItem.GetType().FullName;
 
         switch (type)
         {
             case "ShipHull":
 
-                ShipHull shipHull = currentsShopShipDatas[value] as ShipHull;
+                ShipHull shipHull = currentSelectItem as ShipHull;
                 if (shipHull.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
                 {
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHull.defaultShipPartCost;
@@ -424,7 +427,7 @@ public class ShopMain : MonoBehaviour
 
             case "ShipHead":
 
-                ShipHead shipHead = currentsShopShipDatas[value] as ShipHead;
+                ShipHead shipHead = currentSelectItem as ShipHead;
                 if (shipHead.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
                 {
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHead.defaultShipPartCost;
@@ -439,7 +442,7 @@ public class ShopMain : MonoBehaviour
 
             case "ShipBody":
 
-                ShipBody shipBody = currentsShopShipDatas[value] as ShipBody;
+                ShipBody shipBody = currentSelectItem as ShipBody;
                 if (shipBody.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
                 {
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipBody.defaultShipPartCost;
@@ -454,7 +457,7 @@ public class ShopMain : MonoBehaviour
 
             case "ShipTail":
 
-                ShipTail shipTail = currentsShopShipDatas[value] as ShipTail;
+                ShipTail shipTail = currentSelectItem as ShipTail;
                 if (shipTail.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
                 {
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipTail.defaultShipPartCost;
@@ -469,7 +472,7 @@ public class ShopMain : MonoBehaviour
 
             case "Weapon":
 
-                Weapon weapon = currentsShopShipDatas[value] as Weapon;
+                Weapon weapon = currentSelectItem as Weapon;
                 if (weapon.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
                 {
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - weapon.defaultShipPartCost;
@@ -484,7 +487,7 @@ public class ShopMain : MonoBehaviour
 
             case "UtilityData":
 
-                UtilityData utilityData = currentsShopShipDatas[value] as UtilityData;
+                UtilityData utilityData = currentSelectItem as UtilityData;
                 if (utilityData.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
                 {
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - utilityData.defaultShipPartCost;
@@ -499,7 +502,7 @@ public class ShopMain : MonoBehaviour
 
             case "ShipReactor":
 
-                ShipReactor shipReactor = currentsShopShipDatas[value] as ShipReactor;
+                ShipReactor shipReactor = currentSelectItem as ShipReactor;
                 if (shipReactor.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
                 {
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipReactor.defaultShipPartCost;
@@ -515,7 +518,7 @@ public class ShopMain : MonoBehaviour
 
             case "ShipThruster":
 
-                ShipThruster shipThruster = currentsShopShipDatas[value] as ShipThruster;
+                ShipThruster shipThruster = currentSelectItem as ShipThruster;
                 if (shipThruster.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
                 {
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipThruster.defaultShipPartCost;

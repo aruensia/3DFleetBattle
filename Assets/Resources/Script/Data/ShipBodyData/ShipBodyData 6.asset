@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ShipBodyData 6
   m_EditorClassIdentifier: 
   partType: 2
-  defaultShipPartName: 
+  defaultShipPartName: Test2
+  iconImage: {fileID: 0}
   defaultShipPartArmor: 0
   defaultShipPartCost: 0
   defaultShipPartSize: 0

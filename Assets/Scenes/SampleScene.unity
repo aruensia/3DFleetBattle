@@ -1350,6 +1350,7 @@ MonoBehaviour:
   itemSlot: {fileID: 992431340034828300, guid: 6c3d8603a813c3e4ca363d64aebe0ffa, type: 3}
   partSlot: {fileID: 3607853116646230155, guid: 0dd012e4621f482499304966ef15ec78, type: 3}
   tempselectItem: {fileID: 5943205332805435894, guid: e1dba051a0c1b5942b3fd77d6c4606f3, type: 3}
+  defaultSlotImage: {fileID: 21300000, guid: 5ec1172c4dd206c4cb38812cb5d41fe5, type: 3}
   userInven: {fileID: 1411416107}
   buyItemPopup: {fileID: 9047804604782001227}
   shopListCount: 8
