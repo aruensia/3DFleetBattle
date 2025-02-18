@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
+using static UnityEditor.Progress;
 
 public class ShopMain : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class ShopMain : MonoBehaviour
     List<DefaultShipPart> currentsShopShipDatas = new List<DefaultShipPart>();
     List<GameObject> tempInventorylist = new List<GameObject>();
     List<int> slotPartList = new List<int>();
-
+    List<ScriptableObject> tempGetItemList = new List<ScriptableObject>();
 
     public Text shipPartName;
     public GameObject shopItemPrefab;
@@ -37,13 +38,11 @@ public class ShopMain : MonoBehaviour
     public Transform userInven;
     public GameObject buyItemPopup;
 
-    bool isScenesOn = true;
-    bool[] itemBuyCheck;
-
-    [SerializeField] int shopListCount;
     int tempInventoryCount;
     int itemItemRange;
+    int itemGradeRange;
 
+    public int maxListCount = 6;
     ScriptableObject currentSelectItem;
     public GameObject[] activityUIControl;
 
@@ -58,7 +57,6 @@ public class ShopMain : MonoBehaviour
     #endregion
     private void Start()
     {
-      
         //TempSelctShipHullButton = GameObject.Find("TempUserShipSetting").transform.GetChild(4).GetComponent<Button>();
         //TempSelctShipHullButton.onClick.AddListener(() => shipDesign.SetShipHull(tempSelectShopItem));
         //TempSelctShipHullButton.onClick.AddListener(() => AddTempShipHull());
@@ -67,19 +65,6 @@ public class ShopMain : MonoBehaviour
         activityUIControl[2].GetComponent<Button>().onClick.AddListener(() => ColseBuyPopup());
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
         CreateItemSlot();
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            SceneManager.LoadScene("MainScene");
-        }
-
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            //AddItemInUserInventory();
-        }
     }
 
     private void OnEnable()
@@ -94,7 +79,6 @@ public class ShopMain : MonoBehaviour
 
     public void OnDropdownEvent(int index) //유저가 선택한 드랍목록의 int값을 인자로 넘김
     {
-
         for( int i = 0; i < currentShopItemList.Count; i++ )
         {
             Destroy(currentShopItemList[i]);
@@ -111,17 +95,14 @@ public class ShopMain : MonoBehaviour
 
     void DropdownDataInit() //드롭다운 목록에 들어갈 값의 List를 생성함
     {
-        if ( isScenesOn == true)
+        dropdown.ClearOptions();
+        foreach (var dic in sellListShipData)
         {
-            dropdown.ClearOptions();
-            foreach (var dic in sellListShipData)
-            {
-                optionsList.Add(new TMP_Dropdown.OptionData(dic.Key));
-            }
-
-            dropdown.AddOptions(optionsList);
-            dropdown.value = 0;
+            optionsList.Add(new TMP_Dropdown.OptionData(dic.Key));
         }
+
+        dropdown.AddOptions(optionsList);
+        dropdown.value = 0;
     }
 
     public void LoadShopData()
@@ -154,15 +135,84 @@ public class ShopMain : MonoBehaviour
 
     void ShowShopItem(List<ScriptableObject> itemvalue)
     {
-        int itemGradeRange = Random.Range(1, (int)Grade.end);
         string[] tempitemname = new string[itemvalue.Count];
         DefaultShipPart tempdata;
         int count = 0;
-        itemBuyCheck = new bool[shopListCount];
 
         currentsShopShipDatas.Clear();
 
-        foreach ( var item in itemvalue)
+        //foreach ( var item in itemvalue)
+        //{
+        //    tempdata = item as DefaultShipPart;
+        //    currentsShopShipDatas.Add(tempdata);
+        //
+        //    if (tempdata.defaultShipPartName == null)
+        //    {
+        //        Debug.Log("tempitem.defaultShipPartName의 값이 비어있음");
+        //        Debug.Log($"카운트값은 : {count}");
+        //    }
+        //    else
+        //    {
+        //        tempitemname[count] = tempdata.defaultShipPartName;
+        //        count++;
+        //    }
+        //}
+
+        while(true)
+        {
+            itemGradeRange = Random.Range(0, 100);
+            if (itemGradeRange > 60)
+            {
+                foreach (var item in itemvalue)
+                {
+                    DefaultShipPart tempitem = item as DefaultShipPart;
+                    if (tempitem.DefaultShipPartGrade == Grade.Normal)
+                    {
+                        tempGetItemList.Add(tempitem);
+                    }
+                }
+            }
+            else if ( itemGradeRange > 75)
+            {
+                foreach (var item in itemvalue)
+                {
+                    DefaultShipPart tempitem = item as DefaultShipPart;
+                    if (tempitem.DefaultShipPartGrade == Grade.Military)
+                    {
+                        tempGetItemList.Add(tempitem);
+                    }
+                }
+            }
+            else if (itemGradeRange > 89)
+            {
+                foreach (var item in itemvalue)
+                {
+                    DefaultShipPart tempitem = item as DefaultShipPart;
+                    if (tempitem.DefaultShipPartGrade == Grade.HighTech)
+                    {
+                        tempGetItemList.Add(tempitem);
+                    }
+                }
+            }
+            else if (itemGradeRange > 97)
+            {
+                foreach (var item in itemvalue)
+                {
+                    DefaultShipPart tempitem = item as DefaultShipPart;
+                    if (tempitem.DefaultShipPartGrade == Grade.LostTech)
+                    {
+                        tempGetItemList.Add(tempitem);
+                    }
+                }
+            }
+
+            if ( tempGetItemList.Count == maxListCount)
+            {
+                break;
+            }
+        }
+
+        foreach (var item in tempGetItemList)
         {
             tempdata = item as DefaultShipPart;
             currentsShopShipDatas.Add(tempdata);
@@ -179,9 +229,9 @@ public class ShopMain : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < itemvalue.Count; i++)
+        for (int i = 0; i < tempGetItemList.Count; i++)
         {
-            itemItemRange = Random.Range(0, itemvalue.Count);
+            itemItemRange = Random.Range(0, tempGetItemList.Count);
             int tempint = itemItemRange;
             var a = Instantiate(shopItemPrefab, tempcanvas);
             a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>().text = tempitemname[itemItemRange];
@@ -190,6 +240,26 @@ public class ShopMain : MonoBehaviour
             currentShopItemList.Add(a);
             a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup(tempint));
         }
+
+
+
+
+
+
+
+
+
+        //for (int i = 0; i < itemvalue.Count; i++)
+        //{
+        //    itemItemRange = Random.Range(0, itemvalue.Count);
+        //    int tempint = itemItemRange;
+        //    var a = Instantiate(shopItemPrefab, tempcanvas);
+        //    a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>().text = tempitemname[itemItemRange];
+        //
+        //    a.transform.Translate(i * 180, -20, 0);
+        //    currentShopItemList.Add(a);
+        //    a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup(tempint));
+        //}
     }
 
     public void AddTempShipHull()
@@ -266,21 +336,13 @@ public class ShopMain : MonoBehaviour
         }
     }
 
-   // void AddItemInUserInventory()
-   // {
-   //     string addItemType = tempSelectShopItem.GetType().FullName;
-   //
-   //     DataManager.Instance.playerInfo.PlayerData[addItemType + "Data"].Add(tempSelectShopItem);
-   //     Debug.Log($"데이터 받아옴 {DataManager.Instance.playerInfo.PlayerData[addItemType + "Data"][0].name}");
-   // }
-
     void SetItemChange(GameObject partslot)
     {
         string number = Regex.Replace(partslot.name, @"\D", "");
         int tempnum = int.Parse(number);
         int count = 0;
 
-        switch(tempnum)
+        switch (tempnum)
         {
             case 0:
                 if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count == 0 )
@@ -289,10 +351,14 @@ public class ShopMain : MonoBehaviour
                 }
                 else if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count > 0)
                 {
+                    for (int i = 0; i < tempInventoryCount; i++)
+                    {
+                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHullData"])
                     {
                         ShipHull currentShipHull = (ShipHull)item;
-                        Debug.Log(currentShipHull.iconImage);
                         tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
@@ -307,7 +373,18 @@ public class ShopMain : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count > 0)
                 {
-                    Debug.Log("아이템이 있습니다.");
+                    for (int i = 0; i < tempInventoryCount; i++)
+                    {
+                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHeadData"])
+                    {
+                        ShipHead currentShipHull = (ShipHead)item;
+                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        count++;
+                    }
+                    count = 0; Debug.Log("아이템이 있습니다.");
                 }
                 break;
 
@@ -318,10 +395,14 @@ public class ShopMain : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count > 0)
                 {
+                    for (int i = 0; i < tempInventoryCount; i++)
+                    {
+                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipBodyData"])
                     {
                         ShipBody currentShipHull = (ShipBody)item;
-                        Debug.Log(currentShipHull.iconImage);
                         tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
@@ -336,7 +417,18 @@ public class ShopMain : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count > 0)
                 {
-                    Debug.Log("아이템이 있습니다.");
+                    for (int i = 0; i < tempInventoryCount; i++)
+                    {
+                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipTailData"])
+                    {
+                        ShipTail currentShipHull = (ShipTail)item;
+                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        count++;
+                    }
+                    count = 0;
                 }
                 break;
 
@@ -347,7 +439,18 @@ public class ShopMain : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count > 0)
                 {
-                    Debug.Log("아이템이 있습니다.");
+                    for (int i = 0; i < tempInventoryCount; i++)
+                    {
+                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["WeaponData"])
+                    {
+                        Weapon currentShipHull = (Weapon)item;
+                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        count++;
+                    }
+                    count = 0;
                 }
                 break;
 
@@ -358,7 +461,18 @@ public class ShopMain : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count > 0)
                 {
-                    Debug.Log("아이템이 있습니다.");
+                    for (int i = 0; i < tempInventoryCount; i++)
+                    {
+                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["UtilityData"])
+                    {
+                        UtilityData currentShipHull = (UtilityData)item;
+                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        count++;
+                    }
+                    count = 0;
                 }
                 break;
 
@@ -369,7 +483,18 @@ public class ShopMain : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count > 0)
                 {
-                    Debug.Log("아이템이 있습니다.");
+                    for (int i = 0; i < tempInventoryCount; i++)
+                    {
+                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipReactorData"])
+                    {
+                        ShipReactor currentShipHull = (ShipReactor)item;
+                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        count++;
+                    }
+                    count = 0;
                 }
                 break;
 
@@ -380,7 +505,18 @@ public class ShopMain : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count > 0)
                 {
-                    Debug.Log("아이템이 있습니다.");
+                    for (int i = 0; i < tempInventoryCount; i++)
+                    {
+                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"])
+                    {
+                        ShipThruster currentShipHull = (ShipThruster)item;
+                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        count++;
+                    }
+                    count = 0;
                 }
                 break;
         }
@@ -508,7 +644,6 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipReactor.defaultShipPartCost;
                     Debug.Log($"{shipReactor.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Add(shipReactor);
-                    //tempSelectShopItem = shipReactor;
                 }
                 else
                 {
@@ -533,12 +668,14 @@ public class ShopMain : MonoBehaviour
         }
     }
 
-
-
+    public void GoMain()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
 
     private void OnDisable()
     {
-        //tempSelectShopItem = null;
+        
     }
 
 }   
