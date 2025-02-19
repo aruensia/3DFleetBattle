@@ -16,12 +16,12 @@ MonoBehaviour:
   defaultShipPartName: "\uD638\uC704\uD568"
   iconImage: {fileID: 21300000, guid: 1363b808aaa58f24ba28633b7a512c10, type: 3}
   defaultShipPartArmor: 0
-  defaultShipPartCost: 0
+  defaultShipPartCost: 600
   defaultShipPartSize: 0
   defaultShipPartClass: 2
   DefaultShipPartGrade: 0
   hullName: "\uD638\uC704\uD568"
-  hulltHp: 0
+  hulltHp: 400
   shipClass: 2
   size: 0
-  cost: 0
+  cost: 600

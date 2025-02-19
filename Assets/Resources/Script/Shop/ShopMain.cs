@@ -140,73 +140,86 @@ public class ShopMain : MonoBehaviour
         int count = 0;
 
         currentsShopShipDatas.Clear();
+        tempGetItemList.Clear();
 
-        //foreach ( var item in itemvalue)
-        //{
-        //    tempdata = item as DefaultShipPart;
-        //    currentsShopShipDatas.Add(tempdata);
-        //
-        //    if (tempdata.defaultShipPartName == null)
-        //    {
-        //        Debug.Log("tempitem.defaultShipPartName의 값이 비어있음");
-        //        Debug.Log($"카운트값은 : {count}");
-        //    }
-        //    else
-        //    {
-        //        tempitemname[count] = tempdata.defaultShipPartName;
-        //        count++;
-        //    }
-        //}
-
-        while(true)
+        while (true)
         {
             itemGradeRange = Random.Range(0, 100);
-            if (itemGradeRange > 60)
-            {
-                foreach (var item in itemvalue)
-                {
-                    DefaultShipPart tempitem = item as DefaultShipPart;
-                    if (tempitem.DefaultShipPartGrade == Grade.Normal)
-                    {
-                        tempGetItemList.Add(tempitem);
-                    }
-                }
-            }
-            else if ( itemGradeRange > 75)
-            {
-                foreach (var item in itemvalue)
-                {
-                    DefaultShipPart tempitem = item as DefaultShipPart;
-                    if (tempitem.DefaultShipPartGrade == Grade.Military)
-                    {
-                        tempGetItemList.Add(tempitem);
-                    }
-                }
-            }
-            else if (itemGradeRange > 89)
-            {
-                foreach (var item in itemvalue)
-                {
-                    DefaultShipPart tempitem = item as DefaultShipPart;
-                    if (tempitem.DefaultShipPartGrade == Grade.HighTech)
-                    {
-                        tempGetItemList.Add(tempitem);
-                    }
-                }
-            }
-            else if (itemGradeRange > 97)
+            int tempGradeRange = itemGradeRange;
+            if (tempGradeRange > 97)
             {
                 foreach (var item in itemvalue)
                 {
                     DefaultShipPart tempitem = item as DefaultShipPart;
                     if (tempitem.DefaultShipPartGrade == Grade.LostTech)
                     {
-                        tempGetItemList.Add(tempitem);
+                        if (tempGetItemList.Count == maxListCount)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            tempGetItemList.Add(tempitem);
+                        }
+                    }
+                }
+            }
+            else if (tempGradeRange > 89)
+            {
+                foreach (var item in itemvalue)
+                {
+                    DefaultShipPart tempitem = item as DefaultShipPart;
+                    if (tempitem.DefaultShipPartGrade == Grade.HighTech)
+                    {
+                        if (tempGetItemList.Count == maxListCount)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            tempGetItemList.Add(tempitem);
+                        }
+                    }
+                }
+            }
+            else if (tempGradeRange > 75)
+            {
+                foreach (var item in itemvalue)
+                {
+                    DefaultShipPart tempitem = item as DefaultShipPart;
+                    if (tempitem.DefaultShipPartGrade == Grade.Military)
+                    {
+                        if (tempGetItemList.Count == maxListCount)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            tempGetItemList.Add(tempitem);
+                        }
+                    }
+                }
+            }
+            else if (tempGradeRange <=65 )
+            {
+                foreach (var item in itemvalue)
+                {
+                    DefaultShipPart tempitem = item as DefaultShipPart;
+                    if (tempitem.DefaultShipPartGrade == Grade.Normal)
+                    {
+                        if (tempGetItemList.Count == maxListCount)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            tempGetItemList.Add(tempitem);
+                        }
                     }
                 }
             }
 
-            if ( tempGetItemList.Count == maxListCount)
+            if (tempGetItemList.Count == maxListCount)
             {
                 break;
             }
@@ -240,26 +253,6 @@ public class ShopMain : MonoBehaviour
             currentShopItemList.Add(a);
             a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup(tempint));
         }
-
-
-
-
-
-
-
-
-
-        //for (int i = 0; i < itemvalue.Count; i++)
-        //{
-        //    itemItemRange = Random.Range(0, itemvalue.Count);
-        //    int tempint = itemItemRange;
-        //    var a = Instantiate(shopItemPrefab, tempcanvas);
-        //    a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>().text = tempitemname[itemItemRange];
-        //
-        //    a.transform.Translate(i * 180, -20, 0);
-        //    currentShopItemList.Add(a);
-        //    a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup(tempint));
-        //}
     }
 
     public void AddTempShipHull()

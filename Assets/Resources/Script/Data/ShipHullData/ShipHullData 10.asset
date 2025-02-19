@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16835d270f1e10744becc79389f971c5, type: 3}
-  m_Name: ShipHullData 1
+  m_Name: ShipHullData 10
   m_EditorClassIdentifier: 
   partType: 0
-  defaultShipPartName: "\uCD08\uACC4\uD568"
-  iconImage: {fileID: 21300000, guid: 37c8bc0599fc8bd458658f0f023af6cb, type: 3}
+  defaultShipPartName: "\uAD70\uC6A9 \uAD6C\uCD95\uD568"
+  iconImage: {fileID: 21300000, guid: 83a9e438ae1a4fa4286f0981b6ecb5fb, type: 3}
   defaultShipPartArmor: 0
-  defaultShipPartCost: 100
+  defaultShipPartCost: 0
   defaultShipPartSize: 0
-  defaultShipPartClass: 1
-  DefaultShipPartGrade: 0
-  hullName: "\uCD08\uACC4\uD568"
-  hulltHp: 100
-  shipClass: 1
+  defaultShipPartClass: 3
+  DefaultShipPartGrade: 3
+  hullName: "\uAD70\uC6A9 \uAD6C\uCD95\uD568"
+  hulltHp: 0
+  shipClass: 3
   size: 0
-  cost: 100
+  cost: 500
