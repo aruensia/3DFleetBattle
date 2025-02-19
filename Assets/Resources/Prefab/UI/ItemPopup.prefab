@@ -417,13 +417,14 @@ GameObject:
   - component: {fileID: 8230050805585356641}
   - component: {fileID: 5705476329175872241}
   - component: {fileID: 6380625292143477434}
+  - component: {fileID: 1216229323925677966}
   m_Layer: 5
   m_Name: ItemPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8230050805585356641
 RectTransform:
   m_ObjectHideFlags: 0
@@ -484,6 +485,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1216229323925677966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2857193100160932592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d417aec5fc9484793a0480d71d0db4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSlotImage: {fileID: 21300000, guid: 5ec1172c4dd206c4cb38812cb5d41fe5, type: 3}
 --- !u!1 &4168292020761102005
 GameObject:
   m_ObjectHideFlags: 0

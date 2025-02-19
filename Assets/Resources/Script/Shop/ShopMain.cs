@@ -10,9 +10,7 @@ using static UnityEditor.Progress;
 
 public class ShopMain : MonoBehaviour
 {
-    //상점은 유저 전투 등급에 따라 아이쇼핑할 수 있는 상품 개수가 증가한다.
-    //한 번의 전투가 끝날 때마다 아이템의 목록을 새로고침한다. 유저가 특정 상품을 구매할 경우, 솔드아웃이 되어, 더이상 목록에 상품이 생성되지 않는다.
-    ShipDesign shipDesign;
+    ItemPopup invenSlot;
 
     Dictionary<string, List<ScriptableObject>> sellListShipData = new Dictionary<string, List<ScriptableObject>>();
 
@@ -24,7 +22,7 @@ public class ShopMain : MonoBehaviour
     [SerializeField] TMP_Dropdown dropdown; //유저가 구매할 아이템에 대한 상점 목록
     List<GameObject> currentShopItemList = new List<GameObject>();  // 드롭다운 목록에 사용하는 아이템 리스트
     List<DefaultShipPart> currentsShopShipDatas = new List<DefaultShipPart>();
-    List<GameObject> tempInventorylist = new List<GameObject>();
+    public List<GameObject> tempInventorylist = new List<GameObject>();
     List<int> slotPartList = new List<int>();
     List<DefaultShipPart> tempGetItemList = new List<DefaultShipPart>();
 
@@ -35,12 +33,11 @@ public class ShopMain : MonoBehaviour
     public GameObject tempselectItem;
     public GameObject itemRefresh;
     public GameObject playerMoney;
-    public Sprite defaultSlotImage;
     Transform tempcanvas;
     public Transform userInven;
     public GameObject buyItemPopup;
 
-    int tempInventoryCount;
+    public int tempInventoryCount;
     int itemItemRange;
     int itemGradeRange;
     int currentDropDownNum;
@@ -52,7 +49,6 @@ public class ShopMain : MonoBehaviour
     public GameObject[] activityUIControl;
 
     List<GameObject> itemInpo = new List<GameObject>();
-
 
     //------------------------------------------------------------------
     #region 유저가 디자인중인 함선
@@ -69,6 +65,7 @@ public class ShopMain : MonoBehaviour
         //TempSelctShipHullButton.onClick.AddListener(() => shipDesign.SetShipHull(tempSelectShopItem));
         //TempSelctShipHullButton.onClick.AddListener(() => AddTempShipHull());
         tempcanvas = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Transform>(); // 드랍목록 아이템이 생성될 부모의 위치
+        invenSlot = GameObject.Find("CurrentItemPopup").GetComponent<ItemPopup>();
         activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange, expectBuyItem));
         activityUIControl[2].GetComponent<Button>().onClick.AddListener(() => ColseBuyPopup());
         itemRefresh.GetComponent<Button>().onClick.AddListener(() => ShowShopItem(tempTotalShopItem[currentDropDownNum]));
@@ -80,7 +77,6 @@ public class ShopMain : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("OnEnable 로드 됌");
-        shipDesign = GetComponent<ShipDesign>();
         GetForManagerShipData();
         DropdownDataInit();
         LoadShopData();
@@ -270,12 +266,6 @@ public class ShopMain : MonoBehaviour
         Debug.Log(buyCheckList.Count);
     }
 
-    public void AddTempShipHull()
-    {
-        currentHullName.text = shipDesign.currentship.shipHull.hullName.ToString();
-        currentHullHp.text = "체   력 : " + shipDesign.currentship.shipHull.hulltHp.ToString();
-    }
-
     void CreateItemSlot()
     {
         tempInventoryCount = DataManager.Instance.playerInfo.inventoryCount;
@@ -301,7 +291,12 @@ public class ShopMain : MonoBehaviour
         {
             var temppartslot = Instantiate(partSlot, userInven.transform.GetChild(0));
             temppartslot.name = "PartSlot" + i;
-            temppartslot.GetComponent<Button>().onClick.AddListener(() => SetItemChange(temppartslot));
+
+            temppartslot.GetComponent<Button>().onClick.AddListener(() => invenSlot.SetItemChange(temppartslot));
+            if (invenSlot == null)
+            {
+                Debug.Log("널");
+            }
            
             slotPartList.Add(slotPartvalue);
             slotPartvalue++;
@@ -343,191 +338,191 @@ public class ShopMain : MonoBehaviour
         }
     }
 
-    void SetItemChange(GameObject partslot)
-    {
-        string number = Regex.Replace(partslot.name, @"\D", "");
-        int tempnum = int.Parse(number);
-        int count = 0;
+    //void SetItemChange(GameObject partslot)
+    //{
+    //    string number = Regex.Replace(partslot.name, @"\D", "");
+    //    int tempnum = int.Parse(number);
+    //    int count = 0;
 
-        switch (tempnum)
-        {
-            case 0:
-                if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count == 0 )
-                {
-                    Debug.Log("아이템이 없습니다.");
-                }
-                else if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count > 0)
-                {
-                    for (int i = 0; i < tempInventoryCount; i++)
-                    {
-                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-                    }
+    //    switch (tempnum)
+    //    {
+    //        case 0:
+    //            if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count == 0 )
+    //            {
+    //                Debug.Log("아이템이 없습니다.");
+    //            }
+    //            else if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count > 0)
+    //            {
+    //                for (int i = 0; i < tempInventoryCount; i++)
+    //                {
+    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+    //                }
 
-                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHullData"])
-                    {
-                        ShipHull currentShipHull = (ShipHull)item;
-                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-                        count++;
-                    }
-                    count = 0;
-                }
-                break;
+    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHullData"])
+    //                {
+    //                    ShipHull currentShipHull = (ShipHull)item;
+    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+    //                    count++;
+    //                }
+    //                count = 0;
+    //            }
+    //            break;
 
-            case 1:
-                if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count == 0)
-                {
-                    Debug.Log("아이템이 없습니다.");
-                }
-                else if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count > 0)
-                {
-                    for (int i = 0; i < tempInventoryCount; i++)
-                    {
-                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-                    }
+    //        case 1:
+    //            if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count == 0)
+    //            {
+    //                Debug.Log("아이템이 없습니다.");
+    //            }
+    //            else if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count > 0)
+    //            {
+    //                for (int i = 0; i < tempInventoryCount; i++)
+    //                {
+    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+    //                }
 
-                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHeadData"])
-                    {
-                        ShipHead currentShipHull = (ShipHead)item;
-                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-                        count++;
-                    }
-                    count = 0; Debug.Log("아이템이 있습니다.");
-                }
-                break;
+    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHeadData"])
+    //                {
+    //                    ShipHead currentShipHull = (ShipHead)item;
+    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+    //                    count++;
+    //                }
+    //                count = 0; Debug.Log("아이템이 있습니다.");
+    //            }
+    //            break;
 
-            case 2:
-                if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count == 0)
-                {
-                    Debug.Log("아이템이 없습니다.");
-                }
-                else if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count > 0)
-                {
-                    for (int i = 0; i < tempInventoryCount; i++)
-                    {
-                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-                    }
+    //        case 2:
+    //            if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count == 0)
+    //            {
+    //                Debug.Log("아이템이 없습니다.");
+    //            }
+    //            else if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count > 0)
+    //            {
+    //                for (int i = 0; i < tempInventoryCount; i++)
+    //                {
+    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+    //                }
 
-                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipBodyData"])
-                    {
-                        ShipBody currentShipHull = (ShipBody)item;
-                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-                        count++;
-                    }
-                    count = 0;
-                }
-                break;
+    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipBodyData"])
+    //                {
+    //                    ShipBody currentShipHull = (ShipBody)item;
+    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+    //                    count++;
+    //                }
+    //                count = 0;
+    //            }
+    //            break;
 
-            case 3:
-                if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count == 0)
-                {
-                    Debug.Log("아이템이 없습니다.");
-                }
-                else if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count > 0)
-                {
-                    for (int i = 0; i < tempInventoryCount; i++)
-                    {
-                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-                    }
+    //        case 3:
+    //            if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count == 0)
+    //            {
+    //                Debug.Log("아이템이 없습니다.");
+    //            }
+    //            else if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count > 0)
+    //            {
+    //                for (int i = 0; i < tempInventoryCount; i++)
+    //                {
+    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+    //                }
 
-                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipTailData"])
-                    {
-                        ShipTail currentShipHull = (ShipTail)item;
-                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-                        count++;
-                    }
-                    count = 0;
-                }
-                break;
+    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipTailData"])
+    //                {
+    //                    ShipTail currentShipHull = (ShipTail)item;
+    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+    //                    count++;
+    //                }
+    //                count = 0;
+    //            }
+    //            break;
 
-            case 4:
-                if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count == 0)
-                {
-                    Debug.Log("아이템이 없습니다.");
-                }
-                else if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count > 0)
-                {
-                    for (int i = 0; i < tempInventoryCount; i++)
-                    {
-                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-                    }
+    //        case 4:
+    //            if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count == 0)
+    //            {
+    //                Debug.Log("아이템이 없습니다.");
+    //            }
+    //            else if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count > 0)
+    //            {
+    //                for (int i = 0; i < tempInventoryCount; i++)
+    //                {
+    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+    //                }
 
-                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["WeaponData"])
-                    {
-                        Weapon currentShipHull = (Weapon)item;
-                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-                        count++;
-                    }
-                    count = 0;
-                }
-                break;
+    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["WeaponData"])
+    //                {
+    //                    Weapon currentShipHull = (Weapon)item;
+    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+    //                    count++;
+    //                }
+    //                count = 0;
+    //            }
+    //            break;
 
-            case 5:
-                if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count == 0)
-                {
-                    Debug.Log("아이템이 없습니다.");
-                }
-                else if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count > 0)
-                {
-                    for (int i = 0; i < tempInventoryCount; i++)
-                    {
-                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-                    }
+    //        case 5:
+    //            if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count == 0)
+    //            {
+    //                Debug.Log("아이템이 없습니다.");
+    //            }
+    //            else if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count > 0)
+    //            {
+    //                for (int i = 0; i < tempInventoryCount; i++)
+    //                {
+    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+    //                }
 
-                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["UtilityData"])
-                    {
-                        UtilityData currentShipHull = (UtilityData)item;
-                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-                        count++;
-                    }
-                    count = 0;
-                }
-                break;
+    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["UtilityData"])
+    //                {
+    //                    UtilityData currentShipHull = (UtilityData)item;
+    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+    //                    count++;
+    //                }
+    //                count = 0;
+    //            }
+    //            break;
 
-            case 6:
-                if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count == 0)
-                {
-                    Debug.Log("아이템이 없습니다.");
-                }
-                else if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count > 0)
-                {
-                    for (int i = 0; i < tempInventoryCount; i++)
-                    {
-                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-                    }
+    //        case 6:
+    //            if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count == 0)
+    //            {
+    //                Debug.Log("아이템이 없습니다.");
+    //            }
+    //            else if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count > 0)
+    //            {
+    //                for (int i = 0; i < tempInventoryCount; i++)
+    //                {
+    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+    //                }
 
-                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipReactorData"])
-                    {
-                        ShipReactor currentShipHull = (ShipReactor)item;
-                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-                        count++;
-                    }
-                    count = 0;
-                }
-                break;
+    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipReactorData"])
+    //                {
+    //                    ShipReactor currentShipHull = (ShipReactor)item;
+    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+    //                    count++;
+    //                }
+    //                count = 0;
+    //            }
+    //            break;
 
-            case 7:
-                if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count == 0)
-                {
-                    Debug.Log("아이템이 없습니다.");
-                }
-                else if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count > 0)
-                {
-                    for (int i = 0; i < tempInventoryCount; i++)
-                    {
-                        tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-                    }
+    //        case 7:
+    //            if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count == 0)
+    //            {
+    //                Debug.Log("아이템이 없습니다.");
+    //            }
+    //            else if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count > 0)
+    //            {
+    //                for (int i = 0; i < tempInventoryCount; i++)
+    //                {
+    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+    //                }
 
-                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"])
-                    {
-                        ShipThruster currentShipHull = (ShipThruster)item;
-                        tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-                        count++;
-                    }
-                    count = 0;
-                }
-                break;
-        }
-    }
+    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"])
+    //                {
+    //                    ShipThruster currentShipHull = (ShipThruster)item;
+    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+    //                    count++;
+    //                }
+    //                count = 0;
+    //            }
+    //            break;
+    //    }
+    //}
 
     void SetBuyPopup(int value, GameObject item)
     {
@@ -712,11 +707,6 @@ public class ShopMain : MonoBehaviour
     public void GoMain()
     {
         SceneManager.LoadScene("MainScene");
-    }
-
-    public void SetItemInpo()
-    {
-
     }
 
 
