@@ -19,7 +19,7 @@ MonoBehaviour:
   defaultShipPartCost: 3000
   defaultShipPartSize: 0
   defaultShipPartClass: 3
-  DefaultShipPartGrade: 1
+  DefaultShipPartGrade: 75
   hullName: "\uAD70\uC6A9 \uAD6C\uCD95\uD568"
   hulltHp: 1400
   shipClass: 3

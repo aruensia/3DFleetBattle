@@ -14,7 +14,7 @@ public enum PartType
 
 public enum Grade
 {
-    Normal, Military, HighTech, LostTech, end
+    Normal = 65, Military = 75, HighTech = 89, LostTech = 97, end
 }
 
 public enum Utility

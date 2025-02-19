@@ -16,23 +16,25 @@ public class ShopMain : MonoBehaviour
 
     Dictionary<string, List<ScriptableObject>> sellListShipData = new Dictionary<string, List<ScriptableObject>>();
 
-    List<ScriptableObject> tempshopItemList = new List<ScriptableObject>(); // 상점에서 파는 아이템 목록
-    List<List<ScriptableObject>> totalshopItemList = new List<List<ScriptableObject>>(); // sellListShipData에서 받은 딕셔너리를 상점에서 사용하기 위해 저장한 리스트.
+    List<DefaultShipPart> tempshopItemList = new List<DefaultShipPart>(); // 상점에서 파는 아이템 목록
+    List<List<DefaultShipPart>> totalshopItemList = new List<List<DefaultShipPart>>(); // sellListShipData에서 받은 딕셔너리를 상점에서 사용하기 위해 저장한 리스트.
     List<TMP_Dropdown.OptionData> optionsList = new List<TMP_Dropdown.OptionData>(); //드롭다운 목록에 사용하는 키를 저장할 리스트
-    List<List<ScriptableObject>> tempTotalShopItem;
+    List<List<DefaultShipPart>> tempTotalShopItem;
 
     [SerializeField] TMP_Dropdown dropdown; //유저가 구매할 아이템에 대한 상점 목록
     List<GameObject> currentShopItemList = new List<GameObject>();  // 드롭다운 목록에 사용하는 아이템 리스트
     List<DefaultShipPart> currentsShopShipDatas = new List<DefaultShipPart>();
     List<GameObject> tempInventorylist = new List<GameObject>();
     List<int> slotPartList = new List<int>();
-    List<ScriptableObject> tempGetItemList = new List<ScriptableObject>();
+    List<DefaultShipPart> tempGetItemList = new List<DefaultShipPart>();
 
     public Text shipPartName;
     public GameObject shopItemPrefab;
     public GameObject itemSlot;
     public GameObject partSlot;
     public GameObject tempselectItem;
+    public GameObject itemRefresh;
+    public GameObject playerMoney;
     public Sprite defaultSlotImage;
     Transform tempcanvas;
     public Transform userInven;
@@ -41,6 +43,9 @@ public class ShopMain : MonoBehaviour
     int tempInventoryCount;
     int itemItemRange;
     int itemGradeRange;
+    int currentDropDownNum;
+    GameObject expectBuyItem;
+    List<bool> buyCheckList = new List<bool>();
 
     public int maxListCount = 6;
     ScriptableObject currentSelectItem;
@@ -61,8 +66,10 @@ public class ShopMain : MonoBehaviour
         //TempSelctShipHullButton.onClick.AddListener(() => shipDesign.SetShipHull(tempSelectShopItem));
         //TempSelctShipHullButton.onClick.AddListener(() => AddTempShipHull());
         tempcanvas = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Transform>(); // 드랍목록 아이템이 생성될 부모의 위치
-        activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange));
+        activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange, expectBuyItem));
         activityUIControl[2].GetComponent<Button>().onClick.AddListener(() => ColseBuyPopup());
+        itemRefresh.GetComponent<Button>().onClick.AddListener(() => ShowShopItem(tempTotalShopItem[currentDropDownNum]));
+        playerMoney.GetComponent<Text>().text = "보유 재화 : " + DataManager.Instance.playerInfo.Money.ToString();
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
         CreateItemSlot();
     }
@@ -83,7 +90,8 @@ public class ShopMain : MonoBehaviour
         {
             Destroy(currentShopItemList[i]);
         }
- 
+
+        currentDropDownNum = index;
         ShowShopItem(tempTotalShopItem[index]);
     }
 
@@ -114,7 +122,8 @@ public class ShopMain : MonoBehaviour
             {
                 for (int j = 0; j < sellListShipData[optionsList[i].text].Count; j++)
                 {
-                    tempshopItemList.Add(sellListShipData[optionsList[i].text][j]);
+
+                    tempshopItemList.Add(sellListShipData[optionsList[i].text][j] as DefaultShipPart);
                 }
             }
 
@@ -127,31 +136,35 @@ public class ShopMain : MonoBehaviour
 
             if(i != optionsList.Count)
             {
-                tempshopItemList = new List<ScriptableObject>();
+                tempshopItemList = new List<DefaultShipPart>();
             }
         }
         tempTotalShopItem = totalshopItemList;
     }
 
-    void ShowShopItem(List<ScriptableObject> itemvalue)
+    void ShowShopItem(List<DefaultShipPart> itemvalue)
     {
+        for (int i = 0; i < currentShopItemList.Count; i++)
+        {
+            Destroy(currentShopItemList[i]);
+        }
+
         string[] tempitemname = new string[itemvalue.Count];
-        DefaultShipPart tempdata;
         int count = 0;
 
         currentsShopShipDatas.Clear();
         tempGetItemList.Clear();
+        buyCheckList.Clear();
 
         while (true)
         {
             itemGradeRange = Random.Range(0, 100);
             int tempGradeRange = itemGradeRange;
-            if (tempGradeRange > 97)
+            if (tempGradeRange > (int)Grade.LostTech)
             {
                 foreach (var item in itemvalue)
                 {
-                    DefaultShipPart tempitem = item as DefaultShipPart;
-                    if (tempitem.DefaultShipPartGrade == Grade.LostTech)
+                    if (item.DefaultShipPartGrade == Grade.LostTech)
                     {
                         if (tempGetItemList.Count == maxListCount)
                         {
@@ -159,17 +172,16 @@ public class ShopMain : MonoBehaviour
                         }
                         else
                         {
-                            tempGetItemList.Add(tempitem);
+                            tempGetItemList.Add(item);
                         }
                     }
                 }
             }
-            else if (tempGradeRange > 89)
+            else if (tempGradeRange > (int)Grade.HighTech)
             {
                 foreach (var item in itemvalue)
                 {
-                    DefaultShipPart tempitem = item as DefaultShipPart;
-                    if (tempitem.DefaultShipPartGrade == Grade.HighTech)
+                    if (item.DefaultShipPartGrade == Grade.HighTech)
                     {
                         if (tempGetItemList.Count == maxListCount)
                         {
@@ -177,17 +189,16 @@ public class ShopMain : MonoBehaviour
                         }
                         else
                         {
-                            tempGetItemList.Add(tempitem);
+                            tempGetItemList.Add(item);
                         }
                     }
                 }
             }
-            else if (tempGradeRange > 75)
+            else if (tempGradeRange > (int)Grade.Military)
             {
                 foreach (var item in itemvalue)
                 {
-                    DefaultShipPart tempitem = item as DefaultShipPart;
-                    if (tempitem.DefaultShipPartGrade == Grade.Military)
+                    if (item.DefaultShipPartGrade == Grade.Military)
                     {
                         if (tempGetItemList.Count == maxListCount)
                         {
@@ -195,17 +206,16 @@ public class ShopMain : MonoBehaviour
                         }
                         else
                         {
-                            tempGetItemList.Add(tempitem);
+                            tempGetItemList.Add(item);
                         }
                     }
                 }
             }
-            else if (tempGradeRange <=65 )
+            else if (tempGradeRange <= (int)Grade.Normal )
             {
                 foreach (var item in itemvalue)
                 {
-                    DefaultShipPart tempitem = item as DefaultShipPart;
-                    if (tempitem.DefaultShipPartGrade == Grade.Normal)
+                    if (item.DefaultShipPartGrade == Grade.Normal)
                     {
                         if (tempGetItemList.Count == maxListCount)
                         {
@@ -213,7 +223,7 @@ public class ShopMain : MonoBehaviour
                         }
                         else
                         {
-                            tempGetItemList.Add(tempitem);
+                            tempGetItemList.Add(item);
                         }
                     }
                 }
@@ -227,17 +237,16 @@ public class ShopMain : MonoBehaviour
 
         foreach (var item in tempGetItemList)
         {
-            tempdata = item as DefaultShipPart;
-            currentsShopShipDatas.Add(tempdata);
+            currentsShopShipDatas.Add(item);
 
-            if (tempdata.defaultShipPartName == null)
+            if (item.defaultShipPartName == null)
             {
                 Debug.Log("tempitem.defaultShipPartName의 값이 비어있음");
                 Debug.Log($"카운트값은 : {count}");
             }
             else
             {
-                tempitemname[count] = tempdata.defaultShipPartName;
+                tempitemname[count] = item.defaultShipPartName;
                 count++;
             }
         }
@@ -247,12 +256,15 @@ public class ShopMain : MonoBehaviour
             itemItemRange = Random.Range(0, tempGetItemList.Count);
             int tempint = itemItemRange;
             var a = Instantiate(shopItemPrefab, tempcanvas);
+            a.name = "shopItem" + i;
+            buyCheckList.Add(a);
             a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>().text = tempitemname[itemItemRange];
 
             a.transform.Translate(i * 180, -20, 0);
             currentShopItemList.Add(a);
-            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup(tempint));
+            a.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(() => SetBuyPopup(tempint, a));
         }
+        Debug.Log(buyCheckList.Count);
     }
 
     public void AddTempShipHull()
@@ -300,7 +312,6 @@ public class ShopMain : MonoBehaviour
                 case "ShipHeadData":
                     temppartslot.GetComponentInChildren<Text>().text = "선두";
                     break;
-
 
                 case "ShipBodyData":
                     temppartslot.GetComponentInChildren<Text>().text = "선체";
@@ -515,11 +526,11 @@ public class ShopMain : MonoBehaviour
         }
     }
 
-    void SetBuyPopup(int value)
+    void SetBuyPopup(int value, GameObject item)
     {
 
         currentSelectItem = currentsShopShipDatas[value];
-
+        expectBuyItem = item;
         Debug.Log(currentSelectItem.name);
         activityUIControl[0].SetActive(true);
         activityUIControl[3].GetComponent<CanvasGroup>().interactable = false;
@@ -531,57 +542,85 @@ public class ShopMain : MonoBehaviour
         activityUIControl[3].GetComponent<CanvasGroup>().interactable = true;
     }
 
-    void BuyItem(int value)
+    void BuyItem(int value, GameObject item)
     {
         string type = currentSelectItem.GetType().FullName;
+
+        string number = Regex.Replace(item.name, @"\D", "");
+        int tempnum = int.Parse(number);
 
         switch (type)
         {
             case "ShipHull":
+                
+                //if(buyCheckList[tempnum] == true)
+                //{
+                  ShipHull shipHull = currentSelectItem as ShipHull;
+                  if (shipHull.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                  {
+                      DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHull.defaultShipPartCost;
+                      DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Add(shipHull);
+                      buyCheckList[tempnum] = false;
+                  }
+                  else
+                  {
+                      Debug.Log("보유한 돈이 모자랍니다.");
+                  }
 
-                ShipHull shipHull = currentSelectItem as ShipHull;
-                if (shipHull.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHull.defaultShipPartCost;
-                    Debug.Log($"{shipHull.hullName}");
-                    Debug.Log($"{DataManager.Instance.playerInfo.Money}");
-                    DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Add(shipHull);
-                    Debug.Log($"{DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count}");
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
+                //}
+                //else
+                //{
+                //    Debug.Log("이미 구입한 아이템 입니다.");
+                //}
+
                 break;
 
             case "ShipHead":
 
-                ShipHead shipHead = currentSelectItem as ShipHead;
-                if (shipHead.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHead.defaultShipPartCost;
-                    Debug.Log($"{shipHead.defaultShipPartName}");
-                    DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Add(shipHead);
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
+                //if (buyCheckList[tempnum] == true)
+                //{
+                  ShipHead shipHead = currentSelectItem as ShipHead;
+                  if (shipHead.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                  {
+                      DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHead.defaultShipPartCost;
+                      DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Add(shipHead);
+                      buyCheckList[tempnum] = false;
+                  }
+                  else
+                  {
+                      Debug.Log("보유한 돈이 모자랍니다.");
+                  }
+                //}
+                //else
+                //{
+                //    Debug.Log("이미 구입한 아이템 입니다.");
+                //}
+
                 break;
 
             case "ShipBody":
 
-                ShipBody shipBody = currentSelectItem as ShipBody;
-                if (shipBody.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
-                {
-                    DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipBody.defaultShipPartCost;
-                    Debug.Log($"{shipBody.defaultShipPartName}");
-                    DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Add(shipBody);
-                }
-                else
-                {
-                    Debug.Log("보유한 돈이 모자랍니다.");
-                }
+                //if (buyCheckList[tempnum] == true)
+                //{
+                  ShipBody shipBody = currentSelectItem as ShipBody;
+                  if (shipBody.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
+                  {
+                      DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipBody.defaultShipPartCost;
+                      Debug.Log($"{shipBody.defaultShipPartName}");
+                      DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Add(shipBody);
+                      buyCheckList[tempnum] = false;
+
+                  }
+                  else
+                  {
+                      Debug.Log("보유한 돈이 모자랍니다.");
+                  }
+                //}
+                //else
+                //{
+                    //Debug.Log("이미 구입한 아이템 입니다.");
+                //}
+
                 break;
 
             case "ShipTail":
@@ -592,6 +631,7 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipTail.defaultShipPartCost;
                     Debug.Log($"{shipTail.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Add(shipTail);
+                    buyCheckList[tempnum] = false;
                 }
                 else
                 {
@@ -607,6 +647,7 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - weapon.defaultShipPartCost;
                     Debug.Log($"{weapon.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(weapon);
+                    buyCheckList[tempnum] = false;
                 }
                 else
                 {
@@ -622,6 +663,7 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - utilityData.defaultShipPartCost;
                     Debug.Log($"{utilityData.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(utilityData);
+                    buyCheckList[tempnum] = false;
                 }
                 else
                 {
@@ -637,6 +679,7 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipReactor.defaultShipPartCost;
                     Debug.Log($"{shipReactor.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Add(shipReactor);
+                    buyCheckList[tempnum] = false;
                 }
                 else
                 {
@@ -652,6 +695,7 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipThruster.defaultShipPartCost;
                     Debug.Log($"{shipThruster.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Add(shipThruster);
+                    buyCheckList[tempnum] = false;
                 }
                 else
                 {
@@ -659,6 +703,7 @@ public class ShopMain : MonoBehaviour
                 }
                 break;
         }
+        playerMoney.GetComponent<Text>().text = "보유 재화 : " + DataManager.Instance.playerInfo.Money.ToString(); DataManager.Instance.playerInfo.Money.ToString();
     }
 
     public void GoMain()

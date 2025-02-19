@@ -19,7 +19,7 @@ MonoBehaviour:
   defaultShipPartCost: 0
   defaultShipPartSize: 0
   defaultShipPartClass: 1
-  DefaultShipPartGrade: 2
+  DefaultShipPartGrade: 89
   weapons: []
   reactor: {fileID: 0}
   utility: []
