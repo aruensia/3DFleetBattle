@@ -51,6 +51,9 @@ public class ShopMain : MonoBehaviour
     ScriptableObject currentSelectItem;
     public GameObject[] activityUIControl;
 
+    List<GameObject> itemInpo = new List<GameObject>();
+
+
     //------------------------------------------------------------------
     #region 유저가 디자인중인 함선
 
@@ -710,6 +713,13 @@ public class ShopMain : MonoBehaviour
     {
         SceneManager.LoadScene("MainScene");
     }
+
+    public void SetItemInpo()
+    {
+
+    }
+
+
 
     private void OnDisable()
     {
