@@ -21,7 +21,7 @@ public class ShopMain : MonoBehaviour
 
     [SerializeField] TMP_Dropdown dropdown; //유저가 구매할 아이템에 대한 상점 목록
     List<GameObject> currentShopItemList = new List<GameObject>();  // 드롭다운 목록에 사용하는 아이템 리스트
-    List<DefaultShipPart> currentsShopShipDatas = new List<DefaultShipPart>();
+    public List<DefaultShipPart> currentsShopShipDatas = new List<DefaultShipPart>();
     public List<GameObject> tempInventorylist = new List<GameObject>();
     List<int> slotPartList = new List<int>();
     List<DefaultShipPart> tempGetItemList = new List<DefaultShipPart>();
@@ -38,11 +38,11 @@ public class ShopMain : MonoBehaviour
     int itemItemRange;
     int itemGradeRange;
     int currentDropDownNum;
-    GameObject expectBuyItem;
+    public GameObject expectBuyItem;
     List<bool> buyCheckList = new List<bool>();
 
     public int maxListCount = 6;
-    DefaultShipPart currentSelectItem;
+    public DefaultShipPart currentSelectItem;
     public GameObject[] activityUIControl;
 
     public List<Text> itemDefalutData = new List<Text>();
@@ -56,20 +56,9 @@ public class ShopMain : MonoBehaviour
     public List<Text> thruster = new List<Text>();
     public List<Text> reactor = new List<Text>();
 
-    //------------------------------------------------------------------
-    #region 유저가 디자인중인 함선
-
-    public Text currentHullName;
-    public Text currentHullHp;
-    public Text currentHullArmor;
-
-
-    #endregion
     private void Start()
     {
-        //TempSelctShipHullButton = GameObject.Find("TempUserShipSetting").transform.GetChild(4).GetComponent<Button>();
-        //TempSelctShipHullButton.onClick.AddListener(() => shipDesign.SetShipHull(tempSelectShopItem));
-        //TempSelctShipHullButton.onClick.AddListener(() => AddTempShipHull());
+        playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
         tempcanvas = GameObject.Find("Canvas").transform.GetChild(3).GetComponent<Transform>(); // 드랍목록 아이템이 생성될 부모의 위치
         invenSlot = GameObject.Find("CurrentItemPopup").GetComponent<ItemPopup>();
         activityUIControl[1].GetComponent<Button>().onClick.AddListener(() => BuyItem(itemItemRange, expectBuyItem));
@@ -78,17 +67,14 @@ public class ShopMain : MonoBehaviour
         playerMoney.GetComponent<Text>().text = "보유 재화 : " + DataManager.Instance.playerInfo.Money.ToString();
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
         GetText();
-        //CreateItemSlot();
     }
 
     private void OnEnable()
     {
-        playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
         GetForManagerShipData();
         DropdownDataInit();
         LoadShopData();
         Debug.Log("OnEnable 로드 됌");
-        //CreatePartSlot();
     }
 
     void GetText()
@@ -116,7 +102,7 @@ public class ShopMain : MonoBehaviour
 
     }
 
-    void falseText()
+    void FalseText()
     {
         itemDefalutData[0].gameObject.SetActive(false);
         itemDefalutData[1].gameObject.SetActive(false);
@@ -323,76 +309,9 @@ public class ShopMain : MonoBehaviour
         Debug.Log(buyCheckList.Count);
     }
 
-    //void CreateItemSlot()
-    //{
-    //    tempInventoryCount = DataManager.Instance.playerInfo.inventoryCount;
-    //
-    //    for (int i = 0; i < tempInventoryCount; i++)
-    //    {
-    //        var inventory = Instantiate(itemSlot, userInven.transform.GetChild(1));
-    //        tempInventorylist.Add(inventory);
-    //    }
-    //}
-
-    //void CreatePartSlot()
-    //{
-    //    List<string> slots = new List<string>();
-    //    int slotPartvalue = 0;
-    //
-    //    foreach (var inventory in sellListShipData)
-    //    {
-    //        slots.Add(inventory.Key);
-    //    }
-    //
-    //    for ( int i = 0; i < sellListShipData.Count; i++)
-    //    {
-    //        var temppartslot = Instantiate(partSlot, userInven.transform.GetChild(0));
-    //        temppartslot.name = "PartSlot" + i;
-    //
-    //        temppartslot.GetComponent<Button>().onClick.AddListener(() => invenSlot.SetItemChange(temppartslot));
-    //        slotPartList.Add(slotPartvalue);
-    //        slotPartvalue++;
-    //
-    //        switch (slots[i])
-    //        {
-    //            case "ShipHullData":
-    //                temppartslot.GetComponentInChildren<Text>().text = "함선 함체";
-    //                break;
-    //
-    //            case "ShipHeadData":
-    //                temppartslot.GetComponentInChildren<Text>().text = "선두";
-    //                break;
-    //
-    //            case "ShipBodyData":
-    //                temppartslot.GetComponentInChildren<Text>().text = "선체";
-    //                break;
-    //
-    //            case "ShipTailData":
-    //                temppartslot.GetComponentInChildren<Text>().text = "선미";
-    //                break;
-    //
-    //            case "WeaponData":
-    //                temppartslot.GetComponentInChildren<Text>().text = "무기";
-    //                break;
-    //
-    //            case "UtilityData":
-    //                temppartslot.GetComponentInChildren<Text>().text = "보조장치";
-    //                break;
-    //
-    //            case "ShipReactorData":
-    //                temppartslot.GetComponentInChildren<Text>().text = "반응로";
-    //                break;
-    //
-    //            case "ShipThrusterData":
-    //                temppartslot.GetComponentInChildren<Text>().text = "추진체";
-    //                break;
-    //        }
-    //    }
-    //}
-
     void SetBuyPopup(int value, GameObject item)
     {
-        falseText();
+        FalseText();
         expectBuyItem = item;
 
         itemDefalutData[0].gameObject.SetActive(true);
@@ -401,7 +320,6 @@ public class ShopMain : MonoBehaviour
         currentSelectItem = currentsShopShipDatas[value];
 
         string type = currentSelectItem.GetType().FullName;
-
 
         switch (type)
         {
@@ -544,7 +462,7 @@ public class ShopMain : MonoBehaviour
                   {
                       DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHull.defaultShipPartCost;
                       DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Add(shipHull);
-                      buyCheckList[tempnum] = false;
+                      //buyCheckList[tempnum] = false;
                   }
                   else
                   {
@@ -568,7 +486,7 @@ public class ShopMain : MonoBehaviour
                   {
                       DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHead.defaultShipPartCost;
                       DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Add(shipHead);
-                      buyCheckList[tempnum] = false;
+                      //buyCheckList[tempnum] = false;
                   }
                   else
                   {
@@ -592,7 +510,7 @@ public class ShopMain : MonoBehaviour
                       DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipBody.defaultShipPartCost;
                       Debug.Log($"{shipBody.defaultShipPartName}");
                       DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Add(shipBody);
-                      buyCheckList[tempnum] = false;
+                      //buyCheckList[tempnum] = false;
 
                   }
                   else
@@ -615,7 +533,7 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipTail.defaultShipPartCost;
                     Debug.Log($"{shipTail.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Add(shipTail);
-                    buyCheckList[tempnum] = false;
+                    //buyCheckList[tempnum] = false;
                 }
                 else
                 {
@@ -631,7 +549,7 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - weapon.defaultShipPartCost;
                     Debug.Log($"{weapon.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(weapon);
-                    buyCheckList[tempnum] = false;
+                    //buyCheckList[tempnum] = false;
                 }
                 else
                 {
@@ -647,7 +565,7 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - utilityData.defaultShipPartCost;
                     Debug.Log($"{utilityData.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(utilityData);
-                    buyCheckList[tempnum] = false;
+                    //buyCheckList[tempnum] = false;
                 }
                 else
                 {
@@ -663,7 +581,7 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipReactor.defaultShipPartCost;
                     Debug.Log($"{shipReactor.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Add(shipReactor);
-                    buyCheckList[tempnum] = false;
+                    //buyCheckList[tempnum] = false;
                 }
                 else
                 {
@@ -679,7 +597,7 @@ public class ShopMain : MonoBehaviour
                     DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipThruster.defaultShipPartCost;
                     Debug.Log($"{shipThruster.defaultShipPartName}");
                     DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Add(shipThruster);
-                    buyCheckList[tempnum] = false;
+                    //buyCheckList[tempnum] = false;
                 }
                 else
                 {
@@ -687,7 +605,7 @@ public class ShopMain : MonoBehaviour
                 }
                 break;
         }
-        playerMoney.GetComponent<Text>().text = "보유 재화 : " + DataManager.Instance.playerInfo.Money.ToString(); DataManager.Instance.playerInfo.Money.ToString();
+        playerMoney.GetComponent<Text>().text = "보유 재화 : " + DataManager.Instance.playerInfo.Money.ToString();
     }
 
     public void GoMain()

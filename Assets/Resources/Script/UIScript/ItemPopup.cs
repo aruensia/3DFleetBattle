@@ -3,18 +3,29 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ItemPopup : MonoBehaviour
 {
+
     PlayerInfo playerInfo;
     ShopMain shopmain;
     ShipDesign shipdesign;
+    public Button itemSlotButton;
     public Sprite defaultSlotImage;
 
     private void Start()
     {
-        shopmain = GameObject.Find("ShopManager").GetComponent<ShopMain>();
-        playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
+        if(SceneManager.GetActiveScene().name == "ShipDesign")
+        {
+            playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
+        }
+        if (SceneManager.GetActiveScene().name == "SampleScene")
+        {
+            shopmain = GameObject.Find("ShopManager").GetComponent<ShopMain>();
+            playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
+        }
+        itemSlotButton = GetComponent<Button>();
     }
 
     public void SetItemChange(GameObject partslot)
@@ -29,6 +40,7 @@ public class ItemPopup : MonoBehaviour
                 if (DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count == 0)
                 {
                     Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipHullData";
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count > 0)
                 {
@@ -43,6 +55,7 @@ public class ItemPopup : MonoBehaviour
                         playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
+                    playerInfo.currentSelectDataValue = "ShipHullData";
                     count = 0;
                 }
                 break;
@@ -61,10 +74,11 @@ public class ItemPopup : MonoBehaviour
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHeadData"])
                     {
-                        ShipHead currentShipHull = (ShipHead)item;
-                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        ShipHead currentShipHead = (ShipHead)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHead.iconImage;
                         count++;
                     }
+                    playerInfo.currentSelectDataValue = "ShipHeadData";
                     count = 0; Debug.Log("아이템이 있습니다.");
                 }
                 break;
@@ -83,10 +97,11 @@ public class ItemPopup : MonoBehaviour
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipBodyData"])
                     {
-                        ShipBody currentShipHull = (ShipBody)item;
-                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        ShipBody currentShipBody = (ShipBody)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipBody.iconImage;
                         count++;
                     }
+                    playerInfo.currentSelectDataValue = "ShipBodyData";
                     count = 0;
                 }
                 break;
@@ -105,10 +120,11 @@ public class ItemPopup : MonoBehaviour
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipTailData"])
                     {
-                        ShipTail currentShipHull = (ShipTail)item;
-                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        ShipTail currentShipTail = (ShipTail)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipTail.iconImage;
                         count++;
                     }
+                    playerInfo.currentSelectDataValue = "ShipTailData";
                     count = 0;
                 }
                 break;
@@ -127,10 +143,11 @@ public class ItemPopup : MonoBehaviour
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["WeaponData"])
                     {
-                        Weapon currentShipHull = (Weapon)item;
-                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        Weapon currentShipWeapon = (Weapon)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipWeapon.iconImage;
                         count++;
                     }
+                    playerInfo.currentSelectDataValue = "WeaponData";
                     count = 0;
                 }
                 break;
@@ -149,10 +166,11 @@ public class ItemPopup : MonoBehaviour
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["UtilityData"])
                     {
-                        UtilityData currentShipHull = (UtilityData)item;
-                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        UtilityData currentShipUtility = (UtilityData)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipUtility.iconImage;
                         count++;
                     }
+                    playerInfo.currentSelectDataValue = "UtilityData";
                     count = 0;
                 }
                 break;
@@ -171,10 +189,11 @@ public class ItemPopup : MonoBehaviour
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipReactorData"])
                     {
-                        ShipReactor currentShipHull = (ShipReactor)item;
-                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        ShipReactor currentShipReactor = (ShipReactor)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipReactor.iconImage;
                         count++;
                     }
+                    playerInfo.currentSelectDataValue = "ShipReactorData";
                     count = 0;
                 }
                 break;
@@ -193,10 +212,11 @@ public class ItemPopup : MonoBehaviour
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"])
                     {
-                        ShipThruster currentShipHull = (ShipThruster)item;
-                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        ShipThruster currentShipThruster = (ShipThruster)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipThruster.iconImage;
                         count++;
                     }
+                    playerInfo.currentSelectDataValue = "ShipThrusterData";
                     count = 0;
                 }
                 break;

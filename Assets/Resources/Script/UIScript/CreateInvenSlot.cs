@@ -15,11 +15,19 @@ public class CreateInvenSlot : MonoBehaviour
     public GameObject itemSlot;
     public Transform userInven;
 
+    private void OnEnable()
+    {
+        GetForManagerShipData();
+        //CreatePartSlot();
+        //CreateItemSlot();
+    }
+
+
     private void Start()
     {
         playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
         invenSlot = GameObject.Find("CurrentItemPopup").GetComponent<ItemPopup>();
-        GetForManagerShipData();
+        //GetForManagerShipData();
         CreatePartSlot();
         CreateItemSlot();
     }
@@ -39,6 +47,7 @@ public class CreateInvenSlot : MonoBehaviour
             for (int i = 0; i < inventoryCount; i++)
             {
                 var inventory = Instantiate(itemSlot, userInven.transform.GetChild(1));
+                inventory.name = "inventory" + i;
                 playerInfo.tempInventorylist.Add(inventory);
             }
         }
@@ -47,6 +56,7 @@ public class CreateInvenSlot : MonoBehaviour
             for (int i = 0; i < inventoryCount; i++)
             {
                 var inventory = Instantiate(itemSlot, userInven.transform.GetChild(1));
+                inventory.name = "inventory" + i;
                 playerInfo.tempInventorylist[i] = inventory;
             }
         }
@@ -55,7 +65,6 @@ public class CreateInvenSlot : MonoBehaviour
     void CreatePartSlot()
     {
         List<string> slots = new List<string>();
-        int slotPartvalue = 0;
 
         foreach (var inventory in shipDataDic)
         {
@@ -68,8 +77,6 @@ public class CreateInvenSlot : MonoBehaviour
             temppartslot.name = "PartSlot" + i;
 
             temppartslot.GetComponent<Button>().onClick.AddListener(() => invenSlot.SetItemChange(temppartslot));
-            slotPartList.Add(slotPartvalue);
-            slotPartvalue++;
 
             switch (slots[i])
             {
