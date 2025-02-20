@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: ShipHeadData 5
   m_EditorClassIdentifier: 
   partType: 1
-  defaultShipPartName: 
+  defaultShipPartName: "\uCCA8\uB2E8 \uC694\uACA9\uD568 \uC120\uB450"
   iconImage: {fileID: 0}
-  defaultShipPartArmor: 0
-  defaultShipPartCost: 0
+  defaultShipPartArmor: 100
+  defaultShipPartCost: 60
   defaultShipPartSize: 0
-  defaultShipPartClass: 0
-  DefaultShipPartGrade: 2
-  weapons: []
-  utility: []
+  defaultShipPartClass: 1
+  DefaultShipPartGrade: 89
+  weapons:
+  - {fileID: 0}
+  utility:
+  - {fileID: 0}
+  - {fileID: 0}

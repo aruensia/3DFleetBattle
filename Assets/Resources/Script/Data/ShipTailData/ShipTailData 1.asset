@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partType: 3
   defaultShipPartName: "\uC694\uACA9\uD568 \uC120\uBBF8"
-  defaultShipPartArmor: 0
-  defaultShipPartCost: 0
+  iconImage: {fileID: 0}
+  defaultShipPartArmor: 30
+  defaultShipPartCost: 10
   defaultShipPartSize: 0
   defaultShipPartClass: 1
-  DefaultShipPartGrade: 0
+  DefaultShipPartGrade: 65
   weapons: []
   thruster: {fileID: 0}
   utility:

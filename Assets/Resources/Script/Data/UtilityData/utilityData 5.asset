@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: utilityData 5
   m_EditorClassIdentifier: 
   partType: 5
-  defaultShipPartName: 
+  defaultShipPartName: "\uC120\uC870 \uC65C\uACE1\uC7A5"
+  iconImage: {fileID: 0}
   defaultShipPartArmor: 0
-  defaultShipPartCost: 0
+  defaultShipPartCost: 20
   defaultShipPartSize: 0
   defaultShipPartClass: 1
-  DefaultShipPartGrade: 0
-  utilityName: 
+  DefaultShipPartGrade: 97
+  utilityName: "\uC120\uC870 \uC65C\uACE1\uC7A5"
   defence: 0
-  shild: 0
+  shild: 300
+  usePower: 80
   utility: 0

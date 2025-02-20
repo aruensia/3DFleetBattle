@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: ShipReactorData 3
   m_EditorClassIdentifier: 
   partType: 6
-  defaultShipPartName: 
+  defaultShipPartName: "\uCCA8\uB2E8 \uD575\uBD84\uC5F4 \uBC18\uC751\uB85C"
+  iconImage: {fileID: 0}
   defaultShipPartArmor: 0
-  defaultShipPartCost: 0
+  defaultShipPartCost: 30
   defaultShipPartSize: 0
   defaultShipPartClass: 1
-  DefaultShipPartGrade: 0
-  reactorName: 
-  reactorPower: 0
+  DefaultShipPartGrade: 89
+  reactorName: "\uCCA8\uB2E8 \uD575\uBD84\uC5F4 \uBC18\uC751\uB85C"
+  reactorPower: 60

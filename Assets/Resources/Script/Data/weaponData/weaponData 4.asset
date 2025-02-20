@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partType: 0
   defaultShipPartName: "\uAD70\uC6A9 \uCF54\uC77C\uAC74"
+  iconImage: {fileID: 0}
   defaultShipPartArmor: 0
   defaultShipPartCost: 0
   defaultShipPartSize: 0
   defaultShipPartClass: 1
-  DefaultShipPartGrade: 1
+  DefaultShipPartGrade: 75
   damage: 22
   attackRange: 30
   weaponType: 0

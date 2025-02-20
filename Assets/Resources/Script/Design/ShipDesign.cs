@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ShipDesign : MonoBehaviour
@@ -9,8 +10,9 @@ public class ShipDesign : MonoBehaviour
     //유저가 생성할 함선에 대해서 뉴 할당.
     public Ship currentship = new Ship();
 
+    DefaultShipPart curruentSelectUserItem;
 
-    public void SetShipHull(ScriptableObject value)
+    public void SetShipHull(DefaultShipPart value)
     {
          Debug.Log("버튼이 눌려서 쉽디자인 호출됌");
          
@@ -22,8 +24,6 @@ public class ShipDesign : MonoBehaviour
          }
          
          Debug.Log(this.currentship.shipHull.hullName + " 가 들어갔습니다.");
-      
-
     }
 
     void SetShipPart(DefaultShipPart tempShipPart)
@@ -73,5 +73,10 @@ public class ShipDesign : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void GoMain()
+    {
+        SceneManager.LoadScene("MainScene");
     }
 }

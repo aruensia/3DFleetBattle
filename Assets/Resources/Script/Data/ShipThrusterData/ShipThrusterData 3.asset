@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: ShipThrusterData 3
   m_EditorClassIdentifier: 
   partType: 7
-  defaultShipPartName: 
+  defaultShipPartName: "\uCCA8\uB2E8 \uD654\uD559 \uCD94\uC9C4\uAE30"
+  iconImage: {fileID: 0}
   defaultShipPartArmor: 0
   defaultShipPartCost: 0
   defaultShipPartSize: 0
   defaultShipPartClass: 1
-  DefaultShipPartGrade: 2
-  thrusterName: 
-  thrusterSpeed: 0
-  usePower: 0
+  DefaultShipPartGrade: 89
+  thrusterName: "\uCCA8\uB2E8 \uD654\uD559 \uCD94\uC9C4\uAE30"
+  thrusterSpeed: 20
+  usePower: 15

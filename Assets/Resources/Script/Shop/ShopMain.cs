@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -11,6 +10,7 @@ using static UnityEditor.Progress;
 public class ShopMain : MonoBehaviour
 {
     ItemPopup invenSlot;
+    PlayerInfo playerInfo;
 
     Dictionary<string, List<ScriptableObject>> sellListShipData = new Dictionary<string, List<ScriptableObject>>();
 
@@ -28,13 +28,10 @@ public class ShopMain : MonoBehaviour
 
     public Text shipPartName;
     public GameObject shopItemPrefab;
-    public GameObject itemSlot;
-    public GameObject partSlot;
     public GameObject tempselectItem;
     public GameObject itemRefresh;
     public GameObject playerMoney;
     Transform tempcanvas;
-    public Transform userInven;
     public GameObject buyItemPopup;
 
     public int tempInventoryCount;
@@ -45,10 +42,19 @@ public class ShopMain : MonoBehaviour
     List<bool> buyCheckList = new List<bool>();
 
     public int maxListCount = 6;
-    ScriptableObject currentSelectItem;
+    DefaultShipPart currentSelectItem;
     public GameObject[] activityUIControl;
 
-    List<GameObject> itemInpo = new List<GameObject>();
+    public List<Text> itemDefalutData = new List<Text>();
+    public List<Text> head = new List<Text>();
+    public List<Text> body = new List<Text>();
+    public List<Text> tail = new List<Text>();
+    public List<Text> hull = new List<Text>();
+    public List<Text> weapon = new List<Text>();
+    public List<Text> shild = new List<Text>();
+    public List<Text> defence = new List<Text>();
+    public List<Text> thruster = new List<Text>();
+    public List<Text> reactor = new List<Text>();
 
     //------------------------------------------------------------------
     #region 유저가 디자인중인 함선
@@ -71,16 +77,67 @@ public class ShopMain : MonoBehaviour
         itemRefresh.GetComponent<Button>().onClick.AddListener(() => ShowShopItem(tempTotalShopItem[currentDropDownNum]));
         playerMoney.GetComponent<Text>().text = "보유 재화 : " + DataManager.Instance.playerInfo.Money.ToString();
         dropdown.onValueChanged.AddListener(OnDropdownEvent);
-        CreateItemSlot();
+        GetText();
+        //CreateItemSlot();
     }
 
     private void OnEnable()
     {
-        Debug.Log("OnEnable 로드 됌");
+        playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
         GetForManagerShipData();
         DropdownDataInit();
         LoadShopData();
-        CreatePartSlot();
+        Debug.Log("OnEnable 로드 됌");
+        //CreatePartSlot();
+    }
+
+    void GetText()
+    {
+        itemDefalutData[0] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Text>();
+        itemDefalutData[1] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<Text>();
+        itemDefalutData[2] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(5).GetComponent<Text>();
+        hull[0] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Text>();
+        weapon[0] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(6).GetComponent<Text>();
+        weapon[1] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(11).GetComponent<Text>();
+        weapon[2] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(12).GetComponent<Text>();
+        shild[0] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(7).GetComponent<Text>();
+        shild[1] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(13).GetComponent<Text>();
+        defence[0] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(8).GetComponent<Text>();
+        defence[1] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(13).GetComponent<Text>();
+        thruster[0] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(9).GetComponent<Text>();
+        thruster[1] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(13).GetComponent<Text>();
+        reactor[0] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(10).GetComponent<Text>();
+        head[0] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(14).GetComponent<Text>();
+        head[1] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(15).GetComponent<Text>();
+        body[0] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(14).GetComponent<Text>();
+        body[1] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(15).GetComponent<Text>();
+        tail[0] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(14).GetComponent<Text>();
+        tail[1] = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(0).GetChild(15).GetComponent<Text>();
+
+    }
+
+    void falseText()
+    {
+        itemDefalutData[0].gameObject.SetActive(false);
+        itemDefalutData[1].gameObject.SetActive(false);
+        itemDefalutData[2].gameObject.SetActive(false);
+        hull[0].gameObject.SetActive(false);
+        weapon[0].gameObject.SetActive(false);
+        weapon[1].gameObject.SetActive(false);
+        weapon[2].gameObject.SetActive(false);
+        shild[0].gameObject.SetActive(false);
+        shild[1].gameObject.SetActive(false);
+        defence[0].gameObject.SetActive(false);
+        defence[1].gameObject.SetActive(false);
+        thruster[0].gameObject.SetActive(false);
+        thruster[1].gameObject.SetActive(false);
+        reactor[0].gameObject.SetActive(false);
+        head[0].gameObject.SetActive(false);
+        head[1].gameObject.SetActive(false);
+        body[0].gameObject.SetActive(false);
+        body[1].gameObject.SetActive(false);
+        tail[0].gameObject.SetActive(false);
+        tail[1].gameObject.SetActive(false);
     }
 
     public void OnDropdownEvent(int index) //유저가 선택한 드랍목록의 int값을 인자로 넘김
@@ -266,270 +323,199 @@ public class ShopMain : MonoBehaviour
         Debug.Log(buyCheckList.Count);
     }
 
-    void CreateItemSlot()
-    {
-        tempInventoryCount = DataManager.Instance.playerInfo.inventoryCount;
-
-        for (int i = 0; i < tempInventoryCount; i++)
-        {
-            var inventory = Instantiate(itemSlot, userInven.transform.GetChild(1));
-            tempInventorylist.Add(inventory);
-        }
-    }
-
-    void CreatePartSlot()
-    {
-        List<string> slots = new List<string>();
-        int slotPartvalue = 0;
-
-        foreach (var inventory in sellListShipData)
-        {
-            slots.Add(inventory.Key);
-        }
-
-        for ( int i = 0; i < sellListShipData.Count; i++)
-        {
-            var temppartslot = Instantiate(partSlot, userInven.transform.GetChild(0));
-            temppartslot.name = "PartSlot" + i;
-
-            temppartslot.GetComponent<Button>().onClick.AddListener(() => invenSlot.SetItemChange(temppartslot));
-            if (invenSlot == null)
-            {
-                Debug.Log("널");
-            }
-           
-            slotPartList.Add(slotPartvalue);
-            slotPartvalue++;
-
-            switch (slots[i])
-            {
-                case "ShipHullData":
-                    temppartslot.GetComponentInChildren<Text>().text = "함선 함체";
-                    break;
-
-                case "ShipHeadData":
-                    temppartslot.GetComponentInChildren<Text>().text = "선두";
-                    break;
-
-                case "ShipBodyData":
-                    temppartslot.GetComponentInChildren<Text>().text = "선체";
-                    break;
-
-                case "ShipTailData":
-                    temppartslot.GetComponentInChildren<Text>().text = "선미";
-                    break;
-
-                case "WeaponData":
-                    temppartslot.GetComponentInChildren<Text>().text = "무기";
-                    break;
-
-                case "UtilityData":
-                    temppartslot.GetComponentInChildren<Text>().text = "보조장치";
-                    break;
-
-                case "ShipReactorData":
-                    temppartslot.GetComponentInChildren<Text>().text = "반응로";
-                    break;
-
-                case "ShipThrusterData":
-                    temppartslot.GetComponentInChildren<Text>().text = "추진체";
-                    break;
-            }
-        }
-    }
-
-    //void SetItemChange(GameObject partslot)
+    //void CreateItemSlot()
     //{
-    //    string number = Regex.Replace(partslot.name, @"\D", "");
-    //    int tempnum = int.Parse(number);
-    //    int count = 0;
-
-    //    switch (tempnum)
+    //    tempInventoryCount = DataManager.Instance.playerInfo.inventoryCount;
+    //
+    //    for (int i = 0; i < tempInventoryCount; i++)
     //    {
-    //        case 0:
-    //            if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count == 0 )
-    //            {
-    //                Debug.Log("아이템이 없습니다.");
-    //            }
-    //            else if(DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count > 0)
-    //            {
-    //                for (int i = 0; i < tempInventoryCount; i++)
-    //                {
-    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-    //                }
+    //        var inventory = Instantiate(itemSlot, userInven.transform.GetChild(1));
+    //        tempInventorylist.Add(inventory);
+    //    }
+    //}
 
-    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHullData"])
-    //                {
-    //                    ShipHull currentShipHull = (ShipHull)item;
-    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-    //                    count++;
-    //                }
-    //                count = 0;
-    //            }
-    //            break;
-
-    //        case 1:
-    //            if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count == 0)
-    //            {
-    //                Debug.Log("아이템이 없습니다.");
-    //            }
-    //            else if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count > 0)
-    //            {
-    //                for (int i = 0; i < tempInventoryCount; i++)
-    //                {
-    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-    //                }
-
-    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHeadData"])
-    //                {
-    //                    ShipHead currentShipHull = (ShipHead)item;
-    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-    //                    count++;
-    //                }
-    //                count = 0; Debug.Log("아이템이 있습니다.");
-    //            }
-    //            break;
-
-    //        case 2:
-    //            if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count == 0)
-    //            {
-    //                Debug.Log("아이템이 없습니다.");
-    //            }
-    //            else if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count > 0)
-    //            {
-    //                for (int i = 0; i < tempInventoryCount; i++)
-    //                {
-    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-    //                }
-
-    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipBodyData"])
-    //                {
-    //                    ShipBody currentShipHull = (ShipBody)item;
-    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-    //                    count++;
-    //                }
-    //                count = 0;
-    //            }
-    //            break;
-
-    //        case 3:
-    //            if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count == 0)
-    //            {
-    //                Debug.Log("아이템이 없습니다.");
-    //            }
-    //            else if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count > 0)
-    //            {
-    //                for (int i = 0; i < tempInventoryCount; i++)
-    //                {
-    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-    //                }
-
-    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipTailData"])
-    //                {
-    //                    ShipTail currentShipHull = (ShipTail)item;
-    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-    //                    count++;
-    //                }
-    //                count = 0;
-    //            }
-    //            break;
-
-    //        case 4:
-    //            if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count == 0)
-    //            {
-    //                Debug.Log("아이템이 없습니다.");
-    //            }
-    //            else if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count > 0)
-    //            {
-    //                for (int i = 0; i < tempInventoryCount; i++)
-    //                {
-    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-    //                }
-
-    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["WeaponData"])
-    //                {
-    //                    Weapon currentShipHull = (Weapon)item;
-    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-    //                    count++;
-    //                }
-    //                count = 0;
-    //            }
-    //            break;
-
-    //        case 5:
-    //            if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count == 0)
-    //            {
-    //                Debug.Log("아이템이 없습니다.");
-    //            }
-    //            else if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count > 0)
-    //            {
-    //                for (int i = 0; i < tempInventoryCount; i++)
-    //                {
-    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-    //                }
-
-    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["UtilityData"])
-    //                {
-    //                    UtilityData currentShipHull = (UtilityData)item;
-    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-    //                    count++;
-    //                }
-    //                count = 0;
-    //            }
-    //            break;
-
-    //        case 6:
-    //            if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count == 0)
-    //            {
-    //                Debug.Log("아이템이 없습니다.");
-    //            }
-    //            else if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count > 0)
-    //            {
-    //                for (int i = 0; i < tempInventoryCount; i++)
-    //                {
-    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-    //                }
-
-    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipReactorData"])
-    //                {
-    //                    ShipReactor currentShipHull = (ShipReactor)item;
-    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-    //                    count++;
-    //                }
-    //                count = 0;
-    //            }
-    //            break;
-
-    //        case 7:
-    //            if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count == 0)
-    //            {
-    //                Debug.Log("아이템이 없습니다.");
-    //            }
-    //            else if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count > 0)
-    //            {
-    //                for (int i = 0; i < tempInventoryCount; i++)
-    //                {
-    //                    tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
-    //                }
-
-    //                foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"])
-    //                {
-    //                    ShipThruster currentShipHull = (ShipThruster)item;
-    //                    tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
-    //                    count++;
-    //                }
-    //                count = 0;
-    //            }
-    //            break;
+    //void CreatePartSlot()
+    //{
+    //    List<string> slots = new List<string>();
+    //    int slotPartvalue = 0;
+    //
+    //    foreach (var inventory in sellListShipData)
+    //    {
+    //        slots.Add(inventory.Key);
+    //    }
+    //
+    //    for ( int i = 0; i < sellListShipData.Count; i++)
+    //    {
+    //        var temppartslot = Instantiate(partSlot, userInven.transform.GetChild(0));
+    //        temppartslot.name = "PartSlot" + i;
+    //
+    //        temppartslot.GetComponent<Button>().onClick.AddListener(() => invenSlot.SetItemChange(temppartslot));
+    //        slotPartList.Add(slotPartvalue);
+    //        slotPartvalue++;
+    //
+    //        switch (slots[i])
+    //        {
+    //            case "ShipHullData":
+    //                temppartslot.GetComponentInChildren<Text>().text = "함선 함체";
+    //                break;
+    //
+    //            case "ShipHeadData":
+    //                temppartslot.GetComponentInChildren<Text>().text = "선두";
+    //                break;
+    //
+    //            case "ShipBodyData":
+    //                temppartslot.GetComponentInChildren<Text>().text = "선체";
+    //                break;
+    //
+    //            case "ShipTailData":
+    //                temppartslot.GetComponentInChildren<Text>().text = "선미";
+    //                break;
+    //
+    //            case "WeaponData":
+    //                temppartslot.GetComponentInChildren<Text>().text = "무기";
+    //                break;
+    //
+    //            case "UtilityData":
+    //                temppartslot.GetComponentInChildren<Text>().text = "보조장치";
+    //                break;
+    //
+    //            case "ShipReactorData":
+    //                temppartslot.GetComponentInChildren<Text>().text = "반응로";
+    //                break;
+    //
+    //            case "ShipThrusterData":
+    //                temppartslot.GetComponentInChildren<Text>().text = "추진체";
+    //                break;
+    //        }
     //    }
     //}
 
     void SetBuyPopup(int value, GameObject item)
     {
-
-        currentSelectItem = currentsShopShipDatas[value];
+        falseText();
         expectBuyItem = item;
-        Debug.Log(currentSelectItem.name);
+
+        itemDefalutData[0].gameObject.SetActive(true);
+        itemDefalutData[1].gameObject.SetActive(true);
+        itemDefalutData[2].gameObject.SetActive(true);
+        currentSelectItem = currentsShopShipDatas[value];
+
+        string type = currentSelectItem.GetType().FullName;
+
+
+        switch (type)
+        {
+            case "ShipHull":
+                ShipHull tempHull = (ShipHull)currentSelectItem;
+                hull[0].gameObject.SetActive(true);
+                itemDefalutData[0].text = "이     름 : " + tempHull.defaultShipPartName;
+                itemDefalutData[1].text = "함     급 : " + tempHull.defaultShipPartClass.ToString();
+                itemDefalutData[2].text = "등     급 : " + tempHull.DefaultShipPartGrade.ToString();
+                hull[0].text = "체     력 : " + tempHull.hulltHp.ToString();
+                break;
+
+            case "ShipHead":
+                head[0].gameObject.SetActive(true);
+                head[1].gameObject.SetActive(true);
+                ShipHead tempHead = (ShipHead)currentSelectItem;
+                itemDefalutData[0].text = "이     름 : " + tempHead.defaultShipPartName;
+                itemDefalutData[1].text = "함     급 : " + tempHead.defaultShipPartClass.ToString();
+                itemDefalutData[2].text = "등     급 : " + tempHead.DefaultShipPartGrade.ToString();
+                head[0].text = "사용 무기 개수 : " + tempHead.weapons.Count;
+                head[1].text = "사용 무기 개수 : " + tempHead.utility.Count;
+
+                break;
+
+            case "ShipBody":
+                body[0].gameObject.SetActive(true);
+                body[1].gameObject.SetActive(true);
+                ShipBody tempBody = (ShipBody)currentSelectItem;
+                itemDefalutData[0].text = "이     름 : " + tempBody.defaultShipPartName;
+                itemDefalutData[1].text = "함     급 : " + tempBody.defaultShipPartClass.ToString();
+                itemDefalutData[2].text = "등     급 : " + tempBody.DefaultShipPartGrade.ToString();
+                body[0].text = "사용 무기 개수 : " + tempBody.weapons.Count;
+                body[1].text = "사용 무기 개수 : " + tempBody.utility.Count;
+                break;
+
+
+            case "ShipTail":
+                tail[0].gameObject.SetActive(true);
+                tail[1].gameObject.SetActive(true);
+                ShipTail tempTail = (ShipTail)currentSelectItem;
+                itemDefalutData[0].text = "이     름 : " + tempTail.defaultShipPartName;
+                itemDefalutData[1].text = "함     급 : " + tempTail.defaultShipPartClass.ToString();
+                itemDefalutData[2].text = "등     급 : " + tempTail.DefaultShipPartGrade.ToString();
+                tail[0].text = "사용 무기 개수 : " + tempTail.weapons.Count;
+                tail[1].text = "사용 무기 개수 : " + tempTail.utility.Count;
+                break;
+
+
+            case "Weapon":
+                Weapon tempWeapon = (Weapon)currentSelectItem;
+                weapon[0].gameObject.SetActive(true);
+                weapon[1].gameObject.SetActive(true);
+                weapon[2].gameObject.SetActive(true);
+                weapon[3].gameObject.SetActive(true);
+
+
+                itemDefalutData[0].text = "이     름 : " + tempWeapon.defaultShipPartName;
+                itemDefalutData[1].text = "함     급 : " + tempWeapon.defaultShipPartClass.ToString();
+                itemDefalutData[2].text = "등     급 : " + tempWeapon.DefaultShipPartGrade.ToString();
+                weapon[0].text = "공 격 력 : " + tempWeapon.damage;
+                weapon[1].text = "공격속도 : " + tempWeapon.attackRange;
+                weapon[2].text = "공격거리 : " + tempWeapon.attackSpeed;
+                weapon[3].text = "전력소모 : " + tempWeapon.usePower;
+                break;
+
+            case "UtilityData":
+                UtilityData tempUtility = (UtilityData)currentSelectItem;
+                if (Utility.Shields == tempUtility.utility)
+                {
+                    shild[0].gameObject.SetActive(true);
+                    shild[1].gameObject.SetActive(true);
+
+                    itemDefalutData[0].text = "이     름 : " + tempUtility.defaultShipPartName;
+                    itemDefalutData[1].text = "함     급 : " + tempUtility.defaultShipPartClass.ToString();
+                    itemDefalutData[2].text = "등     급 : " + tempUtility.DefaultShipPartGrade.ToString();
+                    shild[0].text = "보 호 막 : " + tempUtility.shild;
+                    shild[1].text = "전력소모 : " + tempUtility.usePower;
+                }
+                else if (Utility.Armor == tempUtility.utility)
+                {
+                    defence[0].gameObject.SetActive(true);
+                    defence[1].gameObject.SetActive(true);
+
+                    itemDefalutData[0].text = "이     름 : " + tempUtility.defaultShipPartName;
+                    itemDefalutData[1].text = "함     급 : " + tempUtility.defaultShipPartClass.ToString();
+                    itemDefalutData[2].text = "등     급 : " + tempUtility.DefaultShipPartGrade.ToString();
+                    defence[0].text = "방어력 : " + tempUtility.defence;
+                    defence[1].text = "방어력 : " + tempUtility.usePower;
+                }
+                break;
+
+            case "ShipReactor":
+                reactor[0].gameObject.SetActive(true);
+
+                ShipReactor tempReactor = (ShipReactor)currentSelectItem;
+                itemDefalutData[0].text = "이     름 : " + tempReactor.defaultShipPartName;
+                itemDefalutData[1].text = "함     급 : " + tempReactor.defaultShipPartClass.ToString();
+                itemDefalutData[2].text = "등     급 : " + tempReactor.DefaultShipPartGrade.ToString();
+                reactor[0].text = "최대전력 : " + tempReactor.reactorPower;
+                break;
+
+            case "ShipThruster":
+                thruster[0].gameObject.SetActive(true);
+                thruster[1].gameObject.SetActive(true);
+
+                ShipThruster tempThruster = (ShipThruster)currentSelectItem;
+                itemDefalutData[0].text = "이     름 : " + tempThruster.defaultShipPartName;
+                itemDefalutData[1].text = "함     급 : " + tempThruster.defaultShipPartClass.ToString();
+                itemDefalutData[2].text = "등     급 : " + tempThruster.DefaultShipPartGrade.ToString();
+                thruster[0].text = "이동속도 : " + tempThruster.thrusterSpeed;
+                thruster[1].text = "최대전력 : " + tempThruster.usePower;
+                break;
+        }
+
         activityUIControl[0].SetActive(true);
         activityUIControl[3].GetComponent<CanvasGroup>().interactable = false;
     }
@@ -707,13 +693,6 @@ public class ShopMain : MonoBehaviour
     public void GoMain()
     {
         SceneManager.LoadScene("MainScene");
-    }
-
-
-
-    private void OnDisable()
-    {
-        
     }
 
 }   

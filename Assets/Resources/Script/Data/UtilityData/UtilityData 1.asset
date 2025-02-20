@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partType: 5
   defaultShipPartName: "\uC65C\uACE1\uC7A5"
+  iconImage: {fileID: 0}
   defaultShipPartArmor: 0
-  defaultShipPartCost: 0
+  defaultShipPartCost: 5
   defaultShipPartSize: 0
   defaultShipPartClass: 1
-  DefaultShipPartGrade: 0
-  utilityName: 
+  DefaultShipPartGrade: 65
+  utilityName: "\uC65C\uACE1\uC7A5"
   defence: 0
-  shild: 0
+  shild: 75
+  usePower: 15
   utility: 0

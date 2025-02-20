@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 public class MainControl : MonoBehaviour
 {
 
-
+    public void GoDesign()
+    {
+        SceneManager.LoadScene("ShipDesign");
+    }
 
     public void GoShop()
     {

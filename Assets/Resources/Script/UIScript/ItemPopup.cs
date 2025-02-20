@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ItemPopup : MonoBehaviour
 {
-    int inventoryCount;
+    PlayerInfo playerInfo;
     ShopMain shopmain;
     ShipDesign shipdesign;
     public Sprite defaultSlotImage;
@@ -14,6 +14,7 @@ public class ItemPopup : MonoBehaviour
     private void Start()
     {
         shopmain = GameObject.Find("ShopManager").GetComponent<ShopMain>();
+        playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
     }
 
     public void SetItemChange(GameObject partslot)
@@ -31,15 +32,15 @@ public class ItemPopup : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count > 0)
                 {
-                    for (int i = 0; i < shopmain.tempInventoryCount; i++)
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
                     {
-                        shopmain.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
                     }
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHullData"])
                     {
                         ShipHull currentShipHull = (ShipHull)item;
-                        shopmain.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
                     count = 0;
@@ -53,15 +54,15 @@ public class ItemPopup : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count > 0)
                 {
-                    for (int i = 0; i < shopmain.tempInventoryCount; i++)
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
                     {
-                        shopmain.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
                     }
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHeadData"])
                     {
                         ShipHead currentShipHull = (ShipHead)item;
-                        shopmain.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
                     count = 0; Debug.Log("아이템이 있습니다.");
@@ -75,15 +76,15 @@ public class ItemPopup : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count > 0)
                 {
-                    for (int i = 0; i < shopmain.tempInventoryCount; i++)
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
                     {
-                        shopmain.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
                     }
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipBodyData"])
                     {
                         ShipBody currentShipHull = (ShipBody)item;
-                        shopmain.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
                     count = 0;
@@ -97,15 +98,15 @@ public class ItemPopup : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count > 0)
                 {
-                    for (int i = 0; i < shopmain.tempInventoryCount; i++)
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
                     {
-                        shopmain.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
                     }
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipTailData"])
                     {
                         ShipTail currentShipHull = (ShipTail)item;
-                        shopmain.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
                     count = 0;
@@ -119,15 +120,15 @@ public class ItemPopup : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count > 0)
                 {
-                    for (int i = 0; i < shopmain.tempInventoryCount; i++)
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
                     {
-                        shopmain.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
                     }
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["WeaponData"])
                     {
                         Weapon currentShipHull = (Weapon)item;
-                        shopmain.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
                     count = 0;
@@ -141,15 +142,15 @@ public class ItemPopup : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count > 0)
                 {
-                    for (int i = 0; i < inventoryCount; i++)
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
                     {
-                        shopmain.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
                     }
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["UtilityData"])
                     {
                         UtilityData currentShipHull = (UtilityData)item;
-                        shopmain.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
                     count = 0;
@@ -165,13 +166,13 @@ public class ItemPopup : MonoBehaviour
                 {
                     for (int i = 0; i < shopmain.tempInventoryCount; i++)
                     {
-                        shopmain.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
                     }
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipReactorData"])
                     {
                         ShipReactor currentShipHull = (ShipReactor)item;
-                        shopmain.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
                     count = 0;
@@ -187,13 +188,13 @@ public class ItemPopup : MonoBehaviour
                 {
                     for (int i = 0; i < shopmain.tempInventoryCount; i++)
                     {
-                        shopmain.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
                     }
 
                     foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"])
                     {
                         ShipThruster currentShipHull = (ShipThruster)item;
-                        shopmain.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
                         count++;
                     }
                     count = 0;

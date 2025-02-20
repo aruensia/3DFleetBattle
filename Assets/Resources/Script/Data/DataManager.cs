@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum WeaponType
 {
-    Mass, Laser, Drone
+    Mass, Laser, Missile, Drone
 }
 
 public enum PartType
@@ -42,6 +42,7 @@ public class DataManager : MonoBehaviour
     [HideInInspector]
     public DataList getNewDataList;
     ShopMain shopMain;
+    ShipDesign shopDesign;
     [HideInInspector]
     public PlayerInfo playerInfo;
 
@@ -62,7 +63,9 @@ public class DataManager : MonoBehaviour
     private void Start()
     {
         shopMain = GetComponent<ShopMain>();
+        shopDesign = GetComponent<ShipDesign>();
         playerInfo = GetComponent<PlayerInfo>();
+        
         getNewDataList.GetShipData();
     }
 

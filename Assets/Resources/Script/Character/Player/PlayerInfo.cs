@@ -17,14 +17,18 @@ public class PlayerInfo : MonoBehaviour
         { "ShipThrusterData", new List<ScriptableObject>()},
     };
 
+    public List<GameObject> tempInventorylist = new List<GameObject>();
+    List<ScriptableObject> shipPartinventory = new List<ScriptableObject>();
+    List<Ship> MyShips = new List<Ship>();
+
+
+
+
     public Dictionary<string, List<ScriptableObject>> PlayerData
     {
         get { return playerData; }
         set { playerData = value; }
     }
-
-    List<ScriptableObject> shipPartinventory = new List<ScriptableObject>();
-    List<Ship> MyShips = new List<Ship>();
 
     int money;
 
