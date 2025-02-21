@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CallItemNum : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class CallItemNum : MonoBehaviour, IPointerClickHandler
 {
     string currentSelectItemName;
     int tempnum;
-    private Transform originalParent;
+    public GameObject cubePrefab;
     DesignItemPop designItemPop;
     
     void Start()
@@ -23,29 +23,7 @@ public class CallItemNum : MonoBehaviour, IPointerClickHandler, IBeginDragHandle
         string number = Regex.Replace(currentSelectItemName, @"\D", "");
         tempnum = int.Parse(number);
         designItemPop.SetBuyPopup(tempnum, DataManager.Instance.playerInfo.currentSelectDataValue);
-        Debug.Log(tempnum);
-        Debug.Log(DataManager.Instance.playerInfo.currentSelectDataValue);
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        currentSelectItemName = eventData.pointerCurrentRaycast.gameObject.transform.parent.name;
-        string number = Regex.Replace(currentSelectItemName, @"\D", "");
-        tempnum = int.Parse(number);
-        Transform temp = Instantiate(transform.parent, transform);
-        originalParent = temp;
-        transform.SetParent(originalParent.root);
-    }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        transform.position = eventData.position;
-    }
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if ( transform.parent == originalParent )
-        {
-            transform.SetParent(originalParent);
-        }
-    }
 }
