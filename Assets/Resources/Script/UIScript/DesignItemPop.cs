@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -104,116 +105,231 @@ public class DesignItemPop : MonoBehaviour
             tempSelectItem = (DefaultShipPart)DataManager.Instance.playerInfo.PlayerData[item][value];
         }
 
+
+
         switch (item)
         {
             case "ShipHullData":
-                ShipHull tempHull = (ShipHull)tempSelectItem;
-                hull[0].gameObject.SetActive(true);
-                itemDefalutData[0].text = "이     름 : " + tempHull.defaultShipPartName;
-                itemDefalutData[1].text = "함     급 : " + tempHull.defaultShipPartClass.ToString();
-                itemDefalutData[2].text = "등     급 : " + tempHull.DefaultShipPartGrade.ToString();
-                hull[0].text = "체     력 : " + tempHull.hulltHp.ToString();
+                if (tempSelectItem == null)
+                {
+                    hull[0].gameObject.SetActive(true);
+                    itemDefalutData[0].text = "이     름 : ";
+                    itemDefalutData[1].text = "함     급 : ";
+                    itemDefalutData[2].text = "등     급 : ";
+                    hull[0].text = "체     력 : ";
+                }
+                else if(tempSelectItem != null)
+                {
+                    ShipHull tempHull = (ShipHull)tempSelectItem;
+
+                    hull[0].gameObject.SetActive(true);
+                    itemDefalutData[0].text = "이     름 : " + tempHull.defaultShipPartName;
+                    itemDefalutData[1].text = "함     급 : " + tempHull.defaultShipPartClass.ToString();
+                    itemDefalutData[2].text = "등     급 : " + tempHull.DefaultShipPartGrade.ToString();
+                    hull[0].text = "체     력 : " + tempHull.hulltHp.ToString();
+                }
+
                 break;
     
             case "ShipHeadData":
-                head[0].gameObject.SetActive(true);
-                head[1].gameObject.SetActive(true);
-                ShipHead tempHead = (ShipHead)tempSelectItem;
-                itemDefalutData[0].text = "이     름 : " + tempHead.defaultShipPartName;
-                itemDefalutData[1].text = "함     급 : " + tempHead.defaultShipPartClass.ToString();
-                itemDefalutData[2].text = "등     급 : " + tempHead.DefaultShipPartGrade.ToString();
-                head[0].text = "사용 무기 개수 : " + tempHead.weapons.Count;
-                head[1].text = "사용 무기 개수 : " + tempHead.utility.Count;
-    
+                if (tempSelectItem == null)
+                {
+                    head[0].gameObject.SetActive(true);
+                    head[1].gameObject.SetActive(true);
+                    itemDefalutData[0].text = "이     름 : ";
+                    itemDefalutData[1].text = "함     급 : ";
+                    itemDefalutData[2].text = "등     급 : ";
+                    head[0].text = "사용 무기 개수 : ";
+                    head[1].text = "사용 무기 개수 : ";
+
+                }
+                else if (tempSelectItem != null)
+                {
+                    ShipHead tempHead = (ShipHead)tempSelectItem;
+                    head[0].gameObject.SetActive(true);
+                    head[1].gameObject.SetActive(true);
+                    itemDefalutData[0].text = "이     름 : " + tempHead.defaultShipPartName;
+                    itemDefalutData[1].text = "함     급 : " + tempHead.defaultShipPartClass.ToString();
+                    itemDefalutData[2].text = "등     급 : " + tempHead.DefaultShipPartGrade.ToString();
+                    head[0].text = "사용 무기 개수 : " + tempHead.weapons.Count;
+                    head[1].text = "사용 무기 개수 : " + tempHead.utility.Count;
+                }
+
+
+
+
                 break;
     
             case "ShipBodyData":
-                body[0].gameObject.SetActive(true);
-                body[1].gameObject.SetActive(true);
-                ShipBody tempBody = (ShipBody)tempSelectItem;
-                itemDefalutData[0].text = "이     름 : " + tempBody.defaultShipPartName;
-                itemDefalutData[1].text = "함     급 : " + tempBody.defaultShipPartClass.ToString();
-                itemDefalutData[2].text = "등     급 : " + tempBody.DefaultShipPartGrade.ToString();
-                body[0].text = "사용 무기 개수 : " + tempBody.weapons.Count;
-                body[1].text = "사용 무기 개수 : " + tempBody.utility.Count;
+                if (tempSelectItem == null)
+                {
+
+                    body[0].gameObject.SetActive(true);
+                    body[1].gameObject.SetActive(true);
+                    itemDefalutData[0].text = "이     름 : ";
+                    itemDefalutData[1].text = "함     급 : ";
+                    itemDefalutData[2].text = "등     급 : ";
+                    body[0].text = "사용 무기 개수 : ";
+                    body[1].text = "사용 무기 개수 : ";
+                }
+                else if(tempSelectItem != null)
+                {
+                    body[0].gameObject.SetActive(true);
+                    body[1].gameObject.SetActive(true);
+                    ShipBody tempBody = (ShipBody)tempSelectItem;
+                    itemDefalutData[0].text = "이     름 : " + tempBody.defaultShipPartName;
+                    itemDefalutData[1].text = "함     급 : " + tempBody.defaultShipPartClass.ToString();
+                    itemDefalutData[2].text = "등     급 : " + tempBody.DefaultShipPartGrade.ToString();
+                    body[0].text = "사용 무기 개수 : " + tempBody.weapons.Count;
+                    body[1].text = "사용 무기 개수 : " + tempBody.utility.Count;
+                }
+
                 break;
     
     
             case "ShipTailData":
-                tail[0].gameObject.SetActive(true);
-                tail[1].gameObject.SetActive(true);
-                ShipTail tempTail = (ShipTail)tempSelectItem;
-                itemDefalutData[0].text = "이     름 : " + tempTail.defaultShipPartName;
-                itemDefalutData[1].text = "함     급 : " + tempTail.defaultShipPartClass.ToString();
-                itemDefalutData[2].text = "등     급 : " + tempTail.DefaultShipPartGrade.ToString();
-                tail[0].text = "사용 무기 개수 : " + tempTail.weapons.Count;
-                tail[1].text = "사용 무기 개수 : " + tempTail.utility.Count;
+                if (tempSelectItem == null)
+                {
+                    tail[0].gameObject.SetActive(true);
+                    tail[1].gameObject.SetActive(true);
+                    itemDefalutData[0].text = "이     름 : ";
+                    itemDefalutData[1].text = "함     급 : ";
+                    itemDefalutData[2].text = "등     급 : ";
+                    tail[0].text = "사용 무기 개수 : ";
+                    tail[1].text = "사용 무기 개수 : ";
+                }
+
+                else if (tempSelectItem != null)
+                {
+                    tail[0].gameObject.SetActive(true);
+                    tail[1].gameObject.SetActive(true);
+                    ShipTail tempTail = (ShipTail)tempSelectItem;
+                    itemDefalutData[0].text = "이     름 : " + tempTail.defaultShipPartName;
+                    itemDefalutData[1].text = "함     급 : " + tempTail.defaultShipPartClass.ToString();
+                    itemDefalutData[2].text = "등     급 : " + tempTail.DefaultShipPartGrade.ToString();
+                    tail[0].text = "사용 무기 개수 : " + tempTail.weapons.Count;
+                    tail[1].text = "사용 무기 개수 : " + tempTail.utility.Count;
+                }
                 break;
     
     
             case "WeaponData":
-                Weapon tempWeapon = (Weapon)tempSelectItem;
-                weapon[0].gameObject.SetActive(true);
-                weapon[1].gameObject.SetActive(true);
-                weapon[2].gameObject.SetActive(true);
-                weapon[3].gameObject.SetActive(true);
-    
-    
-                itemDefalutData[0].text = "이     름 : " + tempWeapon.defaultShipPartName;
-                itemDefalutData[1].text = "함     급 : " + tempWeapon.defaultShipPartClass.ToString();
-                itemDefalutData[2].text = "등     급 : " + tempWeapon.DefaultShipPartGrade.ToString();
-                weapon[0].text = "공 격 력 : " + tempWeapon.damage;
-                weapon[1].text = "공격속도 : " + tempWeapon.attackRange;
-                weapon[2].text = "공격거리 : " + tempWeapon.attackSpeed;
-                weapon[3].text = "전력소모 : " + tempWeapon.usePower;
+                if (tempSelectItem == null)
+                {
+                    weapon[0].gameObject.SetActive(true);
+                    weapon[1].gameObject.SetActive(true);
+                    weapon[2].gameObject.SetActive(true);
+                    weapon[3].gameObject.SetActive(true);
+                    itemDefalutData[0].text = "이     름 : ";
+                    itemDefalutData[1].text = "함     급 : ";
+                    itemDefalutData[2].text = "등     급 : ";
+                    weapon[0].text = "공 격 력 : ";
+                    weapon[1].text = "공격속도 : ";
+                    weapon[2].text = "공격거리 : ";
+                    weapon[3].text = "전력소모 : ";
+
+                }
+
+                else if (tempSelectItem != null)
+                {
+                    Weapon tempWeapon = (Weapon)tempSelectItem;
+                    weapon[0].gameObject.SetActive(true);
+                    weapon[1].gameObject.SetActive(true);
+                    weapon[2].gameObject.SetActive(true);
+                    weapon[3].gameObject.SetActive(true);
+                    itemDefalutData[0].text = "이     름 : " + tempWeapon.defaultShipPartName;
+                    itemDefalutData[1].text = "함     급 : " + tempWeapon.defaultShipPartClass.ToString();
+                    itemDefalutData[2].text = "등     급 : " + tempWeapon.DefaultShipPartGrade.ToString();
+                    weapon[0].text = "공 격 력 : " + tempWeapon.damage;
+                    weapon[1].text = "공격속도 : " + tempWeapon.attackRange;
+                    weapon[2].text = "공격거리 : " + tempWeapon.attackSpeed;
+                    weapon[3].text = "전력소모 : " + tempWeapon.usePower;
+                }
+
                 break;
     
             case "UtilityData":
-                UtilityData tempUtility = (UtilityData)tempSelectItem;
-                if (Utility.Shields == tempUtility.utility)
+                if (tempSelectItem == null)
                 {
-                    shild[0].gameObject.SetActive(true);
-                    shild[1].gameObject.SetActive(true);
-    
-                    itemDefalutData[0].text = "이     름 : " + tempUtility.defaultShipPartName;
-                    itemDefalutData[1].text = "함     급 : " + tempUtility.defaultShipPartClass.ToString();
-                    itemDefalutData[2].text = "등     급 : " + tempUtility.DefaultShipPartGrade.ToString();
-                    shild[0].text = "보 호 막 : " + tempUtility.shild;
-                    shild[1].text = "전력소모 : " + tempUtility.usePower;
+                    itemDefalutData[0].text = "이     름 : ";
+                    itemDefalutData[1].text = "함     급 : ";
+                    itemDefalutData[2].text = "등     급 : ";
                 }
-                else if (Utility.Armor == tempUtility.utility)
+                else if (tempSelectItem != null)
                 {
-                    defence[0].gameObject.SetActive(true);
-                    defence[1].gameObject.SetActive(true);
-    
-                    itemDefalutData[0].text = "이     름 : " + tempUtility.defaultShipPartName;
-                    itemDefalutData[1].text = "함     급 : " + tempUtility.defaultShipPartClass.ToString();
-                    itemDefalutData[2].text = "등     급 : " + tempUtility.DefaultShipPartGrade.ToString();
-                    defence[0].text = "방어력 : " + tempUtility.defence;
-                    defence[1].text = "방어력 : " + tempUtility.usePower;
+                    UtilityData tempUtility = (UtilityData)tempSelectItem;
+                    if (Utility.Shields == tempUtility.utility)
+                    {
+                        shild[0].gameObject.SetActive(true);
+                        shild[1].gameObject.SetActive(true);
+
+                        itemDefalutData[0].text = "이     름 : " + tempUtility.defaultShipPartName;
+                        itemDefalutData[1].text = "함     급 : " + tempUtility.defaultShipPartClass.ToString();
+                        itemDefalutData[2].text = "등     급 : " + tempUtility.DefaultShipPartGrade.ToString();
+                        shild[0].text = "보 호 막 : " + tempUtility.shild;
+                        shild[1].text = "전력소모 : " + tempUtility.usePower;
+                    }
+                    else if (Utility.Armor == tempUtility.utility)
+                    {
+                        defence[0].gameObject.SetActive(true);
+                        defence[1].gameObject.SetActive(true);
+
+                        itemDefalutData[0].text = "이     름 : " + tempUtility.defaultShipPartName;
+                        itemDefalutData[1].text = "함     급 : " + tempUtility.defaultShipPartClass.ToString();
+                        itemDefalutData[2].text = "등     급 : " + tempUtility.DefaultShipPartGrade.ToString();
+                        defence[0].text = "방어력 : " + tempUtility.defence;
+                        defence[1].text = "방어력 : " + tempUtility.usePower;
+                    }
                 }
+
                 break;
     
             case "ShipReactorData":
-                reactor[0].gameObject.SetActive(true);
-    
-                ShipReactor tempReactor = (ShipReactor)tempSelectItem;
-                itemDefalutData[0].text = "이     름 : " + tempReactor.defaultShipPartName;
-                itemDefalutData[1].text = "함     급 : " + tempReactor.defaultShipPartClass.ToString();
-                itemDefalutData[2].text = "등     급 : " + tempReactor.DefaultShipPartGrade.ToString();
-                reactor[0].text = "최대전력 : " + tempReactor.reactorPower;
+                if (tempSelectItem == null)
+                {
+                    reactor[0].gameObject.SetActive(true);
+                    itemDefalutData[0].text = "이     름 : ";
+                    itemDefalutData[1].text = "함     급 : ";
+                    itemDefalutData[2].text = "등     급 : ";
+                    reactor[0].text = "최대전력 : ";
+
+                }
+                else if (tempSelectItem != null)
+                {
+                    reactor[0].gameObject.SetActive(true);
+                    ShipReactor tempReactor = (ShipReactor)tempSelectItem;
+                    itemDefalutData[0].text = "이     름 : " + tempReactor.defaultShipPartName;
+                    itemDefalutData[1].text = "함     급 : " + tempReactor.defaultShipPartClass.ToString();
+                    itemDefalutData[2].text = "등     급 : " + tempReactor.DefaultShipPartGrade.ToString();
+                    reactor[0].text = "최대전력 : " + tempReactor.reactorPower;
+                }
+
                 break;
     
             case "ShipThrusterData":
-                thruster[0].gameObject.SetActive(true);
-                thruster[1].gameObject.SetActive(true);
-    
-                ShipThruster tempThruster = (ShipThruster)tempSelectItem;
-                itemDefalutData[0].text = "이     름 : " + tempThruster.defaultShipPartName;
-                itemDefalutData[1].text = "함     급 : " + tempThruster.defaultShipPartClass.ToString();
-                itemDefalutData[2].text = "등     급 : " + tempThruster.DefaultShipPartGrade.ToString();
-                thruster[0].text = "이동속도 : " + tempThruster.thrusterSpeed;
-                thruster[1].text = "최대전력 : " + tempThruster.usePower;
+                if (tempSelectItem == null)
+                {
+                    thruster[0].gameObject.SetActive(true);
+                    thruster[1].gameObject.SetActive(true);
+                    itemDefalutData[0].text = "이     름 : ";
+                    itemDefalutData[1].text = "함     급 : ";
+                    itemDefalutData[2].text = "등     급 : ";
+                    thruster[0].text = "이동속도 : ";
+                    thruster[1].text = "최대전력 : ";
+                }
+
+                else if (tempSelectItem != null)
+                {
+                    thruster[0].gameObject.SetActive(true);
+                    thruster[1].gameObject.SetActive(true);
+
+                    ShipThruster tempThruster = (ShipThruster)tempSelectItem;
+                    itemDefalutData[0].text = "이     름 : " + tempThruster.defaultShipPartName;
+                    itemDefalutData[1].text = "함     급 : " + tempThruster.defaultShipPartClass.ToString();
+                    itemDefalutData[2].text = "등     급 : " + tempThruster.DefaultShipPartGrade.ToString();
+                    thruster[0].text = "이동속도 : " + tempThruster.thrusterSpeed;
+                    thruster[1].text = "최대전력 : " + tempThruster.usePower;
+                }
                 break;
         }
         Debug.Log("여기까지 와서 텍스트 만들엇음");
