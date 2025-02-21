@@ -22,8 +22,6 @@ public class ShopMain : MonoBehaviour
     [SerializeField] TMP_Dropdown dropdown; //유저가 구매할 아이템에 대한 상점 목록
     List<GameObject> currentShopItemList = new List<GameObject>();  // 드롭다운 목록에 사용하는 아이템 리스트
     public List<DefaultShipPart> currentsShopShipDatas = new List<DefaultShipPart>();
-    public List<GameObject> tempInventorylist = new List<GameObject>();
-    List<int> slotPartList = new List<int>();
     List<DefaultShipPart> tempGetItemList = new List<DefaultShipPart>();
 
     public Text shipPartName;
@@ -433,7 +431,7 @@ public class ShopMain : MonoBehaviour
                 thruster[1].text = "최대전력 : " + tempThruster.usePower;
                 break;
         }
-
+        
         activityUIControl[0].SetActive(true);
         activityUIControl[3].GetComponent<CanvasGroup>().interactable = false;
     }

@@ -64,6 +64,7 @@ public class ItemPopup : MonoBehaviour
                 if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count == 0)
                 {
                     Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipHeadData";
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count > 0)
                 {
@@ -87,6 +88,7 @@ public class ItemPopup : MonoBehaviour
                 if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count == 0)
                 {
                     Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipBodyData";
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count > 0)
                 {
@@ -110,6 +112,7 @@ public class ItemPopup : MonoBehaviour
                 if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count == 0)
                 {
                     Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipTailData";
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count > 0)
                 {
@@ -133,6 +136,7 @@ public class ItemPopup : MonoBehaviour
                 if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count == 0)
                 {
                     Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "WeaponData";
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count > 0)
                 {
@@ -156,6 +160,8 @@ public class ItemPopup : MonoBehaviour
                 if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count == 0)
                 {
                     Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "UtilityData";
+
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count > 0)
                 {
@@ -179,6 +185,7 @@ public class ItemPopup : MonoBehaviour
                 if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count == 0)
                 {
                     Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipReactorData";
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count > 0)
                 {
@@ -202,6 +209,7 @@ public class ItemPopup : MonoBehaviour
                 if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count == 0)
                 {
                     Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipThrusterData";
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count > 0)
                 {
