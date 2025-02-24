@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class CallItemNum : MonoBehaviour, IPointerClickHandler
 {
+    ShipDesign shipDesign;
     string currentSelectItemName;
     int tempnum;
     public GameObject cubePrefab;
@@ -14,21 +15,30 @@ public class CallItemNum : MonoBehaviour, IPointerClickHandler
     
     void Start()
     {
+        shipDesign = GameObject.Find("DesignManager").GetComponent<ShipDesign>();
         designItemPop = GameObject.Find("DesignManager").GetComponent<DesignItemPop>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        currentSelectItemName = eventData.pointerCurrentRaycast.gameObject.transform.parent.name;
-        Debug.Log(eventData.pointerCurrentRaycast.gameObject.transform.parent.name);
-        if ( currentSelectItemName == null)
+        if (shipDesign.isWeaponSetting == true)
         {
-            Debug.Log("비어있어요!!");
+            Debug.Log(" isWeaponSetting true가 되었음");
+
         }
-        string number = Regex.Replace(currentSelectItemName, @"\D", "");
-        tempnum = int.Parse(number);
-        Debug.Log(DataManager.Instance.playerInfo.currentSelectDataValue);
-        designItemPop.SetBuyPopup(tempnum, DataManager.Instance.playerInfo.currentSelectDataValue);
+        else
+        {
+            currentSelectItemName = eventData.pointerCurrentRaycast.gameObject.transform.parent.name;
+            Debug.Log(eventData.pointerCurrentRaycast.gameObject.transform.parent.name);
+            if (currentSelectItemName == null)
+            {
+                Debug.Log("비어있어요!!");
+            }
+            string number = Regex.Replace(currentSelectItemName, @"\D", "");
+            tempnum = int.Parse(number);
+            Debug.Log(DataManager.Instance.playerInfo.currentSelectDataValue);
+            designItemPop.SetBuyPopup(tempnum, DataManager.Instance.playerInfo.currentSelectDataValue);
+        }
     }
 
 
