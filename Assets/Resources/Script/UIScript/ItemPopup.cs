@@ -26,6 +26,7 @@ public class ItemPopup : MonoBehaviour
             playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
         }
         itemSlotButton = GetComponent<Button>();
+        
     }
 
     public void SetItemChange(GameObject partslot)

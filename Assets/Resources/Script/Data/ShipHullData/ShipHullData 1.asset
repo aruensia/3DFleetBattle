@@ -22,6 +22,7 @@ MonoBehaviour:
   DefaultShipPartGrade: 65
   hullName: "\uCD08\uACC4\uD568"
   hulltHp: 100
+  shipModel: {fileID: 1258441714792974, guid: aedaa4b32d4953945a2e0bd72942e07e, type: 3}
   shipClass: 1
   size: 0
   cost: 100

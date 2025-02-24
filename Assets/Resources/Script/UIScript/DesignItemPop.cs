@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class DesignItemPop : MonoBehaviour
 {
+    ShipDesign shipdesign;
+
     public List<Text> itemDefalutData = new List<Text>();
     public List<Text> head = new List<Text>();
     public List<Text> body = new List<Text>();
@@ -19,19 +21,25 @@ public class DesignItemPop : MonoBehaviour
 
     public GameObject[] activityUIControl;
     public GameObject itemButton;
+    public Button SetShipPartButton;
 
     string currentSelectItemName;
     int tempnum;
+
+    DefaultShipPart tempSelectItem = null;
 
     private void OnEnable()
     {
         GetText();
         FalseText();
+        shipdesign = GameObject.Find("DesignManager").GetComponent<ShipDesign>();
+
     }
 
     void Start()
     {
-        itemButton.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => SetItemPopup(DataManager.Instance.playerInfo.currentSelectDataValue));
+        //itemButton.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => SetItemPopup(DataManager.Instance.playerInfo.currentSelectDataValue));
+        SetShipPartButton = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(2).GetComponent<Button>();
     }
     
 
@@ -93,7 +101,6 @@ public class DesignItemPop : MonoBehaviour
     {
         FalseText();
 
-        DefaultShipPart tempSelectItem = null;
         itemDefalutData[0].gameObject.SetActive(true);
         itemDefalutData[1].gameObject.SetActive(true);
         itemDefalutData[2].gameObject.SetActive(true);
@@ -102,18 +109,16 @@ public class DesignItemPop : MonoBehaviour
         {
             if(DataManager.Instance.playerInfo.PlayerData[item].Count <= value || DataManager.Instance.playerInfo.PlayerData[item][value] == null)
             {
-                Debug.Log("value가 count보다 커서 tempSelectItem이 널이 됌");
                 tempSelectItem = null;
             }
             else
             {
-                Debug.Log("값이 들어감");
                 tempSelectItem = (DefaultShipPart)DataManager.Instance.playerInfo.PlayerData[item][value];
+                Debug.Log(tempSelectItem);
             }
         }
         else
         {
-            Debug.Log("tryGetValue에서 false를 보내서 null이 됌");
             tempSelectItem = null;
         }
 
@@ -138,6 +143,7 @@ public class DesignItemPop : MonoBehaviour
                     itemDefalutData[1].text = "함     급 : " + tempHull.defaultShipPartClass.ToString();
                     itemDefalutData[2].text = "등     급 : " + tempHull.DefaultShipPartGrade.ToString();
                     hull[0].text = "체     력 : " + tempHull.hulltHp.ToString();
+                    SetShipPartButton.onClick.AddListener(() => shipdesign.SetShipPart(tempSelectItem));
                 }
 
                 break;
@@ -164,6 +170,7 @@ public class DesignItemPop : MonoBehaviour
                     itemDefalutData[2].text = "등     급 : " + tempHead.DefaultShipPartGrade.ToString();
                     head[0].text = "사용 무기 개수 : " + tempHead.weapons.Count;
                     head[1].text = "사용 무기 개수 : " + tempHead.utility.Count;
+                    SetShipPartButton.onClick.AddListener(() => shipdesign.SetShipPart(tempSelectItem));
                 }
                 break;
     
@@ -189,6 +196,7 @@ public class DesignItemPop : MonoBehaviour
                     itemDefalutData[2].text = "등     급 : " + tempBody.DefaultShipPartGrade.ToString();
                     body[0].text = "사용 무기 개수 : " + tempBody.weapons.Count;
                     body[1].text = "사용 무기 개수 : " + tempBody.utility.Count;
+                    SetShipPartButton.onClick.AddListener(() => shipdesign.SetShipPart(tempSelectItem));
                 }
                 break;
     
@@ -215,6 +223,7 @@ public class DesignItemPop : MonoBehaviour
                     itemDefalutData[2].text = "등     급 : " + tempTail.DefaultShipPartGrade.ToString();
                     tail[0].text = "사용 무기 개수 : " + tempTail.weapons.Count;
                     tail[1].text = "사용 무기 개수 : " + tempTail.utility.Count;
+                    SetShipPartButton.onClick.AddListener(() => shipdesign.SetShipPart(tempSelectItem));
                 }
                 break;
     
@@ -250,6 +259,7 @@ public class DesignItemPop : MonoBehaviour
                     weapon[1].text = "공격속도 : " + tempWeapon.attackRange;
                     weapon[2].text = "공격거리 : " + tempWeapon.attackSpeed;
                     weapon[3].text = "전력소모 : " + tempWeapon.usePower;
+                    SetShipPartButton.onClick.AddListener(() => shipdesign.SetShipPart(tempSelectItem));
                 }
                 break;
     
@@ -273,6 +283,7 @@ public class DesignItemPop : MonoBehaviour
                         itemDefalutData[2].text = "등     급 : " + tempUtility.DefaultShipPartGrade.ToString();
                         shild[0].text = "보 호 막 : " + tempUtility.shild;
                         shild[1].text = "전력소모 : " + tempUtility.usePower;
+                        SetShipPartButton.onClick.AddListener(() => shipdesign.SetShipPart(tempSelectItem));
                     }
                     else if (Utility.Armor == tempUtility.utility)
                     {
@@ -284,6 +295,7 @@ public class DesignItemPop : MonoBehaviour
                         itemDefalutData[2].text = "등     급 : " + tempUtility.DefaultShipPartGrade.ToString();
                         defence[0].text = "방어력 : " + tempUtility.defence;
                         defence[1].text = "방어력 : " + tempUtility.usePower;
+                        SetShipPartButton.onClick.AddListener(() => shipdesign.SetShipPart(tempSelectItem));
                     }
                 }
                 break;
@@ -306,6 +318,7 @@ public class DesignItemPop : MonoBehaviour
                     itemDefalutData[1].text = "함     급 : " + tempReactor.defaultShipPartClass.ToString();
                     itemDefalutData[2].text = "등     급 : " + tempReactor.DefaultShipPartGrade.ToString();
                     reactor[0].text = "최대전력 : " + tempReactor.reactorPower;
+                    SetShipPartButton.onClick.AddListener(() => shipdesign.SetShipPart(tempSelectItem));
                 }
                 break;
     
@@ -332,6 +345,7 @@ public class DesignItemPop : MonoBehaviour
                     itemDefalutData[2].text = "등     급 : " + tempThruster.DefaultShipPartGrade.ToString();
                     thruster[0].text = "이동속도 : " + tempThruster.thrusterSpeed;
                     thruster[1].text = "최대전력 : " + tempThruster.usePower;
+                    SetShipPartButton.onClick.AddListener(() => shipdesign.SetShipPart(tempSelectItem));
                 }
                 break;
         }
