@@ -14,7 +14,7 @@ public class ShipDesign : MonoBehaviour
 
     public void SetShipHull(DefaultShipPart value)
     {
-         Debug.Log("버튼이 눌려서 쉽디자인 호출됌");
+         Debug.Log("ShipHull 설치 호출");
          
          string a = value.GetType().FullName;
          if(a == "ShipHull")

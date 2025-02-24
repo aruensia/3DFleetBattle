@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
+
     Dictionary<string, List<ScriptableObject>> playerData = new Dictionary<string, List<ScriptableObject>>()
     {
         { "ShipHullData", new List<ScriptableObject>()},
@@ -53,7 +53,4 @@ public class PlayerInfo : MonoBehaviour
         Debug.Log($"@@@@-- 인벤토리의 크기는 : {inventoryCount} --@@@@");
         Debug.Log($"@@@@-- 초기화된 돈은 : {money} --@@@@");
     }
-
-
-
 }

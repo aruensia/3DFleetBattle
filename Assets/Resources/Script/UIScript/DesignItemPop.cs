@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DesignItemPop : MonoBehaviour
@@ -94,19 +92,32 @@ public class DesignItemPop : MonoBehaviour
     public void SetBuyPopup(int value, string item)
     {
         FalseText();
-    
+
+        DefaultShipPart tempSelectItem = null;
         itemDefalutData[0].gameObject.SetActive(true);
         itemDefalutData[1].gameObject.SetActive(true);
         itemDefalutData[2].gameObject.SetActive(true);
 
-        DefaultShipPart tempSelectItem = null;
-        if ( tempSelectItem != null)
+        if (DataManager.Instance.playerInfo.PlayerData.TryGetValue(item, out List<ScriptableObject> obj))
         {
-            tempSelectItem = (DefaultShipPart)DataManager.Instance.playerInfo.PlayerData[item][value];
+            if(DataManager.Instance.playerInfo.PlayerData[item].Count <= value || DataManager.Instance.playerInfo.PlayerData[item][value] == null)
+            {
+                Debug.Log("value가 count보다 커서 tempSelectItem이 널이 됌");
+                tempSelectItem = null;
+            }
+            else
+            {
+                Debug.Log("값이 들어감");
+                tempSelectItem = (DefaultShipPart)DataManager.Instance.playerInfo.PlayerData[item][value];
+            }
+        }
+        else
+        {
+            Debug.Log("tryGetValue에서 false를 보내서 null이 됌");
+            tempSelectItem = null;
         }
 
-
-
+        Debug.Log(tempSelectItem);
         switch (item)
         {
             case "ShipHullData":
@@ -154,10 +165,6 @@ public class DesignItemPop : MonoBehaviour
                     head[0].text = "사용 무기 개수 : " + tempHead.weapons.Count;
                     head[1].text = "사용 무기 개수 : " + tempHead.utility.Count;
                 }
-
-
-
-
                 break;
     
             case "ShipBodyData":
@@ -183,7 +190,6 @@ public class DesignItemPop : MonoBehaviour
                     body[0].text = "사용 무기 개수 : " + tempBody.weapons.Count;
                     body[1].text = "사용 무기 개수 : " + tempBody.utility.Count;
                 }
-
                 break;
     
     
@@ -245,7 +251,6 @@ public class DesignItemPop : MonoBehaviour
                     weapon[2].text = "공격거리 : " + tempWeapon.attackSpeed;
                     weapon[3].text = "전력소모 : " + tempWeapon.usePower;
                 }
-
                 break;
     
             case "UtilityData":
@@ -281,7 +286,6 @@ public class DesignItemPop : MonoBehaviour
                         defence[1].text = "방어력 : " + tempUtility.usePower;
                     }
                 }
-
                 break;
     
             case "ShipReactorData":
@@ -303,7 +307,6 @@ public class DesignItemPop : MonoBehaviour
                     itemDefalutData[2].text = "등     급 : " + tempReactor.DefaultShipPartGrade.ToString();
                     reactor[0].text = "최대전력 : " + tempReactor.reactorPower;
                 }
-
                 break;
     
             case "ShipThrusterData":

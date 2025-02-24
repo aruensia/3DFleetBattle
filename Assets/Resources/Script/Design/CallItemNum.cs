@@ -20,8 +20,14 @@ public class CallItemNum : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         currentSelectItemName = eventData.pointerCurrentRaycast.gameObject.transform.parent.name;
+        Debug.Log(eventData.pointerCurrentRaycast.gameObject.transform.parent.name);
+        if ( currentSelectItemName == null)
+        {
+            Debug.Log("비어있어요!!");
+        }
         string number = Regex.Replace(currentSelectItemName, @"\D", "");
         tempnum = int.Parse(number);
+        Debug.Log(DataManager.Instance.playerInfo.currentSelectDataValue);
         designItemPop.SetBuyPopup(tempnum, DataManager.Instance.playerInfo.currentSelectDataValue);
     }
 

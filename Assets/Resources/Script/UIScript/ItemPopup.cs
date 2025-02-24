@@ -41,6 +41,10 @@ public class ItemPopup : MonoBehaviour
                 {
                     Debug.Log("아이템이 없습니다.");
                     playerInfo.currentSelectDataValue = "ShipHullData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count > 0)
                 {
@@ -65,6 +69,10 @@ public class ItemPopup : MonoBehaviour
                 {
                     Debug.Log("아이템이 없습니다.");
                     playerInfo.currentSelectDataValue = "ShipHeadData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count > 0)
                 {
@@ -89,6 +97,10 @@ public class ItemPopup : MonoBehaviour
                 {
                     Debug.Log("아이템이 없습니다.");
                     playerInfo.currentSelectDataValue = "ShipBodyData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count > 0)
                 {
@@ -113,6 +125,10 @@ public class ItemPopup : MonoBehaviour
                 {
                     Debug.Log("아이템이 없습니다.");
                     playerInfo.currentSelectDataValue = "ShipTailData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count > 0)
                 {
@@ -137,6 +153,10 @@ public class ItemPopup : MonoBehaviour
                 {
                     Debug.Log("아이템이 없습니다.");
                     playerInfo.currentSelectDataValue = "WeaponData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count > 0)
                 {
@@ -161,6 +181,10 @@ public class ItemPopup : MonoBehaviour
                 {
                     Debug.Log("아이템이 없습니다.");
                     playerInfo.currentSelectDataValue = "UtilityData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
 
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count > 0)
@@ -186,6 +210,10 @@ public class ItemPopup : MonoBehaviour
                 {
                     Debug.Log("아이템이 없습니다.");
                     playerInfo.currentSelectDataValue = "ShipReactorData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count > 0)
                 {
@@ -210,6 +238,10 @@ public class ItemPopup : MonoBehaviour
                 {
                     Debug.Log("아이템이 없습니다.");
                     playerInfo.currentSelectDataValue = "ShipThrusterData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count > 0)
                 {

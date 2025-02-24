@@ -62,7 +62,7 @@ public class CreateInvenSlot : MonoBehaviour
         }
     }
 
-    void CreatePartSlot()
+    void CreatePartSlot() //인벤토리에서 아이템 탭을 만드는 함수.
     {
         List<string> slots = new List<string>();
 
@@ -76,7 +76,7 @@ public class CreateInvenSlot : MonoBehaviour
             var temppartslot = Instantiate(partSlot, userInven.transform.GetChild(0));
             temppartslot.name = "PartSlot" + i;
 
-            temppartslot.GetComponent<Button>().onClick.AddListener(() => invenSlot.SetItemChange(temppartslot));
+            temppartslot.GetComponent<Button>().onClick.AddListener(() => invenSlot.SetItemChange(temppartslot)); //각 탭을 누를 경우 해당 정보를 출력하는 함수.
 
             switch (slots[i])
             {
