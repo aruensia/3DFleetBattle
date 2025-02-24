@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class ShipDesign : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class ShipDesign : MonoBehaviour
     public GameObject itemInfoPanel;
     public GameObject weaponButton;
     public GameObject utilityButton;
+    public Transform tempObject;
 
     public bool isWeaponSetting;
     GameObject tempShiphullSlot;
@@ -33,12 +36,18 @@ public class ShipDesign : MonoBehaviour
     {
         Debug.Log($"{tempShipPart.defaultShipPartName}를 호출함");
         Debug.Log($"{tempShipPart.partType}를 호출함");
-        
-        switch(tempShipPart.partType)
+
+        string number = Regex.Replace(tempShipPart.name, @"\D", "");
+        int tempnum = int.Parse(number);
+
+        Debug.Log(currentship.shiphead);
+
+        switch (tempShipPart.partType)
         {
             case PartType.Head:
-                if( this.currentship.shipHull != null)
+                if( this.currentship.shiphead == null)
                 {
+                    this.currentship.shiphead = null;
                     ShipHead shipHead = (ShipHead)tempShipPart;
                     this.currentship.shiphead = shipHead;
                     this.currentship.hp += shipHead.defaultShipPartArmor;
@@ -61,8 +70,18 @@ public class ShipDesign : MonoBehaviour
                             Instantiate(itemIcon, shipHeadPos.transform.GetChild(1).transform);
                         }
                     }
-
+                    Debug.Log(DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count);
+                    DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Remove(shipHead);
                 }
+                else
+                {
+                    Debug.Log(shipHeadPos.transform.GetChild(0).childCount);
+                    for ( int i = 0; i < shipHeadPos.transform.GetChild(0).childCount; i++)
+                    {
+                        Destroy((shipHeadPos.transform.GetChild(0).transform.GetChild(i)).gameObject);
+                    }
+                }
+
                 break;
 
             case PartType.Body:
