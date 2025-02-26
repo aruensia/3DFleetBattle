@@ -21,27 +21,44 @@ public class CallItemNum : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (shipDesign.isWeaponSetting == true)
+        var names = eventData.pointerCurrentRaycast.gameObject.transform.parent.transform.parent.name;
+        Debug.Log(names);
+        
+        if (names == "Weapons")
         {
-            Debug.Log(" isWeaponSetting true가 되었음");
-
+            shipDesign.currentSelectRemoveItemType = "Weapons";
+            shipDesign.RemoveSubItem(eventData);
+        }
+        else if (names == "Utilitys")
+        {
+            shipDesign.currentSelectRemoveItemType = "Utilitys";
+            shipDesign.RemoveSubItem(eventData);
         }
         else
         {
-            currentSelectItemName = eventData.pointerCurrentRaycast.gameObject.transform.parent.name;
-            Debug.Log(eventData.pointerCurrentRaycast.gameObject.transform.parent.name);
-            if (currentSelectItemName == null)
+            if (shipDesign.isWeaponSetting == true)
             {
-                Debug.Log("비어있어요!!");
+                Debug.Log(" isWeaponSetting true가 되었음");
+
             }
             else
             {
-                string number = Regex.Replace(currentSelectItemName, @"\D", "");
-                tempnum = int.Parse(number);
-                Debug.Log(DataManager.Instance.playerInfo.currentSelectDataValue);
-                designItemPop.SetBuyPopup(tempnum, DataManager.Instance.playerInfo.currentSelectDataValue);
+                currentSelectItemName = eventData.pointerCurrentRaycast.gameObject.transform.parent.name;
+                Debug.Log(eventData.pointerCurrentRaycast.gameObject.transform.parent.name);
+                if (currentSelectItemName == null)
+                {
+                    Debug.Log("비어있어요!!");
+                }
+                else
+                {
+                    string number = Regex.Replace(currentSelectItemName, @"\D", "");
+                    tempnum = int.Parse(number);
+                    Debug.Log(DataManager.Instance.playerInfo.currentSelectDataValue);
+                    designItemPop.SetBuyPopup(tempnum, DataManager.Instance.playerInfo.currentSelectDataValue);
+                }
             }
         }
+
     }
 
 

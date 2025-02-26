@@ -350,7 +350,6 @@ public class DesignItemPop : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log("여기까지 와서 텍스트 만들엇음");
         activityUIControl[0].SetActive(true);
     }
 

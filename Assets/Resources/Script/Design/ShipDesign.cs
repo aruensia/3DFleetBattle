@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
@@ -24,10 +25,18 @@ public class ShipDesign : MonoBehaviour
     bool saveOn = false;
     GameObject tempShiphullSlot;
     DefaultShipPart tempweapons;
+    DefaultShipPart temputilitys;
+    public Sprite defaultSlotImage1;
+    public Sprite defaultSlotImage2;
+    public string currentSelectRemoveItemType;
 
-    int headCount = 0;
-    int bodyCount = 0;
-    int tailCount = 0;
+    int weaponheadCount = 0;
+    int weaponbodyCount = 0;
+    int weapontailCount = 0;
+
+    int utilityheadCount = 0;
+    int utilitybodyCount = 0;
+    int utilitytailCount = 0;
 
     List<DefaultShipPart> tempShipPartSaveList = new List<DefaultShipPart>();
 
@@ -66,14 +75,16 @@ public class ShipDesign : MonoBehaviour
                     {
                         for (int i = 0; i < shipHead.weapons.Count; i++)
                         {
-                            Instantiate(itemIcon, shipHeadPos.transform.GetChild(0).transform);
+                            var temp = Instantiate(itemIcon, shipHeadPos.transform.GetChild(0).transform);
+                            temp.name = "weapons"+i;
                         }
                     }
                     if (shipHead.utility.Count > 0)
                     {
                         for (int i = 0; i < shipHead.utility.Count; i++)
                         {
-                            Instantiate(itemIcon, shipHeadPos.transform.GetChild(1).transform);
+                            var temp = Instantiate(itemIcon, shipHeadPos.transform.GetChild(1).transform);
+                            temp.name = "utility" + i;
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Remove(shipHead);
@@ -105,7 +116,8 @@ public class ShipDesign : MonoBehaviour
                         Debug.Log(shipHead.weapons.Count);
                         for (int i = 0; i < shipHead.weapons.Count; i++)
                         {
-                            Instantiate(itemIcon, shipHeadPos.transform.GetChild(0).transform);
+                            var temp = Instantiate(itemIcon, shipHeadPos.transform.GetChild(0).transform);
+                            temp.name = "weapons" + i;
                         }
                     }
                     if (shipHead.utility.Count > 0)
@@ -113,7 +125,8 @@ public class ShipDesign : MonoBehaviour
                         Debug.Log(shipHead.utility.Count);
                         for (int i = 0; i < shipHead.utility.Count; i++)
                         {
-                            Instantiate(itemIcon, shipHeadPos.transform.GetChild(1).transform);
+                            var temp = Instantiate(itemIcon, shipHeadPos.transform.GetChild(1).transform);
+                            temp.name = "utility" + i;
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Remove(shipHead);
@@ -136,7 +149,8 @@ public class ShipDesign : MonoBehaviour
                         Debug.Log(shipBody.weapons.Count);
                         for (int i = 0; i < shipBody.weapons.Count; i++)
                         {
-                            Instantiate(itemIcon, shipBodyPos.transform.GetChild(0).transform);
+                            var temp = Instantiate(itemIcon, shipBodyPos.transform.GetChild(0).transform);
+                            temp.name = "weapons" + i;
                         }
                     }
                     if (shipBody.utility.Count > 0)
@@ -144,7 +158,8 @@ public class ShipDesign : MonoBehaviour
                         Debug.Log(shipBody.utility.Count);
                         for (int i = 0; i < shipBody.utility.Count; i++)
                         {
-                            Instantiate(itemIcon, shipBodyPos.transform.GetChild(1).transform);
+                            var temp = Instantiate(itemIcon, shipBodyPos.transform.GetChild(1).transform);
+                            temp.name = "utility" + i;
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Remove(shipBody);
@@ -176,7 +191,8 @@ public class ShipDesign : MonoBehaviour
                         Debug.Log(shipBody.weapons.Count);
                         for (int i = 0; i < shipBody.weapons.Count; i++)
                         {
-                            Instantiate(itemIcon, shipBodyPos.transform.GetChild(0).transform);
+                            var temp = Instantiate(itemIcon, shipBodyPos.transform.GetChild(0).transform);
+                            temp.name = "weapons" + i;
                         }
                     }
                     if (shipBody.utility.Count > 0)
@@ -184,7 +200,8 @@ public class ShipDesign : MonoBehaviour
                         Debug.Log(shipBody.utility.Count);
                         for (int i = 0; i < shipBody.utility.Count; i++)
                         {
-                            Instantiate(itemIcon, shipBodyPos.transform.GetChild(1).transform);
+                            var temp = Instantiate(itemIcon, shipBodyPos.transform.GetChild(1).transform);
+                            temp.name = "utility" + i;
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Remove(shipBody);
@@ -205,14 +222,16 @@ public class ShipDesign : MonoBehaviour
                     {
                         for (int i = 0; i < shipTail.weapons.Count; i++)
                         {
-                            Instantiate(itemIcon, shipTailPos.transform.GetChild(0).transform);
+                            var temp = Instantiate(itemIcon, shipTailPos.transform.GetChild(0).transform);
+                            temp.name = "weapons" + i;
                         }
                     }
                     if (shipTail.utility.Count > 0)
                     {
                         for (int i = 0; i < shipTail.utility.Count; i++)
                         {
-                            Instantiate(itemIcon, shipTailPos.transform.GetChild(1).transform);
+                            var temp = Instantiate(itemIcon, shipTailPos.transform.GetChild(1).transform);
+                            temp.name = "utility" + i;
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Remove(shipTail);
@@ -241,14 +260,16 @@ public class ShipDesign : MonoBehaviour
                     {
                         for (int i = 0; i < shipTail.weapons.Count; i++)
                         {
-                            Instantiate(itemIcon, shipTailPos.transform.GetChild(0).transform);
+                            var temp = Instantiate(itemIcon, shipTailPos.transform.GetChild(0).transform);
+                            temp.name = "weapons" + i;
                         }
                     }
                     if (shipTail.utility.Count > 0)
                     {
                         for (int i = 0; i < shipTail.utility.Count; i++)
                         {
-                            Instantiate(itemIcon, shipTailPos.transform.GetChild(1).transform);
+                            var temp = Instantiate(itemIcon, shipTailPos.transform.GetChild(1).transform);
+                            temp.name = "utility" + i;
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Remove(shipTail);
@@ -299,6 +320,13 @@ public class ShipDesign : MonoBehaviour
                 ActiveSubItem();
                 break;
 
+
+            case PartType.Utility:
+
+                temputilitys = tempShipPart;
+                ActiveSubItem();
+                break;
+
         }
     }
 
@@ -311,89 +339,191 @@ public class ShipDesign : MonoBehaviour
         weaponButton.gameObject.SetActive(true);
     }
 
-
-
     public void SetSubItem(int buttonnum)
     {
         Weapon weapons = (Weapon)tempweapons;
-        switch (buttonnum)
+        UtilityData utility = (UtilityData)temputilitys;
+
+        if(weapons != null )
         {
-            case 1:
-                if(this.currentship.shiphead != null)
-                {
-                    if(this.currentship.shiphead.weapons.Count > headCount)
+            switch (buttonnum)
+            {
+                case 1:
+                    if (this.currentship.shiphead != null)
                     {
-                        this.currentship.shiphead.weapons[headCount] = weapons;
-                        Debug.Log(this.currentship.shiphead.weapons[headCount].defaultShipPartName);
-                        shipHeadPos.transform.GetChild(0).GetChild(headCount).GetComponent<Image>().sprite = weapons.iconImage;
-                        headCount++;
-                        weaponButton.gameObject.SetActive(false);
+                        if (this.currentship.shiphead.weapons.Count > weaponheadCount)
+                        {
+                            this.currentship.shiphead.weapons[weaponheadCount] = weapons;
+                            shipHeadPos.transform.GetChild(0).GetChild(weaponheadCount).GetComponent<Image>().sprite = weapons.iconImage;
+                            weaponheadCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            DataManager.Instance.playerInfo.PlayerData["WeaponData"].Remove(weapons);
+                        }
+                        else if (this.currentship.shiphead.weapons.Count <= weaponheadCount)
+                        {
+                            weaponheadCount = 0;
+                            Weapon tempcurrentshipweapon = this.currentship.shiphead.weapons[weaponheadCount];
+                            this.currentship.shiphead.weapons[weaponheadCount] = weapons;
+                            shipHeadPos.transform.GetChild(0).GetChild(weaponheadCount).GetComponent<Image>().sprite = weapons.iconImage;
+                            weaponheadCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            tempcurrentshipweapon = this.currentship.shiphead.weapons[weaponheadCount];
+                            DataManager.Instance.playerInfo.PlayerData["WeaponData"].Remove(weapons);
+                            DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(tempcurrentshipweapon);
+                        }
                     }
-                    else
-                    {
-                        headCount = 0;
-                        this.currentship.shiphead.weapons[headCount] = weapons;
-                        Debug.Log(this.currentship.shiphead.weapons[headCount].defaultShipPartName);
-                        shipHeadPos.transform.GetChild(0).GetChild(headCount).GetComponent<Image>().sprite = weapons.iconImage;
-                        headCount++;
-                        weaponButton.gameObject.SetActive(false);
-                    }
-                }
-                else
-                {
+                    tempweapons = null;
 
-                }
-                break;
+                    break;
 
+                case 2:
+                    if (this.currentship.shipBody != null)
+                    {
+                        if (this.currentship.shipBody.weapons.Count > weaponbodyCount)
+                        {
+                            this.currentship.shipBody.weapons[weaponbodyCount] = weapons;
+                            shipBodyPos.transform.GetChild(0).GetChild(weaponbodyCount).GetComponent<Image>().sprite = weapons.iconImage;
+                            weaponbodyCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            DataManager.Instance.playerInfo.PlayerData["WeaponData"].Remove(weapons);
+                        }
+                        else if (this.currentship.shipBody.weapons.Count <= weaponbodyCount)
+                        {
+                            weaponbodyCount = 0;
+                            Weapon tempcurrentshipweapon = this.currentship.shipBody.weapons[weaponbodyCount];
+                            this.currentship.shipBody.weapons[weaponbodyCount] = weapons;
+                            shipBodyPos.transform.GetChild(0).GetChild(weaponbodyCount).GetComponent<Image>().sprite = weapons.iconImage;
+                            weaponbodyCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            tempcurrentshipweapon = this.currentship.shipBody.weapons[weaponbodyCount];
+                            DataManager.Instance.playerInfo.PlayerData["WeaponData"].Remove(weapons);
+                            DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(tempcurrentshipweapon);
+                        }
+                    }
+                    tempweapons = null;
 
-            case 2:
-                if (this.currentship.shipBody != null)
-                {
-                    if (this.currentship.shipBody.weapons.Count > bodyCount)
-                    {
-                        this.currentship.shipBody.weapons[bodyCount] = weapons;
-                        Debug.Log(this.currentship.shipBody.weapons[bodyCount].defaultShipPartName);
-                        shipBodyPos.transform.GetChild(0).GetChild(bodyCount).GetComponent<Image>().sprite = weapons.iconImage;
-                        bodyCount++;
-                        weaponButton.gameObject.SetActive(false);
-                    }
-                    else
-                    {
-                        bodyCount = 0;
-                        this.currentship.shipBody.weapons[bodyCount] = weapons;
-                        Debug.Log(this.currentship.shipBody.weapons[bodyCount].defaultShipPartName);
-                        shipBodyPos.transform.GetChild(0).GetChild(bodyCount).GetComponent<Image>().sprite = weapons.iconImage;
-                        bodyCount++;
-                        weaponButton.gameObject.SetActive(false);
-                    }
-                }
-                break;
+                    break;
 
+                case 3:
+                    if (this.currentship.shipTail != null)
+                    {
+                        if (this.currentship.shipTail.weapons.Count > weapontailCount)
+                        {
+                            this.currentship.shipTail.weapons[weapontailCount] = weapons;
+                            shipTailPos.transform.GetChild(0).GetChild(weapontailCount).GetComponent<Image>().sprite = weapons.iconImage;
+                            weapontailCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            DataManager.Instance.playerInfo.PlayerData["WeaponData"].Remove(weapons);
+                        }
+                        else if (this.currentship.shipTail.weapons.Count <= weapontailCount)
+                        {
+                            weapontailCount = 0;
+                            Weapon tempcurrentshipweapon = this.currentship.shipTail.weapons[weapontailCount];
+                            this.currentship.shipTail.weapons[weapontailCount] = weapons;
+                            shipTailPos.transform.GetChild(0).GetChild(weapontailCount).GetComponent<Image>().sprite = weapons.iconImage;
+                            weapontailCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            tempcurrentshipweapon = this.currentship.shipTail.weapons[weapontailCount];
+                            DataManager.Instance.playerInfo.PlayerData["WeaponData"].Remove(weapons);
+                            DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(tempcurrentshipweapon);
+                        }
+                    }
+                    tempweapons = null;
 
-            case 3:
-                if (this.currentship.shipTail != null)
-                {
-                    if (this.currentship.shipTail.weapons.Count > tailCount)
-                    {
-                        this.currentship.shipTail.weapons[tailCount] = weapons;
-                        Debug.Log(this.currentship.shipTail.weapons[tailCount].defaultShipPartName);
-                        shipTailPos.transform.GetChild(0).GetChild(tailCount).GetComponent<Image>().sprite = weapons.iconImage;
-                        tailCount++;
-                        weaponButton.gameObject.SetActive(false);
-                    }
-                    else
-                    {
-                        bodyCount = 0;
-                        this.currentship.shipTail.weapons[tailCount] = weapons;
-                        Debug.Log(this.currentship.shipTail.weapons[tailCount].defaultShipPartName);
-                        shipTailPos.transform.GetChild(0).GetChild(tailCount).GetComponent<Image>().sprite = weapons.iconImage;
-                        tailCount++;
-                        weaponButton.gameObject.SetActive(false);
-                    }
-                }
-                break;
+                    break;
+            }
+            isWeaponSetting = false;
         }
-        isWeaponSetting = false;
+        else if( utility != null)
+        {
+            switch (buttonnum)
+            {
+                case 1:
+                    if (this.currentship.shiphead != null)
+                    {
+                        if (this.currentship.shiphead.utility.Count > utilityheadCount)
+                        {
+                            this.currentship.shiphead.utility[utilityheadCount] = utility;
+                            shipHeadPos.transform.GetChild(1).GetChild(utilityheadCount).GetComponent<Image>().sprite = utility.iconImage;
+                            utilityheadCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            DataManager.Instance.playerInfo.PlayerData["UtilityData"].Remove(utility);
+                        }
+                        else if (this.currentship.shiphead.utility.Count <= utilityheadCount)
+                        {
+                            utilityheadCount = 0;
+                            UtilityData tempcurrentshipUtility = this.currentship.shiphead.utility[utilityheadCount];
+                            this.currentship.shiphead.utility[utilityheadCount] = utility;
+                            shipHeadPos.transform.GetChild(1).GetChild(utilityheadCount).GetComponent<Image>().sprite = utility.iconImage;
+                            utilityheadCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            tempcurrentshipUtility = this.currentship.shiphead.utility[utilityheadCount];
+                            DataManager.Instance.playerInfo.PlayerData["UtilityData"].Remove(utility);
+                            DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(tempcurrentshipUtility);
+                        }
+                    }
+                    temputilitys = null;
+
+                    break;
+
+                case 2:
+                    if (this.currentship.shipBody != null)
+                    {
+                        if (this.currentship.shipBody.utility.Count > utilitybodyCount)
+                        {
+                            this.currentship.shipBody.utility[utilitybodyCount] = utility;
+                            shipBodyPos.transform.GetChild(1).GetChild(utilitybodyCount).GetComponent<Image>().sprite = utility.iconImage;
+                            utilitybodyCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            DataManager.Instance.playerInfo.PlayerData["UtilityData"].Remove(utility);
+                        }
+                        else if (this.currentship.shipBody.utility.Count <= utilitybodyCount)
+                        {
+                            utilitybodyCount = 0;
+                            UtilityData tempcurrentshipUtility = this.currentship.shipBody.utility[utilitybodyCount];
+                            this.currentship.shipBody.weapons[utilitybodyCount] = weapons;
+                            shipBodyPos.transform.GetChild(1).GetChild(utilitybodyCount).GetComponent<Image>().sprite = utility.iconImage;
+                            utilitybodyCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            tempcurrentshipUtility = this.currentship.shipBody.utility[utilitybodyCount];
+                            DataManager.Instance.playerInfo.PlayerData["UtilityData"].Remove(utility);
+                            DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(tempcurrentshipUtility);
+                        }
+                    }
+                    temputilitys = null;
+
+                    break;
+
+                case 3:
+                    if (this.currentship.shipTail != null)
+                    {
+                        if (this.currentship.shipTail.utility.Count > utilitytailCount)
+                        {
+                            this.currentship.shipTail.utility[utilitytailCount] = utility;
+                            shipTailPos.transform.GetChild(1).GetChild(utilitytailCount).GetComponent<Image>().sprite = utility.iconImage;
+                            utilitytailCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            DataManager.Instance.playerInfo.PlayerData["UtilityData"].Remove(utility);
+                        }
+                        else if (this.currentship.shipTail.utility.Count <= utilitytailCount)
+                        {
+                            utilitytailCount = 0;
+                            UtilityData tempcurrentshipUtility = this.currentship.shipTail.utility[utilitytailCount];
+                            this.currentship.shipTail.utility[utilitytailCount] = utility;
+                            shipTailPos.transform.GetChild(1).GetChild(utilitytailCount).GetComponent<Image>().sprite = utility.iconImage;
+                            utilitytailCount++;
+                            weaponButton.gameObject.SetActive(false);
+                            tempcurrentshipUtility = this.currentship.shipTail.utility[utilitytailCount];
+                            DataManager.Instance.playerInfo.PlayerData["UtilityData"].Remove(utility);
+                            DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(tempcurrentshipUtility);
+                        }
+                    }
+                    temputilitys = null;
+
+                    break;
+            }
+            isWeaponSetting = false;
+        }
     }
 
     public void ShipSave()
@@ -415,8 +545,72 @@ public class ShipDesign : MonoBehaviour
     {
         currentship = null;
         Destroy(tempShiphullSlot);
-        
     }
+
+    public void RemoveSubItem(PointerEventData eventData)
+    {
+        var removeItemName = eventData.pointerCurrentRaycast.gameObject.transform.parent.name;
+        string number = Regex.Replace(removeItemName, @"\D", "");
+        int tempnum = int.Parse(number);
+
+        var removeItemPart = eventData.pointerCurrentRaycast.gameObject.transform.parent.transform.parent.transform.parent.name;
+        Debug.Log("현재 선택한 슬롯의 번호는 : " +  tempnum);
+        if (currentSelectRemoveItemType == "Weapons")
+        {
+            if (removeItemPart == "ShipHeadItemSlot")
+            {
+                DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(this.currentship.shiphead.weapons[tempnum]);
+                this.currentship.shiphead.weapons.Remove(this.currentship.shiphead.weapons[tempnum]);
+                this.currentship.shiphead.weapons.Insert(tempnum, null);
+                shipHeadPos.transform.GetChild(0).GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
+                shipHeadPos.transform.GetChild(0).GetChild(tempnum).GetComponent<Image>().sprite = defaultSlotImage2;
+            }
+            else if (removeItemPart == "ShipBodyItemSlot")
+            {
+                DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(this.currentship.shipBody.weapons[tempnum]);
+                this.currentship.shipBody.weapons.Remove(this.currentship.shipBody.weapons[tempnum]);
+                this.currentship.shipBody.weapons.Insert(tempnum, null);
+                shipBodyPos.transform.GetChild(0).GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
+                shipBodyPos.transform.GetChild(0).GetChild(tempnum).GetComponent<Image>().sprite = defaultSlotImage2;
+            }
+            else if (removeItemPart == "ShipTailItemSlot")
+            {
+                DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(this.currentship.shipTail.weapons[tempnum]);
+                this.currentship.shipTail.weapons.Remove(this.currentship.shipTail.weapons[tempnum]);
+                this.currentship.shipTail.weapons.Insert(tempnum, null);
+                shipTailPos.transform.GetChild(0).GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
+                shipTailPos.transform.GetChild(0).GetChild(tempnum).GetComponent<Image>().sprite = defaultSlotImage2;
+            }
+        }
+        else if ( currentSelectRemoveItemType == "Utilitys")
+        {
+            if (removeItemPart == "ShipHeadItemSlot")
+            {
+                DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(this.currentship.shiphead.utility[tempnum]);
+                this.currentship.shiphead.utility.Remove(this.currentship.shiphead.utility[tempnum]);
+                this.currentship.shiphead.utility.Insert(tempnum, null);
+                shipHeadPos.transform.GetChild(1).GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
+                shipHeadPos.transform.GetChild(1).GetChild(tempnum).GetComponent<Image>().sprite = defaultSlotImage2;
+            }
+            else if (removeItemPart == "ShipBodyItemSlot")
+            {
+                DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(this.currentship.shipBody.utility[tempnum]);
+                this.currentship.shipBody.utility.Remove(this.currentship.shipBody.utility[tempnum]);
+                this.currentship.shipBody.utility.Insert(tempnum, null);
+                shipBodyPos.transform.GetChild(1).GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
+                shipBodyPos.transform.GetChild(1).GetChild(tempnum).GetComponent<Image>().sprite = defaultSlotImage2;
+            }
+            else if (removeItemPart == "ShipTailItemSlot")
+            {
+                DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(this.currentship.shipTail.utility[tempnum]);
+                this.currentship.shipTail.utility.Remove(this.currentship.shipTail.utility[tempnum]);
+                this.currentship.shipTail.utility.Insert(tempnum, null);
+                shipTailPos.transform.GetChild(1).GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
+                shipTailPos.transform.GetChild(1).GetChild(tempnum).GetComponent<Image>().sprite = defaultSlotImage2;
+            }
+        }
+        
+    }    
 
     public void GoMain()
     {
@@ -428,16 +622,74 @@ public class ShipDesign : MonoBehaviour
         if (this.currentship.shiphead != null)
         {
             DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Add(this.currentship.shiphead);
+            
+            for ( int i = 0; i < this.currentship.shiphead.weapons.Count; i++)
+            {
+                if (this.currentship.shiphead.weapons[i] != null)
+                {
+                    DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(this.currentship.shiphead.weapons[i]);
+                    this.currentship.shiphead.weapons.Remove(this.currentship.shiphead.weapons[i]);
+                    this.currentship.shiphead.weapons.Insert(i, null);
+                }
+            }
+            for (int i = 0; i < this.currentship.shiphead.utility.Count; i++)
+            {
+                if (this.currentship.shiphead.utility[i] != null)
+                {
+                    DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(this.currentship.shiphead.utility[i]);
+                    this.currentship.shiphead.utility.Remove(this.currentship.shiphead.utility[i]);
+                    this.currentship.shiphead.utility.Insert(i, null);
+                }
+            }
         }
 
         if (this.currentship.shipBody != null)
         {
             DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Add(this.currentship.shipBody);
+
+            for (int i = 0; i < this.currentship.shipBody.weapons.Count; i++)
+            {
+                if (this.currentship.shipBody.weapons[i] != null)
+                {
+                    DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(this.currentship.shipBody.weapons[i]);
+                    this.currentship.shipBody.weapons.Remove(this.currentship.shipBody.weapons[i]);
+                    this.currentship.shipBody.weapons.Insert(i, null);
+                }
+            }
+            for (int i = 0; i < this.currentship.shipBody.utility.Count; i++)
+            {
+                if (this.currentship.shipBody.utility[i] != null)
+                {
+                    DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(this.currentship.shipBody.utility[i]);
+                    this.currentship.shipBody.utility.Remove(this.currentship.shipBody.utility[i]);
+                    this.currentship.shipBody.utility.Insert(i, null);
+                }
+            }
         }
 
         if (this.currentship.shipTail != null)
         {
             DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Add(this.currentship.shipTail);
+
+            for (int i = 0; i < this.currentship.shipTail.weapons.Count; i++)
+            {
+                if (this.currentship.shipTail.weapons[i] != null)
+                {
+                    DataManager.Instance.playerInfo.PlayerData["WeaponData"].Add(this.currentship.shipTail.weapons[i]);
+                    this.currentship.shipTail.weapons.Remove(this.currentship.shipTail.weapons[i]);
+                    this.currentship.shipTail.weapons.Insert(i, null);
+                }
+            }
+            for (int i = 0; i < this.currentship.shipTail.utility.Count; i++)
+            {
+                if (this.currentship.shipTail.utility[i] != null)
+                {
+                    DataManager.Instance.playerInfo.PlayerData["UtilityData"].Add(this.currentship.shipTail.utility[i]);
+                    this.currentship.shipTail.utility.Remove(this.currentship.shipTail.utility[i]);
+                    this.currentship.shipTail.utility.Insert(i, null);
+                }
+
+            }
         }
     }
 
