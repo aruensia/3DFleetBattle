@@ -23,6 +23,11 @@ public class ShipDesign : MonoBehaviour
     public bool isWeaponSetting;
     bool saveOn = false;
     GameObject tempShiphullSlot;
+    DefaultShipPart tempweapons;
+
+    int headCount = 0;
+    int bodyCount = 0;
+    int tailCount = 0;
 
     List<DefaultShipPart> tempShipPartSaveList = new List<DefaultShipPart>();
 
@@ -289,27 +294,106 @@ public class ShipDesign : MonoBehaviour
                 break;
 
             case PartType.Weapon:
-                Debug.Log("³ª È£Ãâ‰Î");
-                ActiveEntryItem();
+
+                tempweapons = tempShipPart;
+                ActiveSubItem();
                 break;
 
         }
     }
 
-    void ActiveEntryItem()
+    void ActiveSubItem()
     {
         isWeaponSetting = true;
 
-        itemInfoPanel.transform.GetChild(0).gameObject.SetActive(false);
-        itemInfoPanel.transform.GetChild(1).gameObject.SetActive(false);
-        itemInfoPanel.transform.GetChild(2).gameObject.SetActive(false);
+        itemInfoPanel.gameObject.SetActive(false);
 
         weaponButton.gameObject.SetActive(true);
     }
 
-    public void SetEntryItem(DefaultShipPart tempShipPart)
-    {
 
+
+    public void SetSubItem(int buttonnum)
+    {
+        Weapon weapons = (Weapon)tempweapons;
+        switch (buttonnum)
+        {
+            case 1:
+                if(this.currentship.shiphead != null)
+                {
+                    if(this.currentship.shiphead.weapons.Count > headCount)
+                    {
+                        this.currentship.shiphead.weapons[headCount] = weapons;
+                        Debug.Log(this.currentship.shiphead.weapons[headCount].defaultShipPartName);
+                        shipHeadPos.transform.GetChild(0).GetChild(headCount).GetComponent<Image>().sprite = weapons.iconImage;
+                        headCount++;
+                        weaponButton.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        headCount = 0;
+                        this.currentship.shiphead.weapons[headCount] = weapons;
+                        Debug.Log(this.currentship.shiphead.weapons[headCount].defaultShipPartName);
+                        shipHeadPos.transform.GetChild(0).GetChild(headCount).GetComponent<Image>().sprite = weapons.iconImage;
+                        headCount++;
+                        weaponButton.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+
+                }
+                break;
+
+
+            case 2:
+                if (this.currentship.shipBody != null)
+                {
+                    if (this.currentship.shipBody.weapons.Count > bodyCount)
+                    {
+                        this.currentship.shipBody.weapons[bodyCount] = weapons;
+                        Debug.Log(this.currentship.shipBody.weapons[bodyCount].defaultShipPartName);
+                        shipBodyPos.transform.GetChild(0).GetChild(bodyCount).GetComponent<Image>().sprite = weapons.iconImage;
+                        bodyCount++;
+                        weaponButton.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        bodyCount = 0;
+                        this.currentship.shipBody.weapons[bodyCount] = weapons;
+                        Debug.Log(this.currentship.shipBody.weapons[bodyCount].defaultShipPartName);
+                        shipBodyPos.transform.GetChild(0).GetChild(bodyCount).GetComponent<Image>().sprite = weapons.iconImage;
+                        bodyCount++;
+                        weaponButton.gameObject.SetActive(false);
+                    }
+                }
+                break;
+
+
+            case 3:
+                if (this.currentship.shipTail != null)
+                {
+                    if (this.currentship.shipTail.weapons.Count > tailCount)
+                    {
+                        this.currentship.shipTail.weapons[tailCount] = weapons;
+                        Debug.Log(this.currentship.shipTail.weapons[tailCount].defaultShipPartName);
+                        shipTailPos.transform.GetChild(0).GetChild(tailCount).GetComponent<Image>().sprite = weapons.iconImage;
+                        tailCount++;
+                        weaponButton.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        bodyCount = 0;
+                        this.currentship.shipTail.weapons[tailCount] = weapons;
+                        Debug.Log(this.currentship.shipTail.weapons[tailCount].defaultShipPartName);
+                        shipTailPos.transform.GetChild(0).GetChild(tailCount).GetComponent<Image>().sprite = weapons.iconImage;
+                        tailCount++;
+                        weaponButton.gameObject.SetActive(false);
+                    }
+                }
+                break;
+        }
+        isWeaponSetting = false;
     }
 
     public void ShipSave()

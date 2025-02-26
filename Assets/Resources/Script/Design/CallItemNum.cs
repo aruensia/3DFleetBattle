@@ -34,10 +34,13 @@ public class CallItemNum : MonoBehaviour, IPointerClickHandler
             {
                 Debug.Log("비어있어요!!");
             }
-            string number = Regex.Replace(currentSelectItemName, @"\D", "");
-            tempnum = int.Parse(number);
-            Debug.Log(DataManager.Instance.playerInfo.currentSelectDataValue);
-            designItemPop.SetBuyPopup(tempnum, DataManager.Instance.playerInfo.currentSelectDataValue);
+            else
+            {
+                string number = Regex.Replace(currentSelectItemName, @"\D", "");
+                tempnum = int.Parse(number);
+                Debug.Log(DataManager.Instance.playerInfo.currentSelectDataValue);
+                designItemPop.SetBuyPopup(tempnum, DataManager.Instance.playerInfo.currentSelectDataValue);
+            }
         }
     }
 
