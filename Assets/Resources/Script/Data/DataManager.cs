@@ -22,6 +22,11 @@ public enum Utility
     Shields, Armor, Computer
 }
 
+public enum ComputerType
+{
+    Tracking, Line, Carrier
+}
+
 public enum ShipClass
 {
     Corvette = 1, Frigate, Destroyer
