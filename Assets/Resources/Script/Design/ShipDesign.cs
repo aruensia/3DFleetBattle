@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -37,9 +38,6 @@ public class ShipDesign : MonoBehaviour
     int utilityheadCount = 0;
     int utilitybodyCount = 0;
     int utilitytailCount = 0;
-
-    List<DefaultShipPart> tempShipPartSaveList = new List<DefaultShipPart>();
-
 
     //유저가 생성할 함선에 대해서 뉴 할당.
     public Ship currentship = new Ship();
@@ -532,6 +530,10 @@ public class ShipDesign : MonoBehaviour
         if(this.currentship.shipHull != null && this.currentship.shiphead != null && this.currentship.shipBody != null && this.currentship.shipTail != null)
         {
             DataManager.Instance.playerInfo.MyShips.Add(currentship);
+            this.currentship.shipHull = null;
+            this.currentship.shiphead = null;
+            this.currentship.shipBody = null;
+            this.currentship.shipTail = null;
             ShipDesignSlotReset();
             Debug.Log(DataManager.Instance.playerInfo.MyShips.Count);
         }
@@ -545,6 +547,46 @@ public class ShipDesign : MonoBehaviour
     {
         currentship = null;
         Destroy(tempShiphullSlot);
+
+        shipHullpos.transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
+        for(int i = 0; i < shipHeadPos.transform.childCount; i++)
+        {
+            var tempobj = shipHeadPos.transform.GetChild(0).GetChild(i);
+            Destroy(tempobj);
+        }
+        for (int i = 0; i < shipHeadPos.transform.childCount; i++)
+        {
+            var tempobj = shipHeadPos.transform.GetChild(1).GetChild(i);
+            Destroy(tempobj);
+        }
+        for (int i = 0; i < shipBodyPos.transform.childCount; i++)
+        {
+            var tempobj = shipBodyPos.transform.GetChild(0).GetChild(i);
+            Destroy(tempobj);
+        }
+        for (int i = 0; i < shipBodyPos.transform.childCount; i++)
+        {
+            var tempobj = shipBodyPos.transform.GetChild(1).GetChild(i);
+            Destroy(tempobj);
+        }
+        for (int i = 0; i < shipTailPos.transform.childCount; i++)
+        {
+            if(shipTailPos.transform.childCount > 0)
+            {
+                var tempobj = shipTailPos.transform.GetChild(0).GetChild(i);
+                Destroy(tempobj);
+            }
+            break;
+        }
+        for (int i = 0; i < shipTailPos.transform.childCount; i++)
+        {
+            if (shipTailPos.transform.childCount > 0)
+            {
+                var tempobj = shipTailPos.transform.GetChild(1).GetChild(i);
+                Destroy(tempobj);
+            }
+            break;
+        }
     }
 
     public void RemoveSubItem(PointerEventData eventData)
@@ -695,7 +737,10 @@ public class ShipDesign : MonoBehaviour
 
     private void OnDisable()
     {
-        ResetItemList();
+        if( saveOn == false)
+        {
+            ResetItemList();
+        }
     }
 }
 
