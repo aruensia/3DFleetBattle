@@ -18,6 +18,7 @@ public class ShipDesign : MonoBehaviour
     public GameObject itemInfoPanel;
     public GameObject weaponButton;
     public GameObject utilityButton;
+    public GameObject userInvenSlot;
     public Transform tempObject;
 
     public bool isWeaponSetting;
@@ -47,13 +48,8 @@ public class ShipDesign : MonoBehaviour
 
     public void SetShipPart(DefaultShipPart tempShipPart)
     {
-        Debug.Log($"{tempShipPart.defaultShipPartName}를 호출함");
-        Debug.Log($"{tempShipPart.partType}를 호출함");
-
         string number = Regex.Replace(tempShipPart.name, @"\D", "");
         int tempnum = int.Parse(number);
-
-        Debug.Log(currentship.shiphead);
 
         switch (tempShipPart.partType)
         {
@@ -84,6 +80,7 @@ public class ShipDesign : MonoBehaviour
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Remove(shipHead);
+                    userInvenSlot.transform.GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
                 }
                 else
                 {
@@ -126,6 +123,7 @@ public class ShipDesign : MonoBehaviour
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Remove(shipHead);
+                    userInvenSlot.transform.GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
                     DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Add(tempcurrentshiphead);
                 }
 
@@ -159,6 +157,7 @@ public class ShipDesign : MonoBehaviour
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Remove(shipBody);
+                    userInvenSlot.transform.GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
                 }
                 else
                 {
@@ -201,6 +200,7 @@ public class ShipDesign : MonoBehaviour
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Remove(shipBody);
+                    userInvenSlot.transform.GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
                     DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Add(tempcurrentshipBody);
                 }
                 break;
@@ -231,6 +231,7 @@ public class ShipDesign : MonoBehaviour
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Remove(shipTail);
+                    userInvenSlot.transform.GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
                 }
                 else
                 {
@@ -269,6 +270,7 @@ public class ShipDesign : MonoBehaviour
                         }
                     }
                     DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Remove(shipTail);
+                    userInvenSlot.transform.GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
                     DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Add(tempcurrentshipTail);
                     
                 }
@@ -276,38 +278,56 @@ public class ShipDesign : MonoBehaviour
 
             case PartType.Hull:
  
-                if(tempShiphullSlot != null)
+                if(tempShiphullSlot == null)
                 {
-                    Destroy(tempShiphullSlot);
+                    ShipHull shipHull = (ShipHull)tempShipPart;
+                    this.currentship.shipHull = shipHull;
+                    this.currentship.hp += shipHull.defaultShipPartArmor;
+                    this.currentship.cost += shipHull.defaultShipPartCost;
+                    Debug.Log(this.currentship.shipHull.defaultShipPartName + " 가 들어갔습니다.");
+                    tempShiphullSlot = Instantiate(shipHull.shipModel, shipInstantiatePos.transform);
+                    shipHullpos.transform.GetChild(0).GetComponent<Image>().sprite = shipHull.iconImage;
+                    Image tempImage = shipHullpos.transform.GetChild(0).GetComponent<Image>();
+                    Color tempColor = tempImage.color;
+                    tempColor.a = 1f;
+                    tempImage.color = tempColor;
+                    DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Remove(shipHull);
+                    userInvenSlot.transform.GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
+        
+                }
+                else if ( tempShiphullSlot != null)
+                {
+                    ShipHull tempcurrentshipHull = this.currentship.shipHull;
+                    ShipHull shipHull = (ShipHull)tempShipPart;
+                    this.currentship.shipHull = shipHull;
+                    this.currentship.hp += shipHull.defaultShipPartArmor;
+                    this.currentship.cost += shipHull.defaultShipPartCost;
+                    Debug.Log(this.currentship.shipHull.defaultShipPartName + " 가 들어갔습니다.");
+                    tempShiphullSlot = Instantiate(shipHull.shipModel, shipInstantiatePos.transform);
+                    shipHullpos.transform.GetChild(0).GetComponent<Image>().sprite = shipHull.iconImage;
+                    Image tempImage = shipHullpos.transform.GetChild(0).GetComponent<Image>();
+                    Color tempColor = tempImage.color;
+                    tempColor.a = 1f;
+                    tempImage.color = tempColor;
+                    DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Remove(shipHull);
+                    userInvenSlot.transform.GetChild(tempnum).GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
+                    DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Add(tempcurrentshipHull);
                 }
 
-                ShipHull shipHull = (ShipHull)tempShipPart;
-                this.currentship.shipHull = shipHull;
-                this.currentship.hp += shipHull.defaultShipPartArmor;
-                this.currentship.cost += shipHull.defaultShipPartCost;
-                Debug.Log(this.currentship.shipHull.defaultShipPartName + " 가 들어갔습니다.");
-                tempShiphullSlot = Instantiate(shipHull.shipModel, shipInstantiatePos.transform);
-                shipHullpos.transform.GetChild(0).GetComponent<Image>().sprite = shipHull.iconImage;
-                Image tempImage = shipHullpos.transform.GetChild(0).GetComponent<Image>();
-                Color tempColor = tempImage.color;
-                tempColor.a = 1f;
-                tempImage.color = tempColor;
-                Debug.Log(shipHull.name);
-
-                if (this.currentship.shiphead != null)
-                {
-                    
-                    for (int i = 0; i < this.currentship.shiphead.weapons.Count; i++)
-                    {
-                        Instantiate(itemIcon, shipHeadPos.transform.GetChild(0).transform);
-                    }
-     
-                    for (int i = 0; i < this.currentship.shiphead.utility.Count; i++)
-                    {
-                        Instantiate(itemIcon, shipHeadPos.transform.GetChild(1).transform);
-                    }
-                    
-                }
+                //if (this.currentship.shiphead != null)
+                //{
+                //    
+                //    for (int i = 0; i < this.currentship.shiphead.weapons.Count; i++)
+                //    {
+                //        Instantiate(itemIcon, shipHeadPos.transform.GetChild(0).transform);
+                //    }
+                //
+                //    for (int i = 0; i < this.currentship.shiphead.utility.Count; i++)
+                //    {
+                //        Instantiate(itemIcon, shipHeadPos.transform.GetChild(1).transform);
+                //    }
+                //    
+                //}
                 break;
 
             case PartType.Weapon:
@@ -547,7 +567,6 @@ public class ShipDesign : MonoBehaviour
 
     void ShipDesignSlotReset()
     {
-        currentship = null;
         Destroy(tempShiphullSlot);
 
         shipHullpos.transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;

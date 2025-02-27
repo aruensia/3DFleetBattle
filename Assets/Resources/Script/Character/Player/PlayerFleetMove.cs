@@ -19,7 +19,7 @@ public class PlayerFleetMove : MonoBehaviour
 
     public Collider[] Engage;
 
-    float tempradius = 300f;
+    float tempradius = 400f;
 
     void Start()
     {

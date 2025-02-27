@@ -2726,10 +2726,12 @@ MonoBehaviour:
   itemInfoPanel: {fileID: 1867326827}
   weaponButton: {fileID: 759988546}
   utilityButton: {fileID: 101614618}
+  userInvenSlot: {fileID: 1672883728}
   tempObject: {fileID: 1059616648}
   isWeaponSetting: 0
   defaultSlotImage1: {fileID: 21300000, guid: 5ec1172c4dd206c4cb38812cb5d41fe5, type: 3}
   defaultSlotImage2: {fileID: 21300000, guid: fee4525ebe8fb8849b6c669ceb31bb16, type: 3}
+  currentSelectRemoveItemType: 
 --- !u!4 &929257805
 Transform:
   m_ObjectHideFlags: 0
