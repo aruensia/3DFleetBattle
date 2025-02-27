@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum state
+{
+    Idle, Move, Attack, Die
+}
+
+
 public class Ship
 {
     public ShipHull shipHull;

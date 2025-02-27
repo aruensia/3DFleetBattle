@@ -1063,7 +1063,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1349043252}
-  - component: {fileID: 1349043254}
+  - component: {fileID: 1349043253}
   m_Layer: 7
   m_Name: PlayerFleet
   m_TagString: Player
@@ -1092,7 +1092,7 @@ Transform:
   - {fileID: 1746282764}
   m_Father: {fileID: 298146456}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1349043254
+--- !u!114 &1349043253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1101,7 +1101,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1349043251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d022c6ab35861a47b71511a300290c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 14f128fe876504a4abb962966465fcb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MaxFleetWaitSpeed: 15

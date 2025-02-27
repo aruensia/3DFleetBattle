@@ -1,30 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UIElements;
 
-public class PlayerFleetMove : MonoBehaviour
+public class PlayerFleetAI : MonoBehaviour
 {
     [SerializeField] float MaxFleetWaitSpeed = 15f;
 
     BattleMain battleMain;
 
+    public List<List<Ship>> corvetteGroup = new List<List<Ship>>();
+    public List<List<Ship>> frigateGroup = new List<List<Ship>>();
+    public List<List<Ship>> destroyerGroup = new List<List<Ship>>();
+    public List<List<Ship>> cruiserGroup = new List<List<Ship>>();
+    public List<List<Ship>> battleshipeGroup = new List<List<Ship>>();
+    public List<List<Ship>> aircraftCarrierGroup = new List<List<Ship>>();
+
     public GameObject playerStartingPoint;
     public GameObject TargetPoint;
     public Transform PlayerBattleGroup;
-    
+
     bool maxSpeedOn = false;
 
     public Collider[] Engage;
 
     float tempradius = 400f;
 
-    void Start()
+    private void Awake()
     {
-        battleMain = GameObject.Find("DataManager").GetComponent<BattleMain>();
-        StartCoroutine(FleetBattleState());
+        battleMain = GameObject.Find("BattleManager").GetComponent<BattleMain>();
     }
 
     private void Update()
@@ -38,13 +41,13 @@ public class PlayerFleetMove : MonoBehaviour
         {
             battleMain.BattleGroupWaitMoveSpeed += 0.01f;
 
-            if (battleMain.BattleGroupWaitMoveSpeed >= MaxFleetWaitSpeed )
+            if (battleMain.BattleGroupWaitMoveSpeed >= MaxFleetWaitSpeed)
             {
                 maxSpeedOn = true;
             }
         }
 
-        else if ( maxSpeedOn == true )
+        else if (maxSpeedOn == true)
         {
             battleMain.BattleGroupWaitMoveSpeed = MaxFleetWaitSpeed;
         }
@@ -53,9 +56,14 @@ public class PlayerFleetMove : MonoBehaviour
         PlayerBattleGroup.transform.Translate(Vector3.forward * battleMain.BattleGroupWaitMoveSpeed * Time.deltaTime);
     }
 
+    public void StartFleetMove()
+    {
+        StartCoroutine(FleetBattleState());
+    }
+
     IEnumerator FleetBattleState()
     {
-        while(true)
+        while (true)
         {
             if (battleMain.ShipSettingOn == true)
             {

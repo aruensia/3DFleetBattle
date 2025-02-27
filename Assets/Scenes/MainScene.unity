@@ -899,7 +899,6 @@ GameObject:
   - component: {fileID: 1496704203}
   - component: {fileID: 1496704202}
   - component: {fileID: 1496704204}
-  - component: {fileID: 1496704205}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -951,19 +950,6 @@ MonoBehaviour:
   tempInventorylist: []
   currentSelectDataValue: 
   inventoryCount: 52
---- !u!114 &1496704205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496704201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24787556670e1304d80ea2914f254376, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BattleGroupWaitMoveSpeed: 10
 --- !u!1 &1610261365
 GameObject:
   m_ObjectHideFlags: 0

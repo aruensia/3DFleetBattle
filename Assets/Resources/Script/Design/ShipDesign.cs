@@ -381,7 +381,6 @@ public class ShipDesign : MonoBehaviour
                             Weapon tempcurrentshipweapon = this.currentship.shiphead.weapons[weaponheadCount];
                             this.currentship.shiphead.weapons[weaponheadCount] = weapons;
                             shipHeadPos.transform.GetChild(0).GetChild(weaponheadCount).GetComponent<Image>().sprite = weapons.iconImage;
-                            weaponheadCount++;
                             weaponButton.gameObject.SetActive(false);
                             tempcurrentshipweapon = this.currentship.shiphead.weapons[weaponheadCount];
                             DataManager.Instance.playerInfo.PlayerData["WeaponData"].Remove(weapons);
@@ -409,7 +408,6 @@ public class ShipDesign : MonoBehaviour
                             Weapon tempcurrentshipweapon = this.currentship.shipBody.weapons[weaponbodyCount];
                             this.currentship.shipBody.weapons[weaponbodyCount] = weapons;
                             shipBodyPos.transform.GetChild(0).GetChild(weaponbodyCount).GetComponent<Image>().sprite = weapons.iconImage;
-                            weaponbodyCount++;
                             weaponButton.gameObject.SetActive(false);
                             tempcurrentshipweapon = this.currentship.shipBody.weapons[weaponbodyCount];
                             DataManager.Instance.playerInfo.PlayerData["WeaponData"].Remove(weapons);
@@ -437,7 +435,6 @@ public class ShipDesign : MonoBehaviour
                             Weapon tempcurrentshipweapon = this.currentship.shipTail.weapons[weapontailCount];
                             this.currentship.shipTail.weapons[weapontailCount] = weapons;
                             shipTailPos.transform.GetChild(0).GetChild(weapontailCount).GetComponent<Image>().sprite = weapons.iconImage;
-                            weapontailCount++;
                             weaponButton.gameObject.SetActive(false);
                             tempcurrentshipweapon = this.currentship.shipTail.weapons[weapontailCount];
                             DataManager.Instance.playerInfo.PlayerData["WeaponData"].Remove(weapons);
@@ -471,7 +468,6 @@ public class ShipDesign : MonoBehaviour
                             UtilityData tempcurrentshipUtility = this.currentship.shiphead.utility[utilityheadCount];
                             this.currentship.shiphead.utility[utilityheadCount] = utility;
                             shipHeadPos.transform.GetChild(1).GetChild(utilityheadCount).GetComponent<Image>().sprite = utility.iconImage;
-                            utilityheadCount++;
                             weaponButton.gameObject.SetActive(false);
                             tempcurrentshipUtility = this.currentship.shiphead.utility[utilityheadCount];
                             DataManager.Instance.playerInfo.PlayerData["UtilityData"].Remove(utility);
@@ -499,7 +495,6 @@ public class ShipDesign : MonoBehaviour
                             UtilityData tempcurrentshipUtility = this.currentship.shipBody.utility[utilitybodyCount];
                             this.currentship.shipBody.weapons[utilitybodyCount] = weapons;
                             shipBodyPos.transform.GetChild(1).GetChild(utilitybodyCount).GetComponent<Image>().sprite = utility.iconImage;
-                            utilitybodyCount++;
                             weaponButton.gameObject.SetActive(false);
                             tempcurrentshipUtility = this.currentship.shipBody.utility[utilitybodyCount];
                             DataManager.Instance.playerInfo.PlayerData["UtilityData"].Remove(utility);
@@ -527,7 +522,6 @@ public class ShipDesign : MonoBehaviour
                             UtilityData tempcurrentshipUtility = this.currentship.shipTail.utility[utilitytailCount];
                             this.currentship.shipTail.utility[utilitytailCount] = utility;
                             shipTailPos.transform.GetChild(1).GetChild(utilitytailCount).GetComponent<Image>().sprite = utility.iconImage;
-                            utilitytailCount++;
                             weaponButton.gameObject.SetActive(false);
                             tempcurrentshipUtility = this.currentship.shipTail.utility[utilitytailCount];
                             DataManager.Instance.playerInfo.PlayerData["UtilityData"].Remove(utility);

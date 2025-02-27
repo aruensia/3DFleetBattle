@@ -8,13 +8,14 @@ public class EnemyFleetMove : MonoBehaviour
 
     BattleMain battleMain;
 
+
     public GameObject TargetPoint;
     public Transform enemyBattleGroup;
     bool maxSpeedOn = false;
 
-    void Start()
+    private void Awake()
     {
-        battleMain = GameObject.Find("DataManager").GetComponent<BattleMain>();
+        battleMain = GameObject.Find("BattleManager").GetComponent<BattleMain>();
     }
 
     private void Update()

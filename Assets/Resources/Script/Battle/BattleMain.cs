@@ -5,16 +5,19 @@ using UnityEngine;
 public class BattleMain : MonoBehaviour
 {
     public bool playerEngage = false;
-    PlayerInfo playerInfo;
+    PlayerFleetAI playerfleet;
+    
     public float BattleGroupWaitMoveSpeed = 10f;
     public GameObject PlayerSpawnObject;
     public GameObject playerBattleGroup;
     public bool ShipSettingOn = false;
 
+    List<Ship> unitGroup = new List<Ship>();
+
 
     private void Start()
     {
-        playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
+        playerfleet = GameObject.Find("PlayerFleet").GetComponent<PlayerFleetAI>();
         PlayerShipInstantiate();
     }
 
@@ -33,19 +36,59 @@ public class BattleMain : MonoBehaviour
             switch(tempship.shipHull.shipClass)
             {
                 case ShipClass.Corvette:
+
+                    if(count == 10)
+                    {
+                        playerfleet.corvetteGroup.Add(unitGroup);
+                        unitGroup.Clear();
+                        count = 0;
+                    }
+
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(0));
+                    unitGroup.Add(tempship);
+                    count++;
                     break;
 
                 case ShipClass.Frigate:
+
+                    if (count == 8)
+                    {
+                        playerfleet.corvetteGroup.Add(unitGroup);
+                        unitGroup.Clear();
+                        count = 0;
+                    }
+
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(1));
+                    unitGroup.Add(tempship);
+                    count++;
                     break;
 
                 case ShipClass.Destroyer:
+
+                    if (count == 5)
+                    {
+                        playerfleet.corvetteGroup.Add(unitGroup);
+                        unitGroup.Clear();
+                        count = 0;
+                    }
+
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(2));
+                    unitGroup.Add(tempship);
+                    count++;
                     break;
 
                 case ShipClass.Cruiser:
+
+                    if (count == 3)
+                    {
+                        playerfleet.corvetteGroup.Add(unitGroup);
+                        unitGroup.Clear();
+                        count = 0;
+                    }
+
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(3));
+                    unitGroup.Add(tempship);
+                    count++;
                     break;
 
                 case ShipClass.Battleship:
@@ -61,5 +104,6 @@ public class BattleMain : MonoBehaviour
         }
 
         ShipSettingOn = true;
+        playerfleet.StartFleetMove();
     }
 }
