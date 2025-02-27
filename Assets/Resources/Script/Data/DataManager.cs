@@ -29,7 +29,7 @@ public enum ComputerType
 
 public enum ShipClass
 {
-    Corvette = 1, Frigate, Destroyer
+    Corvette = 1, Frigate, Destroyer, Cruiser, Battleship, AircraftCarrier
 }
 public enum Size
 {
