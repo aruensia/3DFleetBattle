@@ -8,12 +8,12 @@ public class PlayerFleetAI : MonoBehaviour
 
     BattleMain battleMain;
 
-    public List<List<Ship>> corvetteGroup = new List<List<Ship>>();
-    public List<List<Ship>> frigateGroup = new List<List<Ship>>();
-    public List<List<Ship>> destroyerGroup = new List<List<Ship>>();
-    public List<List<Ship>> cruiserGroup = new List<List<Ship>>();
-    public List<List<Ship>> battleshipeGroup = new List<List<Ship>>();
-    public List<List<Ship>> aircraftCarrierGroup = new List<List<Ship>>();
+    public List<List<GameObject>> corvetteGroup = new List<List<GameObject>>();
+    public List<List<GameObject>> frigateGroup = new List<List<GameObject>>();
+    public List<List<GameObject>> destroyerGroup = new List<List<GameObject>>();
+    public List<List<GameObject>> cruiserGroup = new List<List<GameObject>>();
+    public List<List<GameObject>> battleshipeGroup = new List<List<GameObject>>();
+    public List<List<GameObject>> aircraftCarrierGroup = new List<List<GameObject>>();
 
     public GameObject playerStartingPoint;
     public GameObject TargetPoint;
@@ -104,4 +104,12 @@ public class PlayerFleetAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position, tempradius);
     }
+
+    IEnumerator FleetState()
+    {
+
+
+        yield return new WaitForSeconds(0.3f);
+    }
+
 }

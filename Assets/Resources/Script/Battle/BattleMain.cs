@@ -12,8 +12,8 @@ public class BattleMain : MonoBehaviour
     public GameObject playerBattleGroup;
     public bool ShipSettingOn = false;
 
-    List<Ship> unitGroup = new List<Ship>();
-
+    List<GameObject> unitGroup = new List<GameObject>();
+    
 
     private void Start()
     {
@@ -31,6 +31,7 @@ public class BattleMain : MonoBehaviour
             Debug.Log(tempship.shipBody.name);
             Debug.Log(tempship.shipTail.name);
             GameObject instanships = Instantiate(tempship.shipHull.shipModel, PlayerSpawnObject.transform);
+            instanships.AddComponent<ShipContainer>();
             instanships.transform.Translate(transform.position.x + count, 0, 0);
 
             switch(tempship.shipHull.shipClass)
@@ -45,7 +46,18 @@ public class BattleMain : MonoBehaviour
                     }
 
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(0));
-                    unitGroup.Add(tempship);
+
+                    instanships.GetComponent<ShipContainer>().shipHull = tempship.shipHull;
+                    instanships.GetComponent<ShipContainer>().shiphead = tempship.shiphead;
+                    instanships.GetComponent<ShipContainer>().shipBody = tempship.shipBody;
+                    instanships.GetComponent<ShipContainer>().shipTail = tempship.shipTail;
+                    instanships.GetComponent<ShipContainer>().hp = tempship.hp;
+                    instanships.GetComponent<ShipContainer>().armor = tempship.armor;
+                    instanships.GetComponent<ShipContainer>().shield = tempship.shield;
+                    instanships.GetComponent<ShipContainer>().cost = tempship.cost;
+                    instanships.GetComponent<ShipContainer>().speed = tempship.speed;
+
+                    unitGroup.Add(instanships);
                     count++;
                     break;
 
@@ -59,7 +71,7 @@ public class BattleMain : MonoBehaviour
                     }
 
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(1));
-                    unitGroup.Add(tempship);
+                    unitGroup.Add(instanships);
                     count++;
                     break;
 
@@ -73,7 +85,7 @@ public class BattleMain : MonoBehaviour
                     }
 
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(2));
-                    unitGroup.Add(tempship);
+                    unitGroup.Add(instanships);
                     count++;
                     break;
 
@@ -87,7 +99,7 @@ public class BattleMain : MonoBehaviour
                     }
 
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(3));
-                    unitGroup.Add(tempship);
+                    unitGroup.Add(instanships);
                     count++;
                     break;
 

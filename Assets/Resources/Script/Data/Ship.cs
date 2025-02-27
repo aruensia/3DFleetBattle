@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public enum state
+enum state
 {
     Idle, Move, Attack, Die
 }
-
 
 public class Ship
 {
@@ -16,6 +16,9 @@ public class Ship
     public ShipTail shipTail;
 
     public int hp;
+    public int armor;
+    public int shield;
+
     public int speed;
     public int usecap;
     public int cost;
@@ -76,10 +79,36 @@ public class Ship
         
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int damage)
+    {
+        if( shield > 0)
+        {
+            shield -= damage;
+
+            if (shield <= 0)
+            {
+                if( armor > 0)
+                {
+                    armor -= damage;
+
+                    if ( armor <= 0)
+                    { 
+                        hp -= damage;
+
+                        if ( hp <= 0)
+                        {
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void CheckState(bool engage)
     {
 
     }
-
 
 }

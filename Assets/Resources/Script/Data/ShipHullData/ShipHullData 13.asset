@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16835d270f1e10744becc79389f971c5, type: 3}
-  m_Name: ShipHullData 12
+  m_Name: ShipHullData 13
   m_EditorClassIdentifier: 
   partType: 0
-  defaultShipPartName: "\uCCA8\uB2E8 \uC21C\uC591\uD568"
+  defaultShipPartName: "\uC804\uD568"
   iconImage: {fileID: 21300000, guid: 83a9e438ae1a4fa4286f0981b6ecb5fb, type: 3}
   defaultShipPartArmor: 0
   defaultShipPartCost: 0
-  defaultShipPartSize: 1
-  defaultShipPartClass: 4
-  DefaultShipPartGrade: 89
-  hullName: "\uCCA8\uB2E8 \uC21C\uC591\uD568"
+  defaultShipPartSize: 2
+  defaultShipPartClass: 5
+  DefaultShipPartGrade: 65
+  hullName: "\uC804\uD568"
   hulltHp: 0
-  shipModel: {fileID: 1982829032239556, guid: 48aa84e32699f4b4f9aee15c3a203d12, type: 3}
-  shipClass: 3
-  size: 0
+  shipModel: {fileID: 1313761810091096, guid: f71f11146cc005646a779aceb6ad6d16, type: 3}
+  shipClass: 5
+  size: 2
   cost: 0
