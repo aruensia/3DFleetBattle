@@ -10,5 +10,5 @@ public class UtilityData : DefaultShipPart
     public int shild;
     public int usePower;
     public Utility utility;
-
+    public float searchRange;
 }

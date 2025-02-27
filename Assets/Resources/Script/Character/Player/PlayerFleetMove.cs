@@ -32,8 +32,6 @@ public class PlayerFleetMove : MonoBehaviour
         PatrolMove();
     }
 
-
-
     void PatrolMove()
     {
         if (maxSpeedOn == false)
@@ -45,6 +43,7 @@ public class PlayerFleetMove : MonoBehaviour
                 maxSpeedOn = true;
             }
         }
+
         else if ( maxSpeedOn == true )
         {
             battleMain.BattleGroupWaitMoveSpeed = MaxFleetWaitSpeed;
@@ -58,15 +57,23 @@ public class PlayerFleetMove : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(1);
-            if (battleMain.playerEngage == false)
+            if (battleMain.ShipSettingOn == true)
             {
-                Debug.Log("적 탐색중 !!!!");
-                EnemyContect();
+                yield return new WaitForSeconds(1);
+                if (battleMain.playerEngage == false)
+                {
+                    Debug.Log("적 탐색중 !!!!");
+                    EnemyContect();
+                }
+                if (battleMain.playerEngage == true)
+                {
+                    Debug.Log("적과 교전중!!!!!");
+                    StopCoroutine(FleetBattleState());
+                }
             }
-            if (battleMain.playerEngage == true)
+            else
             {
-                Debug.Log("적과 교전중!!!!!");
+                Debug.Log("함대가 준비되지 않음");
             }
         }
     }
@@ -83,8 +90,6 @@ public class PlayerFleetMove : MonoBehaviour
             }
         }
     }
-
-
 
     private void OnDrawGizmos()
     {

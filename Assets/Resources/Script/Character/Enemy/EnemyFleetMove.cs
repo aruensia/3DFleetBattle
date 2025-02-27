@@ -41,4 +41,9 @@ public class EnemyFleetMove : MonoBehaviour
         transform.LookAt(TargetPoint.transform.position);
         enemyBattleGroup.transform.Translate(Vector3.forward * battleMain.BattleGroupWaitMoveSpeed * Time.deltaTime);
     }
+
+    void EngageMove()
+    {
+
+    }
 }

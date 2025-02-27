@@ -527,11 +527,15 @@ public class ShipDesign : MonoBehaviour
         saveOn = true;
         if(this.currentship.shipHull != null && this.currentship.shiphead != null && this.currentship.shipBody != null && this.currentship.shipTail != null)
         {
-            DataManager.Instance.playerInfo.MyShips.Add(currentship);
-            this.currentship.shipHull = null;
-            this.currentship.shiphead = null;
-            this.currentship.shipBody = null;
-            this.currentship.shipTail = null;
+            Debug.Log(this.currentship.shipHull.name);
+            Debug.Log(this.currentship.shiphead.name);
+            Debug.Log(this.currentship.shipBody.name);
+            Debug.Log(this.currentship.shipTail.name);
+
+            DataManager.Instance.playerInfo.MyShips.Add(this.currentship);
+
+            Ship currentship = new Ship();
+
             ShipDesignSlotReset();
             Debug.Log(DataManager.Instance.playerInfo.MyShips.Count);
         }
@@ -547,43 +551,44 @@ public class ShipDesign : MonoBehaviour
         Destroy(tempShiphullSlot);
 
         shipHullpos.transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage1;
-        for(int i = 0; i < shipHeadPos.transform.childCount; i++)
+        for (int i = 0; i < shipHeadPos.transform.GetChild(0).childCount; i++)
         {
+            Debug.Log(shipHeadPos.transform.GetChild(0).childCount + " 이며 i의 값은 : " + i);
             var tempobj = shipHeadPos.transform.GetChild(0).GetChild(i);
-            Destroy(tempobj);
+            Destroy(tempobj.gameObject);
         }
-        for (int i = 0; i < shipHeadPos.transform.childCount; i++)
+        for (int i = 0; i < shipHeadPos.transform.GetChild(1).childCount; i++)
         {
             var tempobj = shipHeadPos.transform.GetChild(1).GetChild(i);
-            Destroy(tempobj);
+            Destroy(tempobj.gameObject);
         }
-        for (int i = 0; i < shipBodyPos.transform.childCount; i++)
+        for (int i = 0; i < shipBodyPos.transform.GetChild(0).childCount; i++)
         {
             var tempobj = shipBodyPos.transform.GetChild(0).GetChild(i);
-            Destroy(tempobj);
+            Destroy(tempobj.gameObject);
         }
-        for (int i = 0; i < shipBodyPos.transform.childCount; i++)
+        for (int i = 0; i < shipBodyPos.transform.GetChild(1).childCount; i++)
         {
             var tempobj = shipBodyPos.transform.GetChild(1).GetChild(i);
-            Destroy(tempobj);
+            Destroy(tempobj.gameObject);
         }
-        for (int i = 0; i < shipTailPos.transform.childCount; i++)
+        for (int i = 0; i < shipTailPos.transform.GetChild(0).childCount; i++)
         {
-            if(shipTailPos.transform.childCount > 0)
+            Debug.Log(shipTailPos.transform.GetChild(0).childCount + " 이며 i의 값은 : " + i);
+            if (shipTailPos.transform.GetChild(0).childCount -1 > 0 )
             {
                 var tempobj = shipTailPos.transform.GetChild(0).GetChild(i);
-                Destroy(tempobj);
+                Destroy(tempobj.gameObject);
             }
-            break;
         }
-        for (int i = 0; i < shipTailPos.transform.childCount; i++)
+        for (int i = 0; i < shipTailPos.transform.GetChild(1).childCount; i++)
         {
-            if (shipTailPos.transform.childCount > 0)
+            Debug.Log(shipTailPos.transform.GetChild(1).childCount + " 이며 i의 값은 : " + i);
+            if (shipTailPos.transform.GetChild(1).childCount > 0)
             {
                 var tempobj = shipTailPos.transform.GetChild(1).GetChild(i);
-                Destroy(tempobj);
+                Destroy(tempobj.gameObject);
             }
-            break;
         }
     }
 
