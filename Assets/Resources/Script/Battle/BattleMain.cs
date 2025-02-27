@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class BattleMain : MonoBehaviour
 {
-    public GameObject playerStartingPoint;
-    public GameObject enemyStartingPoint;
+    public bool playerEngage = false;
+    PlayerInfo playerInfo;
+    public float BattleGroupWaitMoveSpeed = 10f;
 
-    NavMeshAgent agent;
 
-    public float tempSpeed = 50f;
+    private void Start()
+    {
+        playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
+    }
 
 }

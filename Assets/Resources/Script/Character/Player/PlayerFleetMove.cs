@@ -1,26 +1,94 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class PlayerFleetMove : MonoBehaviour
 {
+    [SerializeField] float MaxFleetWaitSpeed = 15f;
+
+    BattleMain battleMain;
+
     public GameObject playerStartingPoint;
-    public GameObject enemyStartingPoint;
+    public GameObject TargetPoint;
+    public Transform PlayerBattleGroup;
+    
+    bool maxSpeedOn = false;
 
-    public NavMeshAgent agent;
+    public Collider[] Engage;
 
-    public float tempSpeed = 50f;
+    float tempradius = 300f;
 
-    // Start is called before the first frame update
     void Start()
     {
-        agent.GetComponent<NavMeshAgent>();
+        battleMain = GameObject.Find("DataManager").GetComponent<BattleMain>();
+        StartCoroutine(FleetBattleState());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        agent.destination = enemyStartingPoint.transform.position;
+        PatrolMove();
+    }
+
+
+
+    void PatrolMove()
+    {
+        if (maxSpeedOn == false)
+        {
+            battleMain.BattleGroupWaitMoveSpeed += 0.01f;
+
+            if (battleMain.BattleGroupWaitMoveSpeed >= MaxFleetWaitSpeed )
+            {
+                maxSpeedOn = true;
+            }
+        }
+        else if ( maxSpeedOn == true )
+        {
+            battleMain.BattleGroupWaitMoveSpeed = MaxFleetWaitSpeed;
+        }
+
+        transform.LookAt(TargetPoint.transform.position);
+        PlayerBattleGroup.transform.Translate(Vector3.forward * battleMain.BattleGroupWaitMoveSpeed * Time.deltaTime);
+    }
+
+    IEnumerator FleetBattleState()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(1);
+            if (battleMain.playerEngage == false)
+            {
+                Debug.Log("적 탐색중 !!!!");
+                EnemyContect();
+            }
+            if (battleMain.playerEngage == true)
+            {
+                Debug.Log("적과 교전중!!!!!");
+            }
+        }
+    }
+
+    void EnemyContect()
+    {
+        Engage = Physics.OverlapSphere(this.transform.position, tempradius);
+        foreach (Collider item in Engage)
+        {
+            if (item.CompareTag("Enemy"))
+            {
+                Debug.Log("에너미 컨텍트!!!!");
+                battleMain.playerEngage = true;
+            }
+        }
+    }
+
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(this.transform.position, tempradius);
     }
 }

@@ -22,9 +22,6 @@ public class PlayerInfo : MonoBehaviour
     List<ScriptableObject> shipPartinventory = new List<ScriptableObject>();
     public List<Ship> MyShips = new List<Ship>();
 
-
-
-
     public Dictionary<string, List<ScriptableObject>> PlayerData
     {
         get { return playerData; }
@@ -41,12 +38,7 @@ public class PlayerInfo : MonoBehaviour
 
     public int inventoryCount;
 
-    private void Awake()
-    {
-        SetDefaultData();
-    }
-
-    void SetDefaultData()
+    public void SetDefaultData()
     {
         money = 5000;
         Debug.Log($"@@@@-- 함선의 데이터를 초기화 했음 --@@@@");

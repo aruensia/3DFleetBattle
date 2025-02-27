@@ -71,6 +71,7 @@ public class DataManager : MonoBehaviour
         shopDesign = GetComponent<ShipDesign>();
         playerInfo = GetComponent<PlayerInfo>();
         getNewDataList.GetShipData();
+        playerInfo.SetDefaultData();
     }
 
     void GetDataObject()
