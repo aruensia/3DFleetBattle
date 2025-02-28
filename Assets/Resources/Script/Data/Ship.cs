@@ -447,6 +447,7 @@ public class Ship : MonoBehaviour
 
     void ShipDestroy()
     {
+        Debug.Log("Ё╙ ав╬З╬Н©Д!!!!" + gameObject.name);
         Destroy(this.gameObject);
     }
 

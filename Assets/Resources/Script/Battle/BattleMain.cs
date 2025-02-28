@@ -27,6 +27,7 @@ public class BattleMain : MonoBehaviour
     void PlayerShipInstantiate()
     {
         int count = 0;
+        int instantiateDistance = 0;
         foreach(var tempship in DataManager.Instance.playerInfo.MyShips)
         {
             Debug.Log(tempship.shipHull.name);
@@ -35,7 +36,7 @@ public class BattleMain : MonoBehaviour
             Debug.Log(tempship.shipTail.name);
             GameObject instanships = Instantiate(tempship.shipHull.shipModel, PlayerSpawnObject.transform);
             instanships.AddComponent<Ship>();
-            instanships.transform.Translate(transform.position.x + count, 0, 0);
+            instanships.transform.Translate(transform.position.x + instantiateDistance, 0, 0);
 
             switch(tempship.shipHull.shipClass)
             {
@@ -58,8 +59,6 @@ public class BattleMain : MonoBehaviour
                     instanships.GetComponent<Ship>().shield = tempship.shield;
                     instanships.GetComponent<Ship>().cost = tempship.cost;
                     instanships.GetComponent<Ship>().speed = tempship.speed;
-
-
                     unitGroup.Add(instanships);
                     count++;
                     break;
@@ -74,6 +73,15 @@ public class BattleMain : MonoBehaviour
                     }
 
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(1));
+                    instanships.GetComponent<Ship>().shipHull = tempship.shipHull;
+                    instanships.GetComponent<Ship>().shiphead = tempship.shiphead;
+                    instanships.GetComponent<Ship>().shipBody = tempship.shipBody;
+                    instanships.GetComponent<Ship>().shipTail = tempship.shipTail;
+                    instanships.GetComponent<Ship>().hp = tempship.hp;
+                    instanships.GetComponent<Ship>().armor = tempship.armor;
+                    instanships.GetComponent<Ship>().shield = tempship.shield;
+                    instanships.GetComponent<Ship>().cost = tempship.cost;
+                    instanships.GetComponent<Ship>().speed = tempship.speed;
                     unitGroup.Add(instanships);
                     count++;
                     break;
@@ -88,6 +96,15 @@ public class BattleMain : MonoBehaviour
                     }
 
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(2));
+                    instanships.GetComponent<Ship>().shipHull = tempship.shipHull;
+                    instanships.GetComponent<Ship>().shiphead = tempship.shiphead;
+                    instanships.GetComponent<Ship>().shipBody = tempship.shipBody;
+                    instanships.GetComponent<Ship>().shipTail = tempship.shipTail;
+                    instanships.GetComponent<Ship>().hp = tempship.hp;
+                    instanships.GetComponent<Ship>().armor = tempship.armor;
+                    instanships.GetComponent<Ship>().shield = tempship.shield;
+                    instanships.GetComponent<Ship>().cost = tempship.cost;
+                    instanships.GetComponent<Ship>().speed = tempship.speed;
                     unitGroup.Add(instanships);
                     count++;
                     break;
@@ -102,20 +119,47 @@ public class BattleMain : MonoBehaviour
                     }
 
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(3));
+                    instanships.GetComponent<Ship>().shipHull = tempship.shipHull;
+                    instanships.GetComponent<Ship>().shiphead = tempship.shiphead;
+                    instanships.GetComponent<Ship>().shipBody = tempship.shipBody;
+                    instanships.GetComponent<Ship>().shipTail = tempship.shipTail;
+                    instanships.GetComponent<Ship>().hp = tempship.hp;
+                    instanships.GetComponent<Ship>().armor = tempship.armor;
+                    instanships.GetComponent<Ship>().shield = tempship.shield;
+                    instanships.GetComponent<Ship>().cost = tempship.cost;
+                    instanships.GetComponent<Ship>().speed = tempship.speed;
                     unitGroup.Add(instanships);
                     count++;
                     break;
 
                 case ShipClass.Battleship:
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(4));
+                    instanships.GetComponent<Ship>().shipHull = tempship.shipHull;
+                    instanships.GetComponent<Ship>().shiphead = tempship.shiphead;
+                    instanships.GetComponent<Ship>().shipBody = tempship.shipBody;
+                    instanships.GetComponent<Ship>().shipTail = tempship.shipTail;
+                    instanships.GetComponent<Ship>().hp = tempship.hp;
+                    instanships.GetComponent<Ship>().armor = tempship.armor;
+                    instanships.GetComponent<Ship>().shield = tempship.shield;
+                    instanships.GetComponent<Ship>().cost = tempship.cost;
+                    instanships.GetComponent<Ship>().speed = tempship.speed;
                     break;
 
                 case ShipClass.AircraftCarrier:
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(5));
+                    instanships.GetComponent<Ship>().shipHull = tempship.shipHull;
+                    instanships.GetComponent<Ship>().shiphead = tempship.shiphead;
+                    instanships.GetComponent<Ship>().shipBody = tempship.shipBody;
+                    instanships.GetComponent<Ship>().shipTail = tempship.shipTail;
+                    instanships.GetComponent<Ship>().hp = tempship.hp;
+                    instanships.GetComponent<Ship>().armor = tempship.armor;
+                    instanships.GetComponent<Ship>().shield = tempship.shield;
+                    instanships.GetComponent<Ship>().cost = tempship.cost;
+                    instanships.GetComponent<Ship>().speed = tempship.speed;
                     break;
 
             }
-            count += 15;
+            instantiateDistance += 5;
         }
 
         ShipSettingOn = true;
