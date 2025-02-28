@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFleetAI : MonoBehaviour
+public class EnemyFleetAI : MonoBehaviour
 {
-    [SerializeField] float MaxFleetWaitSpeed = 40f;
-    public List<GameObject> enemyBattleGroup = new List<GameObject>();
+    [SerializeField] float MaxFleetWaitSpeed = 15f;
+    public List<GameObject> playerBattleGroup = new List<GameObject>();
 
     BattleMain battleMain;
 
@@ -16,9 +16,9 @@ public class PlayerFleetAI : MonoBehaviour
     public List<List<GameObject>> battleshipeGroup = new List<List<GameObject>>();
     public List<List<GameObject>> aircraftCarrierGroup = new List<List<GameObject>>();
 
-    public GameObject playerStartingPoint;
+    public GameObject EnemyStartingPoint;
     public GameObject TargetPoint;
-    public Transform PlayerBattleGroup;
+    public Transform EnemyBattleGroup;
 
     bool maxSpeedOn = false;
 
@@ -30,6 +30,8 @@ public class PlayerFleetAI : MonoBehaviour
     {
         battleMain = GameObject.Find("BattleManager").GetComponent<BattleMain>();
     }
+
+
 
     public void PatrolMove()
     {
@@ -49,7 +51,7 @@ public class PlayerFleetAI : MonoBehaviour
         }
 
         transform.LookAt(TargetPoint.transform.position);
-        PlayerBattleGroup.transform.Translate(Vector3.forward * battleMain.BattleGroupWaitMoveSpeed * Time.deltaTime);
+        EnemyBattleGroup.transform.Translate(Vector3.forward * battleMain.BattleGroupWaitMoveSpeed * Time.deltaTime);
     }
 
     public void StartFleetMove()
@@ -61,18 +63,18 @@ public class PlayerFleetAI : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1);
             if (battleMain.ShipSettingOn == true)
             {
-                if(battleMain.playerContect == true)
-                {
-                    Debug.Log("적을 발견!!!!!!");
-                    StopCoroutine(FleetBattleState());
-                }
-                else if( battleMain.playerEngage == false)
+                yield return new WaitForSeconds(1);
+                if (battleMain.playerEngage == false)
                 {
                     Debug.Log("적 탐색중 !!!!");
-                    PlayerContectisOn();
+                    EnemyContect();
+                }
+                if (battleMain.playerEngage == true)
+                {
+                    Debug.Log("적과 교전중!!!!!");
+                    StopCoroutine(FleetBattleState());
                 }
             }
             else
@@ -82,22 +84,29 @@ public class PlayerFleetAI : MonoBehaviour
         }
     }
 
-    void PlayerContectisOn()
+    void EnemyContect()
     {
         Engage = Physics.OverlapSphere(this.transform.position, tempradius);
         foreach (Collider item in Engage)
         {
             if (item.CompareTag("Enemy"))
             {
-                Debug.Log("에너미 컨텍트!!!!" + item.name);
-                battleMain.playerContect = true;
+                Debug.Log("에너미 컨텍트!!!!");
+                battleMain.playerEngage = true;
             }
         }
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(this.transform.position, tempradius);
+    }
+
+    IEnumerator FleetState()
+    {
+
+
+        yield return new WaitForSeconds(0.3f);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DataList", menuName = "Ship/DataList")]
+[CreateAssetMenu(fileName = "DataList", menuName = "ShipData/DataList")]
 public class DataList : ScriptableObject
 {
     public Dictionary<string, List<ScriptableObject>> AllShipDataDic = new Dictionary<string, List<ScriptableObject>>()

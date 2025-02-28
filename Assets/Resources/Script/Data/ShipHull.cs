@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ShipHullData", menuName = "Ship/ShipHullData")]
+[CreateAssetMenu(fileName = "ShipHullData", menuName = "ShipData/ShipHullData")]
 public class ShipHull : DefaultShipPart
 {
     public string hullName;

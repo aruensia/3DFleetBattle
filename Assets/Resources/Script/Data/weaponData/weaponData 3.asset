@@ -23,5 +23,8 @@ MonoBehaviour:
   damage: 20
   attackRange: 30
   weaponType: 0
-  attackSpeed: 5
+  attackMinCool: 0
+  attackMaxCool: 5
+  weaponFireOn: 0
+  equipOn: 1
   usePower: 5

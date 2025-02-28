@@ -21,7 +21,11 @@ MonoBehaviour:
   defaultShipPartClass: 1
   DefaultShipPartGrade: 65
   damage: 5
-  attackRange: 20
+  attackRange: 300
   weaponType: 0
-  attackSpeed: 5
+  attackMinCool: 0
+  attackMaxCool: 5
+  attackLoadCount: 0
+  weaponFireOn: 0
+  equipOn: 1
   usePower: 5

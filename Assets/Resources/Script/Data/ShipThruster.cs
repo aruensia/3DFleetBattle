@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "ShipThrusterData", menuName = "Ship/ShipThrusterData")]
+[CreateAssetMenu(fileName = "ShipThrusterData", menuName = "ShipData/ShipThrusterData")]
 public class ShipThruster : DefaultShipPart
 {
     public string thrusterName;

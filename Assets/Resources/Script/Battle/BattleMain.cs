@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class BattleMain : MonoBehaviour
 {
+    public bool playerContect = false;
     public bool playerEngage = false;
+    public bool enemyContect = false;
+    public bool enemyEngage = false;
     PlayerFleetAI playerfleet;
     
     public float BattleGroupWaitMoveSpeed = 10f;
@@ -31,7 +34,7 @@ public class BattleMain : MonoBehaviour
             Debug.Log(tempship.shipBody.name);
             Debug.Log(tempship.shipTail.name);
             GameObject instanships = Instantiate(tempship.shipHull.shipModel, PlayerSpawnObject.transform);
-            instanships.AddComponent<ShipContainer>();
+            instanships.AddComponent<Ship>();
             instanships.transform.Translate(transform.position.x + count, 0, 0);
 
             switch(tempship.shipHull.shipClass)
@@ -46,16 +49,16 @@ public class BattleMain : MonoBehaviour
                     }
 
                     instanships.transform.SetParent(playerBattleGroup.transform.GetChild(0));
+                    instanships.GetComponent<Ship>().shipHull = tempship.shipHull;
+                    instanships.GetComponent<Ship>().shiphead = tempship.shiphead;
+                    instanships.GetComponent<Ship>().shipBody = tempship.shipBody;
+                    instanships.GetComponent<Ship>().shipTail = tempship.shipTail;
+                    instanships.GetComponent<Ship>().hp = tempship.hp;
+                    instanships.GetComponent<Ship>().armor = tempship.armor;
+                    instanships.GetComponent<Ship>().shield = tempship.shield;
+                    instanships.GetComponent<Ship>().cost = tempship.cost;
+                    instanships.GetComponent<Ship>().speed = tempship.speed;
 
-                    instanships.GetComponent<ShipContainer>().shipHull = tempship.shipHull;
-                    instanships.GetComponent<ShipContainer>().shiphead = tempship.shiphead;
-                    instanships.GetComponent<ShipContainer>().shipBody = tempship.shipBody;
-                    instanships.GetComponent<ShipContainer>().shipTail = tempship.shipTail;
-                    instanships.GetComponent<ShipContainer>().hp = tempship.hp;
-                    instanships.GetComponent<ShipContainer>().armor = tempship.armor;
-                    instanships.GetComponent<ShipContainer>().shield = tempship.shield;
-                    instanships.GetComponent<ShipContainer>().cost = tempship.cost;
-                    instanships.GetComponent<ShipContainer>().speed = tempship.speed;
 
                     unitGroup.Add(instanships);
                     count++;

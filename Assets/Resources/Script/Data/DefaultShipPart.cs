@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "UtilityData", menuName = "Ship/UtilityData")]
+[CreateAssetMenu(fileName = "UtilityData", menuName = "ShipData/UtilityData")]
 public class DefaultShipPart : ScriptableObject
 {
     public PartType partType;

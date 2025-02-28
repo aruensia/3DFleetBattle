@@ -39,7 +39,7 @@ public class ShipDesign : MonoBehaviour
     int utilitytailCount = 0;
 
     //유저가 생성할 함선에 대해서 뉴 할당.
-    public Ship currentship = new Ship();
+    public ShipData currentship = new ShipData();
 
     private void Start()
     {
@@ -548,7 +548,7 @@ public class ShipDesign : MonoBehaviour
 
             DataManager.Instance.playerInfo.MyShips.Add(this.currentship);
 
-            Ship currentship = new Ship();
+            ShipData currentship = new ShipData();
 
             ShipDesignSlotReset();
             Debug.Log(DataManager.Instance.playerInfo.MyShips.Count);

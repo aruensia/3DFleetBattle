@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipContainer : MonoBehaviour
+public class ShipData
 {
     public ShipHull shipHull;
     public ShipHead shiphead;

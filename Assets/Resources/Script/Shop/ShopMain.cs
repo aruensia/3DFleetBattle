@@ -378,8 +378,8 @@ public class ShopMain : MonoBehaviour
                 itemDefalutData[1].text = "함     급 : " + tempWeapon.defaultShipPartClass.ToString();
                 itemDefalutData[2].text = "등     급 : " + tempWeapon.DefaultShipPartGrade.ToString();
                 weapon[0].text = "공 격 력 : " + tempWeapon.damage;
-                weapon[1].text = "공격속도 : " + tempWeapon.attackRange;
-                weapon[2].text = "공격거리 : " + tempWeapon.attackSpeed;
+                weapon[1].text = "공격속도 : " + tempWeapon.attackMaxCool;
+                weapon[2].text = "공격거리 : " + tempWeapon.attackRange;
                 weapon[3].text = "전력소모 : " + tempWeapon.usePower;
                 break;
 

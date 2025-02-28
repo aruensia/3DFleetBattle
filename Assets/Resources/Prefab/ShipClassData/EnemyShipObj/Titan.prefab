@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1258441714792974
+--- !u!1 &1574548947951080
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,80 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4800243336161868}
+  - component: {fileID: 4043806860319426}
+  - component: {fileID: 33123758043995408}
+  - component: {fileID: 23858220276506602}
+  - component: {fileID: 3603616451603745413}
+  - component: {fileID: 1893541804217511544}
   m_Layer: 0
-  m_Name: Corvette
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4800243336161868
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1258441714792974}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4150883914427684}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1745553748913288
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4150883914427684}
-  - component: {fileID: 33634596061847108}
-  - component: {fileID: 23280673016514196}
-  - component: {fileID: 4831934097172595057}
-  - component: {fileID: 8758921270907161639}
-  m_Layer: 0
-  m_Name: Skimmer
+  m_Name: Titan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4150883914427684
+--- !u!4 &4043806860319426
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745553748913288}
+  m_GameObject: {fileID: 1574548947951080}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.64, z: 0}
+  m_LocalPosition: {x: -0, y: -0.426, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4800243336161868}
+  m_Father: {fileID: 4944149187817372}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &33634596061847108
+--- !u!33 &33123758043995408
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745553748913288}
-  m_Mesh: {fileID: 4300000, guid: b022b77968d149a4086cc492125143e7, type: 3}
---- !u!23 &23280673016514196
+  m_GameObject: {fileID: 1574548947951080}
+  m_Mesh: {fileID: 4300000, guid: a921edb48b3bbe84680ba944e248a06a, type: 3}
+--- !u!23 &23858220276506602
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745553748913288}
+  m_GameObject: {fileID: 1574548947951080}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -117,13 +85,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &4831934097172595057
+--- !u!54 &3603616451603745413
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745553748913288}
+  m_GameObject: {fileID: 1574548947951080}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -144,13 +112,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 68
   m_CollisionDetection: 0
---- !u!65 &8758921270907161639
+--- !u!65 &1893541804217511544
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745553748913288}
+  m_GameObject: {fileID: 1574548947951080}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -163,5 +131,37 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.8000002, y: 0.91, z: 5.5299997}
-  m_Center: {x: -0.035000026, y: 0.45499995, z: -0.034999967}
+  m_Size: {x: 0.90000004, y: 0.95, z: 3.4999998}
+  m_Center: {x: 0, y: 0.47499996, z: 0}
+--- !u!1 &1715618682974560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4944149187817372}
+  m_Layer: 0
+  m_Name: Titan
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4944149187817372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715618682974560}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 5, z: 7}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4043806860319426}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

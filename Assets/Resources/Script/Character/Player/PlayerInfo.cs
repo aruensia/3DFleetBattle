@@ -19,8 +19,7 @@ public class PlayerInfo : MonoBehaviour
 
     public List<GameObject> tempInventorylist = new List<GameObject>();
     public string currentSelectDataValue;
-    List<ScriptableObject> shipPartinventory = new List<ScriptableObject>();
-    public List<Ship> MyShips = new List<Ship>();
+    public List<ShipData> MyShips = new List<ShipData>();
 
     public Dictionary<string, List<ScriptableObject>> PlayerData
     {
