@@ -218,7 +218,7 @@ public class ItemPopup : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count > 0)
                 {
-                    for (int i = 0; i < shopmain.tempInventoryCount; i++)
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
                     {
                         playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
                     }
@@ -246,7 +246,7 @@ public class ItemPopup : MonoBehaviour
                 }
                 else if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count > 0)
                 {
-                    for (int i = 0; i < shopmain.tempInventoryCount; i++)
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
                     {
                         playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
                     }

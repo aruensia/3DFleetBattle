@@ -32,7 +32,6 @@ public class ShopMain : MonoBehaviour
     Transform tempcanvas;
     public GameObject buyItemPopup;
 
-    public int tempInventoryCount;
     int itemItemRange;
     int itemGradeRange;
     int currentDropDownNum;

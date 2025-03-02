@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8e85da483b01d84fb217bc6bba18093, type: 3}
-  m_Name: WeaponData 1
+  m_Name: WeaponData 16
   m_EditorClassIdentifier: 
   partType: 4
-  defaultShipPartName: "\uB9E4\uC2A4 \uB4DC\uB77C\uC774\uBC84"
-  iconImage: {fileID: 21300000, guid: 6071f78491bcc1a4d89d59d168465b13, type: 3}
+  defaultShipPartName: "\uC120\uC870 \uBBF8\uC0AC\uC77C"
+  iconImage: {fileID: 21300000, guid: 14ed4eb70ad5b144f8048d0d3a2e0850, type: 3}
   defaultShipPartArmor: 0
-  defaultShipPartCost: 10
+  defaultShipPartCost: 52
   defaultShipPartSize: 0
   defaultShipPartClass: 1
-  DefaultShipPartGrade: 65
-  damage: 5
-  attackRange: 300
-  weaponType: 0
+  DefaultShipPartGrade: 97
+  damage: 30
+  attackRange: 630
+  weaponType: 2
   attackMinCool: 0
-  attackMaxCool: 5
+  attackMaxCool: 15
   attackLoadCount: 0
   weaponFireOn: 0
   equipOn: 1

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f69f4bf4a036875438e8a39d5f268f16, type: 3}
-  m_Name: utilityData 3
+  m_Name: UtilityData 3
   m_EditorClassIdentifier: 
   partType: 5
   defaultShipPartName: "\uCCA8\uB2E8 \uC65C\uACE1\uC7A5"
-  iconImage: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: 94bfcbe41014d57438a194263c79dfaf, type: 3}
   defaultShipPartArmor: 0
   defaultShipPartCost: 15
   defaultShipPartSize: 0
@@ -25,3 +25,4 @@ MonoBehaviour:
   shild: 250
   usePower: 50
   utility: 0
+  searchRange: 0

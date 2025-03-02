@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: ShipHullData 15
   m_EditorClassIdentifier: 
   partType: 0
-  defaultShipPartName: "\uCCA8\uB2E8 \uC21C\uC591\uD568"
+  defaultShipPartName: "\uCCA8\uB2E8 \uC804\uD568"
   iconImage: {fileID: 21300000, guid: 83a9e438ae1a4fa4286f0981b6ecb5fb, type: 3}
   defaultShipPartArmor: 0
   defaultShipPartCost: 0
   defaultShipPartSize: 1
   defaultShipPartClass: 3
   DefaultShipPartGrade: 89
-  hullName: "\uAD70\uC6A9 \uAD6C\uCD95\uD568"
-  hulltHp: 0
-  shipModel: {fileID: 0}
-  shipClass: 4
-  size: 0
+  hullName: "\uCCA8\uB2E8 \uC804\uD568"
+  hulltHp: 20000
+  shipModel: {fileID: 1313761810091096, guid: f71f11146cc005646a779aceb6ad6d16, type: 3}
+  shipClass: 5
+  size: 2
   cost: 0

@@ -21,8 +21,8 @@ MonoBehaviour:
   defaultShipPartClass: 4
   DefaultShipPartGrade: 89
   hullName: "\uCCA8\uB2E8 \uC21C\uC591\uD568"
-  hulltHp: 0
+  hulltHp: 6000
   shipModel: {fileID: 1982829032239556, guid: 48aa84e32699f4b4f9aee15c3a203d12, type: 3}
-  shipClass: 3
-  size: 0
+  shipClass: 4
+  size: 1
   cost: 0

@@ -16,12 +16,12 @@ MonoBehaviour:
   defaultShipPartName: "\uAD70\uC6A9 \uB9E4\uC2A4 \uB4DC\uB77C\uC774\uBC84"
   iconImage: {fileID: 21300000, guid: bdd5288258d7c724e8e7365a163fb207, type: 3}
   defaultShipPartArmor: 0
-  defaultShipPartCost: 0
+  defaultShipPartCost: 20
   defaultShipPartSize: 0
   defaultShipPartClass: 1
   DefaultShipPartGrade: 75
   damage: 7
-  attackRange: 20
+  attackRange: 320
   weaponType: 0
   attackMinCool: 0
   attackMaxCool: 5

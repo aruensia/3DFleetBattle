@@ -1323,11 +1323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e87e28b17fd0aee46955bd21e3d0ded9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &252407040 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 246068491886125034, guid: 033143ad726847e47a9292c35e03834e, type: 3}
-  m_PrefabInstance: {fileID: 1672883726}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &279231976
 GameObject:
   m_ObjectHideFlags: 0
@@ -2774,6 +2769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d65add9a21426245ac1ef3289afbed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultSlotImage: {fileID: 21300000, guid: 5ec1172c4dd206c4cb38812cb5d41fe5, type: 3}
   itemDefalutData:
   - {fileID: 904469529}
   - {fileID: 904469528}
@@ -3137,6 +3133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d65add9a21426245ac1ef3289afbed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultSlotImage: {fileID: 0}
   itemDefalutData:
   - {fileID: 904469529}
   - {fileID: 904469528}
@@ -3975,18 +3972,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608023094}
   m_CullTransparentMesh: 1
---- !u!114 &1623548897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 252407040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e87e28b17fd0aee46955bd21e3d0ded9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1641685330
 GameObject:
   m_ObjectHideFlags: 0
@@ -4254,10 +4239,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 246068491886125034, guid: 033143ad726847e47a9292c35e03834e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1623548897}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 033143ad726847e47a9292c35e03834e, type: 3}
 --- !u!224 &1672883727 stripped
 RectTransform:

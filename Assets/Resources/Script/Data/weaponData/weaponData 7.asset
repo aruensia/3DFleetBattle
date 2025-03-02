@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partType: 4
   defaultShipPartName: "\uC120\uC870 \uCF54\uC77C\uAC74"
-  iconImage: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: b8a87e95b71f4a64eb987af5698d89aa, type: 3}
   defaultShipPartArmor: 0
-  defaultShipPartCost: 0
+  defaultShipPartCost: 56
   defaultShipPartSize: 0
   defaultShipPartClass: 1
   DefaultShipPartGrade: 97
@@ -25,6 +25,7 @@ MonoBehaviour:
   weaponType: 0
   attackMinCool: 0
   attackMaxCool: 5
+  attackLoadCount: 0
   weaponFireOn: 0
   equipOn: 1
   usePower: 5

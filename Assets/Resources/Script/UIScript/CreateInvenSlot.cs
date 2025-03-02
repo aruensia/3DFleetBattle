@@ -18,8 +18,6 @@ public class CreateInvenSlot : MonoBehaviour
     private void OnEnable()
     {
         GetForManagerShipData();
-        //CreatePartSlot();
-        //CreateItemSlot();
     }
 
 
@@ -27,7 +25,6 @@ public class CreateInvenSlot : MonoBehaviour
     {
         playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
         invenSlot = GameObject.Find("CurrentItemPopup").GetComponent<ItemPopup>();
-        //GetForManagerShipData();
         CreatePartSlot();
         CreateItemSlot();
     }

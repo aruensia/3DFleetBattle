@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f69f4bf4a036875438e8a39d5f268f16, type: 3}
-  m_Name: utilityData 6
+  m_Name: UtilityData 6
   m_EditorClassIdentifier: 
   partType: 5
-  defaultShipPartName: "\uC120\uC870 \uC65C\uACE1\uC7A5"
-  iconImage: {fileID: 0}
+  defaultShipPartName: "\uAD70\uC6A9 \uB098\uB178\uD569\uC131 \uC7A5\uAC11"
+  iconImage: {fileID: 21300000, guid: 4e613acd038bbee41970969bba8f99e8, type: 3}
   defaultShipPartArmor: 0
   defaultShipPartCost: 20
   defaultShipPartSize: 0
   defaultShipPartClass: 1
-  DefaultShipPartGrade: 97
+  DefaultShipPartGrade: 75
   utilityName: "\uC120\uC870 \uC65C\uACE1\uC7A5"
-  defence: 0
-  shild: 300
+  defence: 250
+  shild: 0
   usePower: 80
-  utility: 0
+  utility: 2
+  searchRange: 0

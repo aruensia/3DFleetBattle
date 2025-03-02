@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class DesignItemPop : MonoBehaviour
 {
     ShipDesign shipdesign;
+    PlayerInfo playerInfo;
+    public Sprite defaultSlotImage;
 
     public List<Text> itemDefalutData = new List<Text>();
     public List<Text> head = new List<Text>();
@@ -38,7 +40,7 @@ public class DesignItemPop : MonoBehaviour
 
     void Start()
     {
-        //itemButton.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => SetItemPopup(DataManager.Instance.playerInfo.currentSelectDataValue));
+        playerInfo = GameObject.Find("DataManager").GetComponent<PlayerInfo>();
         SetShipPartButton = GameObject.Find("CurrentItemPopup").transform.GetChild(0).GetChild(2).GetComponent<Button>();
     }
     
@@ -358,4 +360,237 @@ public class DesignItemPop : MonoBehaviour
     {
         Debug.Log(item);
     }
+
+    public void SetItemChange(PartType partslot)
+    {
+        int count = 0;
+        switch (partslot)
+        {
+            case PartType.Hull:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipHullData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Count > 0)
+                {
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHullData"])
+                    {
+                        ShipHull currentShipHull = (ShipHull)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHull.iconImage;
+                        count++;
+                    }
+                    playerInfo.currentSelectDataValue = "ShipHullData";
+                    count = 0;
+                }
+                break;
+
+            case PartType.Head:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipHeadData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipHeadData"].Count > 0)
+                {
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipHeadData"])
+                    {
+                        ShipHead currentShipHead = (ShipHead)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipHead.iconImage;
+                        count++;
+                    }
+                    playerInfo.currentSelectDataValue = "ShipHeadData";
+                    count = 0; Debug.Log("아이템이 있습니다.");
+                }
+                break;
+
+            case PartType.Body:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipBodyData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipBodyData"].Count > 0)
+                {
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipBodyData"])
+                    {
+                        ShipBody currentShipBody = (ShipBody)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipBody.iconImage;
+                        count++;
+                    }
+                    playerInfo.currentSelectDataValue = "ShipBodyData";
+                    count = 0;
+                }
+                break;
+
+            case PartType.Tail:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipTailData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipTailData"].Count > 0)
+                {
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipTailData"])
+                    {
+                        ShipTail currentShipTail = (ShipTail)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipTail.iconImage;
+                        count++;
+                    }
+                    playerInfo.currentSelectDataValue = "ShipTailData";
+                    count = 0;
+                }
+                break;
+
+            case PartType.Weapon:
+                if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "WeaponData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["WeaponData"].Count > 0)
+                {
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["WeaponData"])
+                    {
+                        Weapon currentShipWeapon = (Weapon)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipWeapon.iconImage;
+                        count++;
+                    }
+                    playerInfo.currentSelectDataValue = "WeaponData";
+                    count = 0;
+                }
+                break;
+
+            case PartType.Utility:
+                if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "UtilityData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["UtilityData"].Count > 0)
+                {
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["UtilityData"])
+                    {
+                        UtilityData currentShipUtility = (UtilityData)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipUtility.iconImage;
+                        count++;
+                    }
+                    playerInfo.currentSelectDataValue = "UtilityData";
+                    count = 0;
+                }
+                break;
+
+            case PartType.Reactor:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipReactorData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipReactorData"].Count > 0)
+                {
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipReactorData"])
+                    {
+                        ShipReactor currentShipReactor = (ShipReactor)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipReactor.iconImage;
+                        count++;
+                    }
+                    playerInfo.currentSelectDataValue = "ShipReactorData";
+                    count = 0;
+                }
+                break;
+
+            case PartType.Thruster:
+                if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count == 0)
+                {
+                    Debug.Log("아이템이 없습니다.");
+                    playerInfo.currentSelectDataValue = "ShipThrusterData";
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+                }
+                else if (DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"].Count > 0)
+                {
+                    for (int i = 0; i < DataManager.Instance.playerInfo.inventoryCount; i++)
+                    {
+                        playerInfo.tempInventorylist[i].transform.GetChild(0).GetComponent<Image>().sprite = defaultSlotImage;
+                    }
+
+                    foreach (var item in DataManager.Instance.playerInfo.PlayerData["ShipThrusterData"])
+                    {
+                        ShipThruster currentShipThruster = (ShipThruster)item;
+                        playerInfo.tempInventorylist[count].transform.GetChild(0).GetComponent<Image>().sprite = currentShipThruster.iconImage;
+                        count++;
+                    }
+                    playerInfo.currentSelectDataValue = "ShipThrusterData";
+                    count = 0;
+                }
+                break;
+        }
+    }
+
 }

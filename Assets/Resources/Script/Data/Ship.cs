@@ -8,6 +8,7 @@ public class Ship : MonoBehaviour
     BattleMain battleMain;
     PlayerFleetAI playerFleetAi;
     EnemyFleetAI enemyFleetAi;
+    BattleSceneUI sceneUI;
 
     List<Weapon> haveWeapon = new List<Weapon>();
 
@@ -42,10 +43,13 @@ public class Ship : MonoBehaviour
         battleMain = GameObject.Find("BattleManager").GetComponent<BattleMain>();
         playerFleetAi = GameObject.Find("PlayerFleet").GetComponent<PlayerFleetAI>();
         enemyFleetAi = GameObject.Find("EnemyFleet").GetComponent<EnemyFleetAI>();
+        sceneUI = GameObject.Find("BattleManager").GetComponent<BattleSceneUI>();
+
         state = ShipState.Idle;
         WeaponFireReady();
         StartCoroutine(CheckState());
         StartCoroutine(ShipAction());
+        sceneUI.ChangeShipCount();
     }
 
     public void Update()
@@ -513,6 +517,7 @@ public class Ship : MonoBehaviour
 
                 case ShipState.Die:
                     ShipDestroy();
+                    sceneUI.ChangeShipCount();
                     break;
             }
             yield return new WaitForSeconds(0.3f);
