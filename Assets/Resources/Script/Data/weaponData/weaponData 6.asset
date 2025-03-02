@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8e85da483b01d84fb217bc6bba18093, type: 3}
-  m_Name: weaponData 6
+  m_Name: WeaponData 6
   m_EditorClassIdentifier: 
   partType: 4
   defaultShipPartName: "\uCCA8\uB2E8 \uCF54\uC77C\uAC74"
-  iconImage: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: 8fd11041c10039f4a8a7b02326b24c5d, type: 3}
   defaultShipPartArmor: 0
   defaultShipPartCost: 0
   defaultShipPartSize: 0
@@ -25,6 +25,7 @@ MonoBehaviour:
   weaponType: 0
   attackMinCool: 0
   attackMaxCool: 5
+  attackLoadCount: 0
   weaponFireOn: 0
   equipOn: 1
   usePower: 5

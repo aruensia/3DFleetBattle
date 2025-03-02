@@ -31,6 +31,7 @@ public class Ship : MonoBehaviour
 
     public ShipState state;
     public bool isdie = false;
+    public bool isShipEngageOn = false;
 
     float minDistance = 30f;
 
@@ -58,7 +59,6 @@ public class Ship : MonoBehaviour
         {
             CombatMove();
         }
-        
     }
 
     void WeaponFireReady()
@@ -113,7 +113,6 @@ public class Ship : MonoBehaviour
                 }
             }
         }
-
     }
 
     public void CombatMove()
@@ -179,8 +178,9 @@ public class Ship : MonoBehaviour
             {
                 if (playerFleetAi.enemyBattleGroup[i].transform.childCount > 0)
                 {
-                    useWeaponTarget = playerFleetAi.enemyBattleGroup[i].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                    this.useWeaponTarget = playerFleetAi.enemyBattleGroup[i].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                     battleMain.playerEngage = true;
+                    isShipEngageOn = true;
                     break;
                 }
             }
@@ -196,7 +196,7 @@ public class Ship : MonoBehaviour
             {
                 if (enemyFleetAi.playerBattleGroup[i].transform.childCount > 0)
                 {
-                    useWeaponTarget = enemyFleetAi.playerBattleGroup[i].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                    this.useWeaponTarget = enemyFleetAi.playerBattleGroup[i].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                     break;
                 }
             }
@@ -227,8 +227,9 @@ public class Ship : MonoBehaviour
                 {
                     if (playerFleetAi.enemyBattleGroup[3].transform.childCount > 0)
                     {
-                        useWeaponTarget = playerFleetAi.enemyBattleGroup[3].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = playerFleetAi.enemyBattleGroup[3].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.playerEngage = true;
+                        isShipEngageOn = true;
                     }
                     else
                     {
@@ -239,8 +240,9 @@ public class Ship : MonoBehaviour
                 {
                     if (enemyFleetAi.playerBattleGroup[3].transform.childCount > 0)
                     {
-                        useWeaponTarget = enemyFleetAi.playerBattleGroup[3].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = enemyFleetAi.playerBattleGroup[3].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.enemyEngage = true;
+                        isShipEngageOn = true;
                     }
                     else
                     {
@@ -254,13 +256,15 @@ public class Ship : MonoBehaviour
                 {
                     if (playerFleetAi.enemyBattleGroup[4].transform.childCount > 0)
                     {
-                        useWeaponTarget = playerFleetAi.enemyBattleGroup[4].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = playerFleetAi.enemyBattleGroup[4].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.playerEngage = true;
+                        isShipEngageOn = true;
                     }
                     else if (playerFleetAi.enemyBattleGroup[5].transform.childCount > 0)
                     {
-                        useWeaponTarget = playerFleetAi.enemyBattleGroup[5].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = playerFleetAi.enemyBattleGroup[5].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.playerEngage = true;
+                        isShipEngageOn = true;
                     }
                     else
                     {
@@ -271,13 +275,15 @@ public class Ship : MonoBehaviour
                 {
                     if (enemyFleetAi.playerBattleGroup[4].transform.childCount > 0)
                     {
-                        useWeaponTarget = enemyFleetAi.playerBattleGroup[4].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = enemyFleetAi.playerBattleGroup[4].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.enemyEngage = true;
+                        isShipEngageOn = true;
                     }
                     else if (enemyFleetAi.playerBattleGroup[5].transform.childCount > 0)
                     {
-                        useWeaponTarget = enemyFleetAi.playerBattleGroup[5].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = enemyFleetAi.playerBattleGroup[5].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.enemyEngage = true;
+                        isShipEngageOn = true;
                     }
                     else
                     {
@@ -291,18 +297,21 @@ public class Ship : MonoBehaviour
                 {
                     if (playerFleetAi.enemyBattleGroup[5].transform.childCount > 0)
                     {
-                        useWeaponTarget = playerFleetAi.enemyBattleGroup[5].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = playerFleetAi.enemyBattleGroup[5].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.playerEngage = true;
+                        isShipEngageOn = true;
                     }
                     else if (playerFleetAi.enemyBattleGroup[4].transform.childCount > 0)
                     {
-                        useWeaponTarget = playerFleetAi.enemyBattleGroup[4].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = playerFleetAi.enemyBattleGroup[4].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.playerEngage = true;
+                        isShipEngageOn = true;
                     }
                     else if (playerFleetAi.enemyBattleGroup[6].transform.childCount > 0)
                     {
-                        useWeaponTarget = playerFleetAi.enemyBattleGroup[6].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = playerFleetAi.enemyBattleGroup[6].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.playerEngage = true;
+                        isShipEngageOn = true;
                     }
                     else
                     {
@@ -313,18 +322,21 @@ public class Ship : MonoBehaviour
                 {
                     if (enemyFleetAi.playerBattleGroup[4].transform.childCount > 0)
                     {
-                        useWeaponTarget = enemyFleetAi.playerBattleGroup[4].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = enemyFleetAi.playerBattleGroup[4].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.enemyEngage = true;
+                        isShipEngageOn = true;
                     }
                     else if (enemyFleetAi.playerBattleGroup[3].transform.childCount > 0)
                     {
-                        useWeaponTarget = enemyFleetAi.playerBattleGroup[3].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = enemyFleetAi.playerBattleGroup[3].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.enemyEngage = true;
+                        isShipEngageOn = true;
                     }
                     else if (enemyFleetAi.playerBattleGroup[5].transform.childCount > 0)
                     {
                         useWeaponTarget = enemyFleetAi.playerBattleGroup[5].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.enemyEngage = true;
+                        isShipEngageOn = true;
                     }
                     else
                     {
@@ -338,18 +350,21 @@ public class Ship : MonoBehaviour
                 {
                     if (playerFleetAi.enemyBattleGroup[6].transform.childCount > 0)
                     {
-                        useWeaponTarget = playerFleetAi.enemyBattleGroup[6].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = playerFleetAi.enemyBattleGroup[6].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.playerEngage = true;
+                        isShipEngageOn = true;
                     }
                     else if (playerFleetAi.enemyBattleGroup[5].transform.childCount > 0)
                     {
-                        useWeaponTarget = playerFleetAi.enemyBattleGroup[5].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = playerFleetAi.enemyBattleGroup[5].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.playerEngage = true;
+                        isShipEngageOn = true;
                     }
                     else if (playerFleetAi.enemyBattleGroup[4].transform.childCount > 0)
                     {
-                        useWeaponTarget = playerFleetAi.enemyBattleGroup[4].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = playerFleetAi.enemyBattleGroup[4].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.playerEngage = true;
+                        isShipEngageOn = true;
                     }
                     else
                     {
@@ -360,18 +375,21 @@ public class Ship : MonoBehaviour
                 {
                     if (enemyFleetAi.playerBattleGroup[6].transform.childCount > 0)
                     {
-                        useWeaponTarget = enemyFleetAi.playerBattleGroup[6].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = enemyFleetAi.playerBattleGroup[6].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.enemyEngage = true;
+                        isShipEngageOn = true;
                     }
                     else if (enemyFleetAi.playerBattleGroup[5].transform.childCount > 0)
                     {
-                        useWeaponTarget = enemyFleetAi.playerBattleGroup[5].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = enemyFleetAi.playerBattleGroup[5].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.enemyEngage = true;
+                        isShipEngageOn = true;
                     }
                     else if (enemyFleetAi.playerBattleGroup[4].transform.childCount > 0)
                     {
-                        useWeaponTarget = enemyFleetAi.playerBattleGroup[4].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                        this.useWeaponTarget = enemyFleetAi.playerBattleGroup[4].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
                         battleMain.enemyEngage = true;
+                        isShipEngageOn = true;
                     }
                     else
                     {
@@ -449,6 +467,7 @@ public class Ship : MonoBehaviour
     {
         Debug.Log("나 죽었어요!!!!" + gameObject.name);
         Destroy(this.gameObject);
+        isdie = true;
     }
 
     IEnumerator CheckState()
@@ -457,7 +476,7 @@ public class Ship : MonoBehaviour
         {
             yield return new WaitForSeconds(0.3f);
 
-            if (battleMain.playerEngage == true)
+            if (isShipEngageOn == true)
             {
                 Debug.Log("현재 상태는 공격중!!");
                 state = ShipState.Attack;

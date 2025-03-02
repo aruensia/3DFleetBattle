@@ -314,20 +314,6 @@ public class ShipDesign : MonoBehaviour
                     DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Add(tempcurrentshipHull);
                 }
 
-                //if (this.currentship.shiphead != null)
-                //{
-                //    
-                //    for (int i = 0; i < this.currentship.shiphead.weapons.Count; i++)
-                //    {
-                //        Instantiate(itemIcon, shipHeadPos.transform.GetChild(0).transform);
-                //    }
-                //
-                //    for (int i = 0; i < this.currentship.shiphead.utility.Count; i++)
-                //    {
-                //        Instantiate(itemIcon, shipHeadPos.transform.GetChild(1).transform);
-                //    }
-                //    
-                //}
                 break;
 
             case PartType.Weapon:
@@ -336,13 +322,11 @@ public class ShipDesign : MonoBehaviour
                 ActiveSubItem();
                 break;
 
-
             case PartType.Utility:
 
                 temputilitys = tempShipPart;
                 ActiveSubItem();
                 break;
-
         }
     }
 

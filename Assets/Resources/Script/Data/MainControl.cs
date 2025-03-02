@@ -8,7 +8,14 @@ public class MainControl : MonoBehaviour
 
     public void GoBattle()
     {
-        SceneManager.LoadScene("BattleScene");
+        if(DataManager.Instance.playerInfo.MyShips.Count == 0)
+        {
+            Debug.Log("보유한 함선이 없습니다.");
+        }
+        else
+        {
+            SceneManager.LoadScene("BattleScene");
+        }
     }
 
     public void GoDesign()

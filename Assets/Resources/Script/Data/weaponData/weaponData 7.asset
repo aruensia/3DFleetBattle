@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8e85da483b01d84fb217bc6bba18093, type: 3}
-  m_Name: weaponData 7
+  m_Name: WeaponData 7
   m_EditorClassIdentifier: 
   partType: 4
   defaultShipPartName: "\uC120\uC870 \uCF54\uC77C\uAC74"

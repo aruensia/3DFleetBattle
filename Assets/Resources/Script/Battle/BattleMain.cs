@@ -12,11 +12,11 @@ public class BattleMain : MonoBehaviour
     
     public float BattleGroupWaitMoveSpeed = 10f;
     public GameObject PlayerSpawnObject;
+    public GameObject EnemySpawnObject;
     public GameObject playerBattleGroup;
     public bool ShipSettingOn = false;
 
     List<GameObject> unitGroup = new List<GameObject>();
-    
 
     private void Start()
     {
@@ -30,11 +30,7 @@ public class BattleMain : MonoBehaviour
         int instantiateDistance = 0;
         foreach(var tempship in DataManager.Instance.playerInfo.MyShips)
         {
-            Debug.Log(tempship.shipHull.name);
-            Debug.Log(tempship.shiphead.name);
-            Debug.Log(tempship.shipBody.name);
-            Debug.Log(tempship.shipTail.name);
-            GameObject instanships = Instantiate(tempship.shipHull.shipModel, PlayerSpawnObject.transform);
+            GameObject instanships = Instantiate(tempship.shipHull.shipModel, PlayerSpawnObject.transform.GetChild(0).transform);
             instanships.AddComponent<Ship>();
             instanships.transform.Translate(transform.position.x + instantiateDistance, 0, 0);
 
@@ -165,4 +161,6 @@ public class BattleMain : MonoBehaviour
         ShipSettingOn = true;
         playerfleet.StartFleetMove();
     }
+
+
 }

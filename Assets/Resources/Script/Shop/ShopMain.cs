@@ -298,6 +298,7 @@ public class ShopMain : MonoBehaviour
             var a = Instantiate(shopItemPrefab, tempcanvas);
             a.name = "shopItem" + i;
             buyCheckList.Add(a);
+            a.transform.GetChild(0).gameObject.GetComponent<Image>().sprite = tempGetItemList[tempint].iconImage;
             a.transform.GetChild(1).transform.GetChild(0).gameObject.GetComponent<Text>().text = tempitemname[itemItemRange];
 
             a.transform.Translate(i * 180, -20, 0);
