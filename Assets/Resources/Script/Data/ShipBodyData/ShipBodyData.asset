@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partType: 2
   defaultShipPartName: 
-  iconImage: {fileID: 0}
+  iconImage: {fileID: 21300000, guid: ba764144fdeb0394c9147917c7e7bc35, type: 3}
   defaultShipPartArmor: 0
   defaultShipPartCost: 0
   defaultShipPartSize: 0

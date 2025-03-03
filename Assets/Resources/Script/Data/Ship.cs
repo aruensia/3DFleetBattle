@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -9,6 +10,7 @@ public class Ship : MonoBehaviour
     PlayerFleetAI playerFleetAi;
     EnemyFleetAI enemyFleetAi;
     BattleSceneUI sceneUI;
+    MuzzleObj muzzleObj;
 
     List<Weapon> haveWeapon = new List<Weapon>();
 
@@ -26,7 +28,7 @@ public class Ship : MonoBehaviour
     public int armor;
     public int shield;
 
-    public float speed;
+    public float speed = 40f;
     public int usecap;
     public int cost;
 
@@ -34,9 +36,13 @@ public class Ship : MonoBehaviour
     public bool isdie = false;
     public bool isShipEngageOn = false;
 
-    float minDistance = 30f;
+    public float dist;
 
-    [SerializeField] Ship useWeaponTarget;
+    float minDistance = 40f;
+
+    [SerializeField] GameObject[] muzzles;
+
+    public Ship useWeaponTarget;
 
     private void Start()
     {
@@ -44,6 +50,8 @@ public class Ship : MonoBehaviour
         playerFleetAi = GameObject.Find("PlayerFleet").GetComponent<PlayerFleetAI>();
         enemyFleetAi = GameObject.Find("EnemyFleet").GetComponent<EnemyFleetAI>();
         sceneUI = GameObject.Find("BattleManager").GetComponent<BattleSceneUI>();
+        muzzleObj = transform.GetChild(0).GetComponent<MuzzleObj>();
+        muzzleObj.AddMuzzle();
 
         state = ShipState.Idle;
         WeaponFireReady();
@@ -54,14 +62,35 @@ public class Ship : MonoBehaviour
 
     public void Update()
     {
-        if (state == ShipState.Idle)
+        IdleState();
+    }
+
+    void IdleState()
+    {
+        if( isdie != true)
         {
-            playerFleetAi.PatrolMove();
-            enemyFleetAi.PatrolMove();
-        }
-        else if(state == ShipState.Attack)
-        {
-            CombatMove();
+            if (transform.CompareTag("Player"))
+            {
+                if (state == ShipState.Idle)
+                {
+                    playerFleetAi.PatrolMove();
+                }
+                else if (state == ShipState.Attack)
+                {
+                    CombatMove();
+                }
+            }
+            if (transform.CompareTag("Enemy"))
+            {
+                if (state == ShipState.Idle)
+                {
+                    enemyFleetAi.PatrolMove();
+                }
+                else if (state == ShipState.Attack)
+                {
+                    CombatMove();
+                }
+            }
         }
     }
 
@@ -121,56 +150,126 @@ public class Ship : MonoBehaviour
 
     public void CombatMove()
     {
-        float distance = Vector3.Distance(transform.position, useWeaponTarget.transform.position);
-
-        switch (shipHull.shipClass)
+        if(useWeaponTarget == null)
         {
-            case ShipClass.Corvette:
-                if (distance > minDistance)
+            state = ShipState.Search;
+        }
+        else
+        {
+            float distance = Vector3.Distance(transform.position, useWeaponTarget.transform.position);
+
+            if (transform.CompareTag("Player"))
+            {
+                switch (shipHull.shipClass)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                    case ShipClass.Corvette:
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, 40 * Time.deltaTime);
+                        }
+                        else
+                        {
+                            transform.position = transform.position;
+                        }
+
+                        break;
+
+                    case ShipClass.Frigate:
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+
+                        break;
+
+                    case ShipClass.Destroyer:
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+
+                        break;
+
+                    case ShipClass.Cruiser:
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+                        break;
+
+                    case ShipClass.Battleship:
+                        minDistance = 100f;
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+                        break;
+
+                    case ShipClass.AircraftCarrier:
+                        minDistance = 150f;
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+                        break;
                 }
-
-                break;
-
-            case ShipClass.Frigate:
-                if (distance > minDistance)
+            }
+            else if (transform.CompareTag("Enemy"))
+            {
+                switch (shipHull.shipClass)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                    case ShipClass.Corvette:
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+                        else
+                        {
+                            transform.position = transform.position;
+                        }
+
+                        break;
+
+                    case ShipClass.Frigate:
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+
+                        break;
+
+                    case ShipClass.Destroyer:
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+
+                        break;
+
+                    case ShipClass.Cruiser:
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+                        break;
+
+                    case ShipClass.Battleship:
+                        minDistance = 100f;
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+                        break;
+
+                    case ShipClass.AircraftCarrier:
+                        minDistance = 150f;
+                        if (distance > minDistance)
+                        {
+                            transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
+                        }
+                        break;
                 }
-
-                break;
-
-            case ShipClass.Destroyer:
-                if (distance > minDistance)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
-                }
-
-                break;
-
-            case ShipClass.Cruiser:
-                if( distance > minDistance)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
-                }
-                break;
-
-            case ShipClass.Battleship:
-                minDistance = 100f;
-                if (distance > minDistance)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
-                }
-                break;
-
-            case ShipClass.AircraftCarrier:
-                minDistance = 150f;
-                if (distance > minDistance)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, useWeaponTarget.transform.position, speed * Time.deltaTime);
-                }
-                break;
+            }
         }
     }
 
@@ -200,13 +299,19 @@ public class Ship : MonoBehaviour
             {
                 if (enemyFleetAi.playerBattleGroup[i].transform.childCount > 0)
                 {
-                    this.useWeaponTarget = enemyFleetAi.playerBattleGroup[i].transform.GetChild(Random.Range(0, playerFleetAi.enemyBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                    this.useWeaponTarget = enemyFleetAi.playerBattleGroup[i].transform.GetChild(Random.Range(0, enemyFleetAi.playerBattleGroup[0].transform.childCount)).GetComponent<Ship>();
+                    battleMain.enemyEngage = true;
+                    isShipEngageOn = true;
                     break;
                 }
             }
             if (useWeaponTarget == null)
             {
                 battleMain.enemyEngage = false;
+                isShipEngageOn = false;
+                battleMain.enemyEngage = false;
+                battleMain.enemyContect = false;
+                state = ShipState.Idle;
                 Debug.Log("적이없다!!!!!!!");
             }
         }
@@ -406,38 +511,46 @@ public class Ship : MonoBehaviour
 
     public void WeaponFire()
     {
-        float dist = Vector3.Distance(transform.position, useWeaponTarget.transform.position);
-        Debug.Log(haveWeapon.Count + " 보유 무기 수 !!!!");
-
-        foreach (var weapon in haveWeapon)
+        if (useWeaponTarget == null)
         {
-            if(weapon.attackLoadCount > weapon.attackMinCool)
-            {
-                weapon.attackLoadCount -= 1;
-                Debug.Log($"{weapon.defaultShipPartName} 무기 장전중!!!! {weapon.attackLoadCount}");
-            }
-            else if ( weapon.attackLoadCount <= weapon.attackMinCool)
-            {
-                weapon.weaponFireOn = true;
-                Debug.Log($"{weapon.defaultShipPartName} 무기 장전 완료!!!!");
-            }
+            state = ShipState.Search;
+        }
+        else
+        {
+            dist = Vector3.Distance(transform.position, useWeaponTarget.transform.position);
+            Debug.Log(haveWeapon.Count + " 보유 무기 수 !!!!");
 
-            if ( weapon.weaponFireOn == true)
+            foreach (var weapon in haveWeapon)
             {
-                if (weapon.attackRange > dist)
+                if (weapon.attackLoadCount > weapon.attackMinCool)
                 {
+                    weapon.attackLoadCount -= 1;
+                    Debug.Log($"{weapon.defaultShipPartName} 무기 장전중!!!! {weapon.attackLoadCount}");
+                }
+                else if (weapon.attackLoadCount <= weapon.attackMinCool)
+                {
+                    weapon.weaponFireOn = true;
+                    Debug.Log($"{weapon.defaultShipPartName} 무기 장전 완료!!!!");
+                }
 
-                    useWeaponTarget.TakeDamage(weapon.damage);
-                    Debug.Log($"{useWeaponTarget.name}을 향해 공격을 해서 피해를 입혔음!!! ");
-                    weapon.attackLoadCount = weapon.attackMaxCool;
-                    weapon.weaponFireOn = false;
+                if (weapon.weaponFireOn == true)
+                {
+                    if (weapon.attackRange > dist)
+                    {
+
+                        useWeaponTarget.TakeDamage(weapon.damage);
+                        Debug.Log($"{useWeaponTarget.name}을 향해 공격을 해서 피해를 입혔음!!! ");
+                        weapon.attackLoadCount = weapon.attackMaxCool;
+                        weapon.weaponFireOn = false;
+                        muzzleObj.FireLaser();
+                    }
                 }
             }
-        }
 
-        if( haveWeapon.Count == 0)
-        {
-            Debug.Log($"{gameObject.name}이 가진 무기가 없습니다.!!");
+            if (haveWeapon.Count == 0)
+            {
+                Debug.Log($"{gameObject.name}이 가진 무기가 없습니다.!!");
+            }
         }
     }
 
@@ -461,6 +574,8 @@ public class Ship : MonoBehaviour
                 }
                 else if(hp <= 0)
                 {
+                    Debug.Log("나 죽었어요!!!!!");
+                    isdie = true;
                     state = ShipState.Die;
                 }
             }
@@ -470,55 +585,107 @@ public class Ship : MonoBehaviour
     void ShipDestroy()
     {
         Debug.Log("나 죽었어요!!!!" + gameObject.name);
+        useWeaponTarget.state = ShipState.Search;
+        useWeaponTarget.useWeaponTarget = null;
+        useWeaponTarget.isShipEngageOn = false;
+        Debug.Log("날 죽인 놈의 상태는 !!!" + useWeaponTarget.state);
         Destroy(this.gameObject);
-        isdie = true;
     }
 
     IEnumerator CheckState()
     {
-        while(!isdie)
+        while(true)
         {
             yield return new WaitForSeconds(0.3f);
+            if (transform.CompareTag("Player"))
+            {
+                if( isdie == false)
+                {
+                    if (isShipEngageOn == true)
+                    {
+                        Debug.Log("현재 상태는 공격중!!");
+                        state = ShipState.Attack;
+                    }
+                    else if (battleMain.playerContect == true)
+                    {
+                        Debug.Log("현재 상태는 찾는 중!!");
+                        state = ShipState.Search;
+                    }
+                    else if (battleMain.playerEngage == false)
+                    {
+                        Debug.Log("현재 상태는 대기중!!");
+                        state = ShipState.Idle;
+                    }
+                }
+            }
+            else if (transform.CompareTag("Enemy"))
+            {
+                if (isShipEngageOn == true)
+                {
+                    Debug.Log("현재 상태는 적이 공격중!!");
+                    state = ShipState.Attack;
+                }
+                else if (battleMain.enemyContect == true)
+                {
+                    Debug.Log("현재 상태는 적이 찾는 중!!");
+                    state = ShipState.Search;
+                }
+                else if (battleMain.enemyEngage == false)
+                {
+                    Debug.Log("현재 상태는 적이 대기중!!");
+                    state = ShipState.Idle;
+                }
+            }
 
-            if (isShipEngageOn == true)
-            {
-                Debug.Log("현재 상태는 공격중!!");
-                state = ShipState.Attack;
-            }
-            else if (battleMain.playerContect == true)
-            {
-                Debug.Log("현재 상태는 찾는 중!!");
-                state = ShipState.Search;
-            }
-            else if (battleMain.playerEngage == false)
-            {
-                Debug.Log("현재 상태는 대기중!!");
-                state = ShipState.Idle;
-            }
         }
     }
 
     IEnumerator ShipAction()
     {
-        while(!isdie)
+        while(true)
         {
-            switch (state)
+            if(transform.CompareTag("Player"))
             {
-                case ShipState.Idle:
-                    break;
+                switch (state)
+                {
+                    case ShipState.Idle:
+                        break;
 
-                case ShipState.Search:
-                    SearchTarget();
-                    break;
+                    case ShipState.Search:
+                        SearchTarget();
+                        break;
 
-                case ShipState.Attack:
-                    WeaponFire();
-                    break;
+                    case ShipState.Attack:
+                        WeaponFire();
+                        break;
 
-                case ShipState.Die:
-                    ShipDestroy();
-                    sceneUI.ChangeShipCount();
-                    break;
+                    case ShipState.Die:
+                        ShipDestroy();
+                        sceneUI.ChangeShipCount();
+                        break;
+                }
+            }
+
+            else if (transform.CompareTag("Enemy"))
+            {
+                switch (state)
+                {
+                    case ShipState.Idle:
+                        break;
+
+                    case ShipState.Search:
+                        SearchTarget();
+                        break;
+
+                    case ShipState.Attack:
+                        WeaponFire();
+                        break;
+
+                    case ShipState.Die:
+                        ShipDestroy();
+                        sceneUI.ChangeShipCount();
+                        break;
+                }
             }
             yield return new WaitForSeconds(0.3f);
         }

@@ -395,14 +395,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.59607846, g: 0.49803922, b: 0.22745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 8b606a9328e8ab045844fafaf871c54e, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -578,8 +578,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -721,17 +721,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523650381}
   m_CullTransparentMesh: 1
---- !u!114 &550007497 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2419432725630842176, guid: aeadf9be97c0be04686a7013debe45c2, type: 3}
-  m_PrefabInstance: {fileID: 5453151932888022607}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &573753080
 GameObject:
   m_ObjectHideFlags: 0
@@ -1261,15 +1250,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropdown: {fileID: 2034603764}
-  tempInventorylist: []
+  currentsShopShipDatas: []
   shipPartName: {fileID: 0}
   shopItemPrefab: {fileID: 5943205332805435894, guid: e1dba051a0c1b5942b3fd77d6c4606f3, type: 3}
   tempselectItem: {fileID: 5943205332805435894, guid: e1dba051a0c1b5942b3fd77d6c4606f3, type: 3}
   itemRefresh: {fileID: 3410320668734091081}
   playerMoney: {fileID: 2085204003}
   buyItemPopup: {fileID: 9047804604782001227}
-  tempInventoryCount: 0
+  expectBuyItem: {fileID: 0}
   maxListCount: 6
+  currentSelectItem: {fileID: 0}
   activityUIControl:
   - {fileID: 9047804604782001227}
   - {fileID: 9047804604782001228}
@@ -1306,9 +1296,6 @@ MonoBehaviour:
   - {fileID: 9047804604782001233}
   reactor:
   - {fileID: 9047804604782001229}
-  currentHullName: {fileID: 2051926585}
-  currentHullHp: {fileID: 550007497}
-  currentHullArmor: {fileID: 1991653709}
 --- !u!114 &1070837289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1836,14 +1823,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.59607846, g: 0.49803922, b: 0.22745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 3b4ca370ada8f6a498663fe08e7e95f5, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2343,15 +2330,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.59607846, g: 0.49803922, b: 0.22745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 47ffbbfddd35ac444808b9cbe1e13aa7, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2368,17 +2355,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963284882}
   m_CullTransparentMesh: 1
---- !u!114 &1991653709 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7630030244141084951, guid: aeadf9be97c0be04686a7013debe45c2, type: 3}
-  m_PrefabInstance: {fileID: 5453151932888022607}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2034603762
 GameObject:
   m_ObjectHideFlags: 0
@@ -2493,14 +2469,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3490566, g: 0.30079636, b: 0.16958883, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 8b606a9328e8ab045844fafaf871c54e, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2530,17 +2506,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &2051926585 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7104456615846759175, guid: aeadf9be97c0be04686a7013debe45c2, type: 3}
-  m_PrefabInstance: {fileID: 5453151932888022607}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2058297092
 GameObject:
   m_ObjectHideFlags: 0
@@ -2925,6 +2890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62d417aec5fc9484793a0480d71d0db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemSlotButton: {fileID: 0}
   defaultSlotImage: {fileID: 21300000, guid: 5ec1172c4dd206c4cb38812cb5d41fe5, type: 3}
 --- !u!1001 &3410320668734091080
 PrefabInstance:
@@ -3213,6 +3179,22 @@ PrefabInstance:
     - target: {fileID: 437710488009944238, guid: 033143ad726847e47a9292c35e03834e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4102801029654834839, guid: 033143ad726847e47a9292c35e03834e, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4102801029654834839, guid: 033143ad726847e47a9292c35e03834e, type: 3}
+      propertyPath: m_Color.b
+      value: 0.22745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 4102801029654834839, guid: 033143ad726847e47a9292c35e03834e, type: 3}
+      propertyPath: m_Color.g
+      value: 0.49803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 4102801029654834839, guid: 033143ad726847e47a9292c35e03834e, type: 3}
+      propertyPath: m_Color.r
+      value: 0.59607846
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

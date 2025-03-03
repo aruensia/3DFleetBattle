@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4982272117772900}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AircraftCarrier
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 23813701018112838}
   - component: {fileID: 7819572745644841590}
   - component: {fileID: 3377208632841392131}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: V-Shooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}

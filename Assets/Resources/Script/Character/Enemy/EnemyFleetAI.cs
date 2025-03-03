@@ -31,8 +31,6 @@ public class EnemyFleetAI : MonoBehaviour
         battleMain = GameObject.Find("BattleManager").GetComponent<BattleMain>();
     }
 
-
-
     public void PatrolMove()
     {
         if (maxSpeedOn == false)
@@ -63,18 +61,18 @@ public class EnemyFleetAI : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(1);
             if (battleMain.ShipSettingOn == true)
             {
-                yield return new WaitForSeconds(1);
-                if (battleMain.playerEngage == false)
+                if (battleMain.enemyContect == true)
                 {
-                    Debug.Log("적 탐색중 !!!!");
-                    EnemyContect();
-                }
-                if (battleMain.playerEngage == true)
-                {
-                    Debug.Log("적과 교전중!!!!!");
+                    Debug.Log("적이 플레이어 발견 !!!!");
                     StopCoroutine(FleetBattleState());
+                }
+                else if (battleMain.enemyEngage == false)
+                {
+                    Debug.Log("플레이어 찾는중!!!!!");
+                    EnemyContectisOn();
                 }
             }
             else
@@ -84,15 +82,15 @@ public class EnemyFleetAI : MonoBehaviour
         }
     }
 
-    void EnemyContect()
+    void EnemyContectisOn()
     {
         Engage = Physics.OverlapSphere(this.transform.position, tempradius);
         foreach (Collider item in Engage)
         {
-            if (item.CompareTag("Enemy"))
+            if (item.CompareTag("Player"))
             {
-                Debug.Log("에너미 컨텍트!!!!");
-                battleMain.playerEngage = true;
+                Debug.Log("플레이어 컨텍트!!!!");
+                battleMain.enemyContect = true;
             }
         }
     }
@@ -101,12 +99,5 @@ public class EnemyFleetAI : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(this.transform.position, tempradius);
-    }
-
-    IEnumerator FleetState()
-    {
-
-
-        yield return new WaitForSeconds(0.3f);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class BattleMain : MonoBehaviour
@@ -9,6 +10,7 @@ public class BattleMain : MonoBehaviour
     public bool enemyContect = false;
     public bool enemyEngage = false;
     PlayerFleetAI playerfleet;
+    EnemyFleetAI enemyFleet;
     
     public float BattleGroupWaitMoveSpeed = 10f;
     public GameObject PlayerSpawnObject;
@@ -16,11 +18,16 @@ public class BattleMain : MonoBehaviour
     public GameObject playerBattleGroup;
     public bool ShipSettingOn = false;
 
+    public GameObject[] enemyShipSetting;
+    public List<ScriptableObject> enemyShipPart;
+
     List<GameObject> unitGroup = new List<GameObject>();
 
     private void Start()
     {
         playerfleet = GameObject.Find("PlayerFleet").GetComponent<PlayerFleetAI>();
+        enemyFleet = GameObject.Find("EnemyFleet").GetComponent<EnemyFleetAI>();
+        EnemyShipSetting();
         PlayerShipInstantiate();
     }
 
@@ -160,7 +167,13 @@ public class BattleMain : MonoBehaviour
 
         ShipSettingOn = true;
         playerfleet.StartFleetMove();
+        enemyFleet.StartFleetMove();
     }
 
+    void EnemyShipSetting()
+    {
+        Ship enemyBattleShip = enemyShipSetting[4].transform.GetChild(0).GetComponent<Ship>();
+        enemyBattleShip.shiphead.weapons[0] = (Weapon)enemyShipPart[0];
+    }
 
 }

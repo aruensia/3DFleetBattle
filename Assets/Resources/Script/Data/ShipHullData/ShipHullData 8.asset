@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partType: 0
   defaultShipPartName: "\uCCA8\uB2E8 \uD638\uC704\uD568"
-  iconImage: {fileID: 21300000, guid: 83a9e438ae1a4fa4286f0981b6ecb5fb, type: 3}
+  iconImage: {fileID: 21300000, guid: e89096d4754cb1c47b7d8956f601e65b, type: 3}
   defaultShipPartArmor: 150
   defaultShipPartCost: 900
   defaultShipPartSize: 0
