@@ -30,6 +30,15 @@ public class BattleCamera : MonoBehaviour
 
     }
 
+    public void SetGlobalCamera()
+    {
+        camera[2].GetComponent<CinemachineVirtualCamera>().LookAt = PlayerCameraList[1].transform;
+        camera[2].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 60;
+        camera[0].gameObject.SetActive(false);
+        camera[1].gameObject.SetActive(false);
+        camera[2].gameObject.SetActive(true);
+    }
+
     public void FleetViewCamera(int num)
     {
         if( num == 0)
@@ -71,7 +80,7 @@ public class BattleCamera : MonoBehaviour
 
                     camera[0].GetComponent<CinemachineVirtualCamera>().Follow = PlayerCameraList[1].transform.GetChild(tempCount).transform;
                     camera[0].GetComponent<CinemachineVirtualCamera>().LookAt = PlayerCameraList[1].transform.GetChild(tempCount).transform;
-                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 10;
+                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 20;
                 }
                 else
                 {
@@ -94,7 +103,7 @@ public class BattleCamera : MonoBehaviour
 
                     camera[0].GetComponent<CinemachineVirtualCamera>().Follow = PlayerCameraList[2].transform;
                     camera[0].GetComponent<CinemachineVirtualCamera>().LookAt = PlayerCameraList[2].transform;
-                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 10;
+                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 20;
                 }
                 else
                 {
@@ -115,7 +124,7 @@ public class BattleCamera : MonoBehaviour
                 {
                     camera[0].GetComponent<CinemachineVirtualCamera>().Follow = PlayerCameraList[3].transform;
                     camera[0].GetComponent<CinemachineVirtualCamera>().LookAt = PlayerCameraList[3].transform;
-                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 10;
+                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 20;
                 }
                 else
                 {
@@ -135,7 +144,7 @@ public class BattleCamera : MonoBehaviour
                 {
                     camera[0].GetComponent<CinemachineVirtualCamera>().Follow = PlayerCameraList[4].transform;
                     camera[0].GetComponent<CinemachineVirtualCamera>().LookAt = PlayerCameraList[4].transform;
-                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 10;
+                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 20;
                 }
                 else
                 {
@@ -155,7 +164,7 @@ public class BattleCamera : MonoBehaviour
                 {
                     camera[0].GetComponent<CinemachineVirtualCamera>().Follow = PlayerCameraList[5].transform;
                     camera[0].GetComponent<CinemachineVirtualCamera>().LookAt = PlayerCameraList[5].transform;
-                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 10;
+                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
                 }
                 else
                 {
@@ -175,7 +184,7 @@ public class BattleCamera : MonoBehaviour
                 {
                     camera[0].GetComponent<CinemachineVirtualCamera>().Follow = PlayerCameraList[6].transform;
                     camera[0].GetComponent<CinemachineVirtualCamera>().LookAt = PlayerCameraList[6].transform;
-                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 10;
+                    camera[0].GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = 40;
                 }
                 else
                 {

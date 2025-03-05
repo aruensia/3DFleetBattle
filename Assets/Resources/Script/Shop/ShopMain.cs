@@ -453,25 +453,16 @@ public class ShopMain : MonoBehaviour
         {
             case "ShipHull":
                 
-                //if(buyCheckList[tempnum] == true)
-                //{
                   ShipHull shipHull = currentSelectItem as ShipHull;
                   if (shipHull.defaultShipPartCost < DataManager.Instance.playerInfo.Money)
                   {
                       DataManager.Instance.playerInfo.Money = DataManager.Instance.playerInfo.Money - shipHull.defaultShipPartCost;
                       DataManager.Instance.playerInfo.PlayerData["ShipHullData"].Add(shipHull);
-                      //buyCheckList[tempnum] = false;
                   }
                   else
                   {
                       Debug.Log("보유한 돈이 모자랍니다.");
                   }
-
-                //}
-                //else
-                //{
-                //    Debug.Log("이미 구입한 아이템 입니다.");
-                //}
 
                 break;
 
