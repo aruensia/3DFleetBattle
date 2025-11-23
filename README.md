@@ -10,7 +10,7 @@
     <td align="center" width="33%">
       <img src="https://github.com/user-attachments/assets/37486176-02cf-45c0-b391-e7b2b2d21d8b" alt="인게임 게임 플레이" width="100%"/>
       <br/>
-      <b>원작 게임 플레이</b>
+      <b>인 게임 플레이</b>
     </td>
     <td align="center" width="33%">
       <img src="https://github.com/user-attachments/assets/2d81d64a-7d23-4a6c-94ce-9cf923066770" alt="게임 로고" width="100%"/>
